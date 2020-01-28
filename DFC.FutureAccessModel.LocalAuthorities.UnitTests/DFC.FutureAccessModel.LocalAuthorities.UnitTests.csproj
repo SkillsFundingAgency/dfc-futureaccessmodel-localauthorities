@@ -5,7 +5,7 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <PropertyGroup>
-        <!-- for futurue reference <ProjectGuid>{D19A668C-220B-45AD-A18D-4CDA9585AE1E}</ProjectGuid> -->
+        <!-- for future reference <ProjectGuid>{D19A668C-220B-45AD-A18D-4CDA9585AE1E}</ProjectGuid> -->
         <ProjectGuid>{D19A668C-220B-45AD-A18D-4CDA9585AE1E}</ProjectGuid>
     </PropertyGroup>
    <ItemGroup>
