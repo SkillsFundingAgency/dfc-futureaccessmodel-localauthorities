@@ -40,7 +40,7 @@ stages:
         BuildConfiguration: 'release'
 
 - stage: DeployTo_DEV
-  displayName: Deploy ARM resources to DEV_FUTUREACCESSMODEL environment
+  displayName: Deploy to DEV_FUTUREACCESSMODEL environment
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   variables:
   - group: dfc-shared-dev
@@ -49,7 +49,7 @@ stages:
   jobs:
   - template: JobTemplates/Deploy.yml
     parameters:
-      AzureSubscription: ${{ variables.AzureDevOpsServiceConnection }}
+      AzureSubscription: ${{ variables.dfc-shared-dev.AzureDevOpsServiceConnection }}
       Environment: DEV_FUTUREACCESSMODEL
       FunctionAppName: dfc-dev-fam-la-fa
       ResourceGroup: dfc-dev-fam-la-rg
