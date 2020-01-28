@@ -1,0 +1,223 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appSharedResourceGroup": {
+            "type": "string"
+        },
+        "appSharedStorageAccountName": {
+            "type": "string"
+        },
+        "aseHostingEnvironmentName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "aseResourceGroup": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "aspInstances": {
+            "type": "int",
+            "defaultValue": 2
+        },
+        "aspSize": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "aspTier": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "cosmosDbAccountName": {
+            "type": "string"
+        },
+        "cosmosDbResourceGroup": {
+            "type": "string"
+        },
+        "environment": {
+            "type": "string"
+        },
+        "sharedAppServicePlanName": {
+            "type": "string",
+            "defaultValue": ""
+        },
+        "sharedAppServicePlanResourceGroup": {
+            "type": "string",
+            "defaultValue": ""
+        }
+    },
+    "variables": {
+        "appServicePlanName": "[if(greater(length(parameters('sharedAppServicePlanName')), 0), parameters('sharedAppServicePlanName'), concat(variables('resourcePrefix'), '-asp'))]",
+        "appServicePlanResourceGroup": "[if(greater(length(parameters('SharedAppServicePlanResourceGroup')), 0), parameters('SharedAppServicePlanResourceGroup'), resourceGroup().name)]",
+        "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
+        "cosmosCollectionName": "LocalAuthorities",
+        "cosmosCollectionPartitionKey": "/LADCode",
+        "cosmosDatabaseName": "dfc-prime-contractor-areas-db",
+        "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-fam-la'))]",
+        "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]",
+        "functionAppInsightsName": "[concat(variables('functionAppName'), '-ai')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[variables('appServicePlanName')]",
+            "type": "Microsoft.Resources/deployments",
+            "condition": "[not(equals(parameters('sharedAppServicePlanName'), variables('appServicePlanName')))]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'app-service-plan.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
+                    "aseHostingEnvironmentName": {
+                        "value": "[parameters('aseHostingEnvironmentName')]"
+                    },
+                    "aseResourceGroup": {
+                        "value": "[parameters('aseResourceGroup')]"
+                    },
+                    "aspSize": {
+                        "value": "[parameters('aspSize')]"
+                    },
+                    "aspInstances": {
+                        "value": "[parameters('aspInstances')]"
+                    },
+                    "nonASETier": {
+                        "value": "[parameters('aspTier')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[variables('functionAppInsightsName')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'application-insights.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[variables('functionAppInsightsName')]"
+                    },
+                    "attachedService": {
+                        "value": "[variables('functionAppName')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "[variables('functionAppName')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'app-service.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServiceName": {
+                        "value": "[variables('functionAppName')]"
+                    },
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
+                    "appServicePlanResourceGroup": {
+                        "value": "[variables('appServicePlanResourceGroup')]"
+                    },
+                    "appServiceType": {
+                        "value": "functionapp"
+                    },
+                    "deployStagingSlot": {
+                        "value": true
+                    },
+                    "appServiceAppSettings": {
+                        "value": [
+                            {
+                                "name": "FUNCTIONS_EXTENSION_VERSION",
+                                "value": "~2"
+                            },
+                            {
+                                "name": "MSDEPLOY_RENAME_LOCKED_FILES",
+                                "value": "1"
+                            },
+                            {
+                                "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                                "value": "[reference(variables('functionAppInsightsName')).outputs.InstrumentationKey.value]"
+                            },
+                            {
+                                "name": "AzureWebJobsStorage",
+                                "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('appSharedStorageAccountName'),';AccountKey=',listKeys(resourceId(parameters('appSharedResourceGroup'), 'Microsoft.Storage/storageAccounts', parameters('appSharedStorageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value, ';EndpointSuffix=core.windows.net')]"
+                            },
+                            {
+                                "name": "WEBSITE_RUN_FROM_PACKAGE",
+                                "value": "1"
+                            },
+                            {
+                                "name": "FUNCTIONS_WORKER_RUNTIME",
+                                "value": "dotnet"
+                            },
+                            {
+                                "name": "DocumentStoreID",
+                                "value": "[variables('cosmosDatabaseName')]"
+                            },
+                            {
+                                "name": "LocalAuthorityCollectionID",
+                                "value": "[variables('cosmosCollectionName')]"
+                            },
+                            {
+                                "name": "DocumentStoreEndpointAddress",
+                                "value": "[concat('https://',parameters('cosmosDbAccountName'),'.documents.azure.com:443/')]"
+                            },
+                            {
+                                "name": "DocumentStoreAccountKey",
+                                "value": "[listKeys(resourceId(parameters('appSharedResourceGroup'), 'Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbAccountName')), providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]).primaryMasterKey]"
+                            }
+                        ]
+                    }
+                }
+            },
+            "dependsOn": [
+                "[variables('functionAppInsightsName')]"
+            ]
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "famLaCosmosCollection",
+            "resourceGroup": "[parameters('cosmosDbResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'CosmosDb/cosmos-collection.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "accountName": {
+                        "value": "[parameters('cosmosDbAccountName')]"
+                    },
+                    "databaseName": {
+                        "value": "[variables('cosmosDatabaseName')]"
+                    },
+                    "collectionName": {
+                        "value": "[variables('cosmosCollectionName')]"
+                    },
+                    "provisionRequestUnits": {
+                        "value": false
+                    },
+                    "partitionKey": {
+                        "value": "[variables('cosmosCollectionPartitionKey')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
