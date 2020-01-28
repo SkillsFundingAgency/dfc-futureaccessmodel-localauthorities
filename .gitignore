@@ -266,3 +266,4 @@ __pycache__/
 DFC.FutureAccessModel.LocalAuthorities/.DS_Store
 DFC.FutureAccessModel.LocalAuthorities/Factories/.DS_Store
 DFC.FutureAccessModel.LocalAuthorities/Storage/.DS_Store
+.DS_Store

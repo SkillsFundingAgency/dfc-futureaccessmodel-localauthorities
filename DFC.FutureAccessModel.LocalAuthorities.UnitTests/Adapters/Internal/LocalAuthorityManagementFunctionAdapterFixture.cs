@@ -13,6 +13,9 @@ using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 {
+    /// <summary>
+    /// local authority management function adapter fixture
+    /// </summary>
     public sealed class LocalAuthorityManagementFunctionAdapterFixture :
         MoqTestingFixture
     {
