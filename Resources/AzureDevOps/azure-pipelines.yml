@@ -9,7 +9,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.8.5
+    ref: refs/tags/v1.10.1
     endpoint: 'GitHub (ESFA)'
 
 stages:
@@ -23,6 +23,11 @@ stages:
       - msbuild
       - visualstudio
     steps:
+    - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
+      parameters:
+        ArmTemplateRoot: '$(Build.SourcesDirectory)\Resources\ArmTemplates'
+        SolutionBaseName: $(SolutionBaseName)
+        PublishPipelineArtifact: true
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
         SolutionBaseName: $(SolutionBaseName)
