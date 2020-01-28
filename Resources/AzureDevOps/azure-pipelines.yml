@@ -1,7 +1,12 @@
 variables:
-    SolutionBaseName: 'DFC.FutureAccessModel.LocalAuthorities'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+- name: SolutionBaseName
+  value: 'DFC.FutureAccessModel.LocalAuthorities'
+- name: BuildPlatform
+  value: 'any cpu'
+- name: BuildConfiguration
+  value: 'release'
+- group: dfc-shared-all
+- group: dfc-futureaccessmodel-shared-all
 
 resources:
   repositories:
