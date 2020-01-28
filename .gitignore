@@ -263,3 +263,6 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+DFC.FutureAccessModel.LocalAuthorities/.DS_Store
+DFC.FutureAccessModel.LocalAuthorities/Factories/.DS_Store
+DFC.FutureAccessModel.LocalAuthorities/Storage/.DS_Store

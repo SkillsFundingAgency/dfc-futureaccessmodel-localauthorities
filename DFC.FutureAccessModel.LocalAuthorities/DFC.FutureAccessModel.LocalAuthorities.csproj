@@ -1,20 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AzureFunctionsVersion>
-    </AzureFunctionsVersion>
-    <ProjectGuid>{59E035DA-D3AD-4674-A00C-AF52820B923D}</ProjectGuid>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.29" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="host.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="local.settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <AzureFunctionsVersion>
+        </AzureFunctionsVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+        <!-- for future reference <ProjectGuid>{59E035DA-D3AD-4674-A00C-AF52820B923D}</ProjectGuid> -->
+        <ProjectGuid>{59E035DA-D3AD-4674-A00C-AF52820B923D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="DFC.Common.Standard" Version="0.1.4" />
+        <PackageReference Include="DFC.Functions.DI.Standard" Version="0.1.0" />
+        <PackageReference Include="DFC.HTTP.Standard" Version="0.1.11" />
+        <PackageReference Include="DFC.JSON.Standard" Version="0.1.4" />
+        <PackageReference Include="DFC.Swagger.Standard" Version="0.1.15" />
+        <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.9.2" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.5" />
+        <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.1.0" />
+        <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.14" />
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.2.0.14119">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="3.0.2" />
+        <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+   <ItemGroup>
+        <None Update="host.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="local.settings.json">
+            <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Adapters\Internal\" />
+        <Folder Include="Functions\" />
+        <Folder Include="Registration\" />
+        <Folder Include="Providers\" />
+        <Folder Include="Providers\Internal\" />
+        <Folder Include="Faults\" />
+        <Folder Include="Factories\" />
+        <Folder Include="Factories\Internal\" />
+        <Folder Include="Registration\Internal\" />
+    </ItemGroup>
 </Project>
