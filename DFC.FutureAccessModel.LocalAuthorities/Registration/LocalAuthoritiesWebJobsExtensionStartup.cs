@@ -7,21 +7,25 @@ using Microsoft.Azure.WebJobs.Hosting;
 namespace DFC.FutureAccessModel.LocalAuthorities.Registration
 {
     /// <summary>
-    /// area routing web jobs extension startup
-    /// this can't be tested because the service collection utilises routine
-    /// grafting that cannot be 'substituted' (static dpeendency)
+    /// local authorities web jobs extension startup
     /// </summary>
     [ExcludeFromCodeCoverage]
     public sealed class LocalAuthoritiesWebJobsExtensionStartup :
         IWebJobsStartup
     {
+        /// <summary>
+        /// configure uses the service registrar to ensure complete service registration. 
+        /// i'd like this to be injectable but i don't have control at this level. 
+        /// so i have to use a static factory
+        /// </summary>
+        /// <param name="builder"></param>
         public void Configure(IWebJobsBuilder builder)
         {
             builder.AddDependencyInjection();
 
-            var provider = ServiceRegistrationProvider.CreateService();
+            var registrar = ServiceRegistrationProvider.CreateService();
 
-            provider.Compose(builder.Services);
+            registrar.Compose(builder.Services);
         }
     }
 }

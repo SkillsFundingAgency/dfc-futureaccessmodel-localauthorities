@@ -38,7 +38,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Display(Name = "Post", Description = "Ability to add the Local Authority details for the given Touchpoint.")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "areas/{touchpointID}/localauthorities")]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "areas/{touchpointID}/localauthorities")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
             [Inject] ICreateLoggingContextScopes factory,
