@@ -68,3 +68,18 @@ stages:
       Environment: SIT_FUTUREACCESSMODEL
       FunctionAppName: dfc-sit-fam-la-fa
       ResourceGroup: dfc-sit-fam-la-rg
+
+- stage: DeployTo_PP
+  displayName: Deploy to PP_FUTUREACCESSMODEL environment
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  variables:
+  - group: dfc-shared-pp
+  - group: dfc-futureaccessmodel-shared-pp
+  - template: VariableTemplates\PPEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      Environment: PP_FUTUREACCESSMODEL
+      FunctionAppName: dfc-pp-fam-la-fa
+      ResourceGroup: dfc-pp-fam-la-rg
