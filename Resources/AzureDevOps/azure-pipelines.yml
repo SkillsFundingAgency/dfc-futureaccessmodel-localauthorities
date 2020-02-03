@@ -1,7 +1,12 @@
 variables:
-    SolutionBaseName: 'DFC.FutureAccessModel.LocalAuthorities'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+- name: SolutionBaseName
+  value: 'DFC.FutureAccessModel.LocalAuthorities'
+- name: BuildPlatform
+  value: 'any cpu'
+- name: BuildConfiguration
+  value: 'release'
+- group: dfc-shared-all
+- group: dfc-futureaccessmodel-shared-all
 
 resources:
   repositories:
@@ -9,7 +14,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.8.5
+    ref: refs/tags/v1.10.1
     endpoint: 'GitHub (ESFA)'
 
 stages:
@@ -23,8 +28,58 @@ stages:
       - msbuild
       - visualstudio
     steps:
+    - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
+      parameters:
+        ArmTemplateRoot: '$(Build.SourcesDirectory)\Resources\ArmTemplates'
+        SolutionBaseName: $(SolutionBaseName)
+        PublishPipelineArtifact: true
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build-sonar.yml@dfc-devops
       parameters:
         SolutionBaseName: $(SolutionBaseName)
         BuildPlatform: 'any cpu'
         BuildConfiguration: 'release'
+
+- stage: DeployTo_DEV
+  displayName: Deploy to DEV_FUTUREACCESSMODEL environment
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  variables:
+  - group: dfc-shared-dev
+  - group: dfc-futureaccessmodel-shared-dev
+  - template: VariableTemplates\DevEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      Environment: DEV_FUTUREACCESSMODEL
+      FunctionAppName: dfc-dev-fam-la-fa
+      ResourceGroup: dfc-dev-fam-la-rg
+
+- stage: DeployTo_SIT
+  displayName: Deploy to SIT_FUTUREACCESSMODEL environment
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  variables:
+  - group: dfc-shared-sit
+  - group: dfc-futureaccessmodel-shared-sit
+  - template: VariableTemplates\SitEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      Environment: SIT_FUTUREACCESSMODEL
+      FunctionAppName: dfc-sit-fam-la-fa
+      ResourceGroup: dfc-sit-fam-la-rg
+
+- stage: DeployTo_PP
+  displayName: Deploy to PP_FUTUREACCESSMODEL environment
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  variables:
+  - group: dfc-shared-pp
+  - group: dfc-futureaccessmodel-shared-pp
+  - template: VariableTemplates\PPEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      Environment: PP_FUTUREACCESSMODEL
+      FunctionAppName: dfc-pp-fam-la-fa
+      ResourceGroup: dfc-pp-fam-la-rg

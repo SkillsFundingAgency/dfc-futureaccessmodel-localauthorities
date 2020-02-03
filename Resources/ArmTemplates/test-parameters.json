@@ -1,0 +1,27 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appSharedResourceGroup": {
+            "value": "dfc-dev-fam-shared-rg"
+        },
+        "appSharedStorageAccountName": {
+            "value": "dfcdevfamsharedstr"
+        },
+        "cosmosDbAccountName": {
+            "value": "dfc-dev-fam-shared-cdb"
+        },
+        "cosmosDbResourceGroup": {
+            "value": "dfc-dev-fam-shared-rg"
+        },
+        "environment": {
+            "value": "FOO"
+        },
+        "sharedAppServicePlanName": {
+            "value": "dfc-dev-fam-shared-asp"
+        },
+        "sharedAppServicePlanResourceGroup": {
+            "value": "dfc-dev-fam-shared-rg"
+        }
+    }
+}

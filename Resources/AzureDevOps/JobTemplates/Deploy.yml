@@ -1,0 +1,45 @@
+parameters:
+  AzureSubscription: ''
+  Environment: ''
+  FunctionAppName: ''
+  ResourceGroup: ''
+  ArmTemplateRoot: '$(Pipeline.Workspace)/Dfc.FutureAccessModel.LocalAuthorities.Resources.ArmTemplates'
+  FunctionAppPackage: '$(Pipeline.Workspace)/Dfc.FutureAccessModel.LocalAuthorities.DeploymentPackages/Dfc.FutureAccessModel.LocalAuthorities.zip'
+  EnvironmentTag: $(EnvironmentTag)
+  ParentBusinessTag: $(ParentBusiness)
+  ServiceOfferingTag: $(ServiceOffering)
+
+jobs:
+- deployment: DeployTo_${{ parameters.Environment }}
+  pool:
+    name: 'NCS - CI and CD'
+  environment: ${{ parameters.Environment }}
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - template: AzureDevOpsTemplates/Deploy/StepTemplates/dfc-arm-deploy.yml@dfc-devops
+          parameters:
+            ArmTemplateRoot: ${{ parameters.ArmTemplateRoot }}
+            AzureSubscription: ${{ parameters.AzureSubscription }}
+            EnvironmentTag: ${{ parameters.EnvironmentTag }}
+            ParentBusinessTag: ${{ parameters.ParentBusinessTag }}
+            ResourceGroup: ${{ parameters.ResourceGroup }}
+            ServiceOfferingTag: ${{ parameters.ServiceOfferingTag }}
+        - task: AzureFunctionApp@1
+          displayName: 'Azure Function App Deploy: ${{ parameters.FunctionAppName }}'
+          inputs:
+            azureSubscription: ${{ parameters.AzureSubscription }}
+            appType: functionApp
+            appName: ${{ parameters.FunctionAppName }}
+            deployToSlotOrASE: true
+            resourceGroupName: ${{ parameters.ResourceGroup }}
+            slotName: staging
+            package: ${{ parameters.FunctionAppPackage }}
+        - task: AzureAppServiceManage@0
+          displayName: 'Swap Slots: ${{ parameters.FunctionAppName }} staging to production'
+          inputs:
+            azureSubscription: ${{ parameters.AzureSubscription }}
+            WebAppName: ${{ parameters.FunctionAppName }}
+            ResourceGroupName: ${{ parameters.ResourceGroup }}
+            SourceSlot: staging
