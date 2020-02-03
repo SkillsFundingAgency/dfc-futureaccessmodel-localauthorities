@@ -164,6 +164,60 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
+        /// document exists meets expectation
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task DocumentExistsMeetsExpectation(bool expectation)
+        {
+            // arrange
+            var sut = MakeSUT();
+            var testPath = new Uri("http://blahStore/blahCollection/blahID");
+
+            GetMock(sut.SafeOperations)
+                .Setup(x => x.Try(It.IsAny<Func<Task<bool>>>(), It.IsAny<Func<Exception, Task<bool>>>()))
+                .Returns(Task.FromResult(expectation));
+
+            // act
+            var result = await sut.DocumentExists(testPath);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
+            GetMock(sut.SafeOperations).VerifyAll();
+
+            Assert.Equal(expectation, result);
+        }
+
+        /// <summary>
+        /// process document exists meets verification
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task ProcessDocumentExistsMeetsVerification(bool expectation)
+        {
+            // arrange
+            var sut = MakeSUT();
+            var testPath = new Uri("http://blahStore/blahCollection/blahID");
+
+            GetMock(sut.Client)
+                .Setup(x => x.DocumentExistsAsync(testPath))
+                .Returns(Task.FromResult(expectation));
+
+            // act
+            var result = await sut.ProcessDocumentExists(testPath);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
+            GetMock(sut.SafeOperations).VerifyAll();
+
+            Assert.Equal(expectation, result);
+        }
+
+        /// <summary>
         /// add document meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>

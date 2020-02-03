@@ -63,7 +63,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .AsGuard<ArgumentNullException>(nameof(theCandidate));
 
             var theTouchpoint = theCandidate.TouchpointID;
-            It.IsNull(theTouchpoint)
+            It.IsEmpty(theTouchpoint)
                 .AsGuard<ArgumentNullException>(nameof(theTouchpoint));
 
             var usingAreaPath = StoragePaths.GetRoutingDetailResourcePathFor(theTouchpoint);
