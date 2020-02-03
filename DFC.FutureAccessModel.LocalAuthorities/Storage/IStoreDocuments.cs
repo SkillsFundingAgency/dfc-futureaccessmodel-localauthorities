@@ -11,7 +11,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage
         ISupportServiceRegistration
     {
         /// <summary>
-        /// document exists
+        /// document exists...
         /// </summary>
         /// <param name="usingStoragePath">using (the) storage path</param>
         /// <returns>true if the document exists</returns>

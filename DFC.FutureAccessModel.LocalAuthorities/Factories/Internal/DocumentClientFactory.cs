@@ -1,4 +1,6 @@
 ﻿using System;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
 {

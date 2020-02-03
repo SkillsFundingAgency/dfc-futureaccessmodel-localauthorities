@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using DFC.Functions.DI.Standard;
 using DFC.FutureAccessModel.LocalAuthorities.Registration.Internal;
 using Microsoft.Azure.WebJobs;
@@ -23,7 +24,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Registration
         {
             builder.AddDependencyInjection();
 
-            var registrar = ServiceRegistrationProvider.CreateService();
+            var registrar = ServiceRegistrationProvider.CreateService(Assembly.GetExecutingAssembly());
 
             registrar.Compose(builder.Services);
         }

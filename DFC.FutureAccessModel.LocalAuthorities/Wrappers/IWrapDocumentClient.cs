@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace DFC.FutureAccessModel.LocalAuthorities.Factories
+namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers
 {
     /// <summary>
-    /// i wrap (the) document client
+    /// i document client (shim)
     /// </summary>
     public interface IWrapDocumentClient
     {

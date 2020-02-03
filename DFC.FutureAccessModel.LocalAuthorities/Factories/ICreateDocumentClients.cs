@@ -1,5 +1,6 @@
 ﻿using System;
 using DFC.FutureAccessModel.LocalAuthorities.Registration;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories
 {

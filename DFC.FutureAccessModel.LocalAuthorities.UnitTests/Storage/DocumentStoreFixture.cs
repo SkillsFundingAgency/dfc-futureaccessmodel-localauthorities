@@ -6,6 +6,7 @@ using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
 using Microsoft.Azure.Documents;
 using Moq;
 using Xunit;

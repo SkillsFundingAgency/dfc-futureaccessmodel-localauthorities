@@ -6,6 +6,7 @@ using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
 using Microsoft.Azure.Documents;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
@@ -77,7 +78,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// <summary>
         /// document exists
         /// </summary>
-        /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="usingStoragePath">using (the) storage path</param>
         /// <returns>true if the document exists</returns>
         public async Task<bool> DocumentExists(Uri usingStoragePath) =>
@@ -90,7 +90,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// </summary>
         /// <param name="usingStoragePath">using (the) storage path</param>
         /// <returns>true if the document exists</returns>
-        internal async Task<bool> ProcessDocumentExists(Uri usingStoragePath)=>
+        internal async Task<bool> ProcessDocumentExists(Uri usingStoragePath) =>
             await Client.DocumentExistsAsync(usingStoragePath);
 
         /// <summary>
