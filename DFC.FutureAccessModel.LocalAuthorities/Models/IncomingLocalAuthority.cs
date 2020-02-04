@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DFC.FutureAccessModel.LocalAuthorities.Storage;
-using DFC.Swagger.Standard.Annotations;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Storage;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Models
 {
