@@ -22,6 +22,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage
         /// </summary>
         /// <param name="theCandidate">the candidate</param>
         /// <returns>the newly added local authority</returns>
-        Task<ILocalAuthority> Add(ILocalAuthority theCandidate);
+        Task<ILocalAuthority> Add(IncomingLocalAuthority theCandidate);
     }
 }

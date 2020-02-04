@@ -138,7 +138,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             It.IsEmpty(usingContent)
                 .AsGuard<ArgumentNullException>(nameof(usingContent));
 
-            var candidate = JsonConvert.DeserializeObject<LocalAuthority>(usingContent);
+            var candidate = JsonConvert.DeserializeObject<IncomingLocalAuthority>(usingContent);
 
             if (It.IsEmpty(candidate.TouchpointID))
             {

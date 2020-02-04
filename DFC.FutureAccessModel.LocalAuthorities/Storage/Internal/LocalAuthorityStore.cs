@@ -13,6 +13,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
     internal sealed class LocalAuthorityStore :
         IStoreLocalAuthorities
     {
+        const string _partitionKey = "not_required";
+
         /// <summary>
         /// storage paths
         /// </summary>
@@ -49,7 +51,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public async Task<ILocalAuthority> Get(string theAdminDistrict)
         {
             var usingPath = StoragePaths.GetLocalAuthorityResourcePathFor(theAdminDistrict);
-            return await DocumentStore.GetDocument<LocalAuthority>(usingPath);
+            return await DocumentStore.GetDocument<LocalAuthority>(usingPath, _partitionKey);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// </summary>
         /// <param name="theCandidate">the candidate (authority)</param>
         /// <returns>the newly added local authority</returns>
-        public async Task<ILocalAuthority> Add(ILocalAuthority theCandidate)
+        public async Task<ILocalAuthority> Add(IncomingLocalAuthority theCandidate)
         {
             It.IsNull(theCandidate)
                 .AsGuard<ArgumentNullException>(nameof(theCandidate));
@@ -66,18 +68,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             It.IsEmpty(theTouchpoint)
                 .AsGuard<ArgumentNullException>(nameof(theTouchpoint));
 
-            var usingAreaPath = StoragePaths.GetRoutingDetailResourcePathFor(theTouchpoint);
-
-            (!await DocumentStore.DocumentExists(usingAreaPath))
-                .AsGuard<NoContentException>(theTouchpoint);
-
             var theAdminDistrict = theCandidate.LADCode;
             It.IsNull(theAdminDistrict)
                 .AsGuard<ArgumentNullException>(nameof(theAdminDistrict));
 
             var usingAuthorityPath = StoragePaths.GetLocalAuthorityResourcePathFor(theAdminDistrict);
 
-            (await DocumentStore.DocumentExists(usingAuthorityPath))
+            (await DocumentStore.DocumentExists<LocalAuthority>(usingAuthorityPath, _partitionKey))
                 .AsGuard<ConflictingResourceException>();
 
             return await DocumentStore.AddDocument(theCandidate, StoragePaths.LocalAuthorityCollection);

@@ -60,16 +60,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         }
 
         /// <summary>
-        /// routing collection id key meets expectation
-        /// </summary>
-        [Fact]
-        public void RoutingDetailCollectionIDKeyMeetsExpectation()
-        {
-            // arrange / act / assert
-            Assert.Equal(storeRoutingCollectionIDKey, StoragePathProvider.RoutingDetailCollectionIDKey);
-        }
-
-        /// <summary>
         /// local authority collection id key meets expectation
         /// </summary>
         [Fact]
@@ -113,23 +103,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act / assert
             Assert.Equal("dbs/Store/colls/Authorities", sut.LocalAuthorityCollection.OriginalString);
-            Assert.Equal("dbs/Store/colls/Details", sut.RoutingDetailCollection.OriginalString);
-        }
-
-        /// <summary>
-        /// get routing details resource path for the touchpoint id meets expectation
-        /// </summary>
-        [Fact]
-        public void GetRoutingDetailResourcePathFortheTouchpointIDMeetsExpectation()
-        {
-            // arrange
-            var sut = MakeSUT();
-
-            // act
-            var result = sut.GetRoutingDetailResourcePathFor("0000000001");
-
-            // assert
-            Assert.Equal("dbs/Store/colls/Details/docs/0000000001", result.OriginalString);
         }
 
         /// <summary>
@@ -142,9 +115,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             GetMock(settings)
                 .Setup(x => x.GetVariable(StoragePathProvider.DocumentStoreIDKey))
                 .Returns(documentStoreName);
-            GetMock(settings)
-                .Setup(x => x.GetVariable(StoragePathProvider.RoutingDetailCollectionIDKey))
-                .Returns(routingCollectionName);
             GetMock(settings)
                 .Setup(x => x.GetVariable(StoragePathProvider.LocalAuthorityCollectionIDKey))
                 .Returns(authorityCollectionName);

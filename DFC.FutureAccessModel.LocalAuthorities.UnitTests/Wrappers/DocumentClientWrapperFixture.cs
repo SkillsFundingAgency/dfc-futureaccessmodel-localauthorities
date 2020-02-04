@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Moq;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
@@ -56,16 +57,16 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
             // arrange
             const string keyValue = "0000123";
             var sut = MakeSUT();
-            var document = new LocalAuthority { LADCode = keyValue };
+            var document = new IncomingLocalAuthority { LADCode = keyValue };
             var collectionUri = new Uri("dbs/areas/colls/routing", UriKind.Relative);
             var documentUri = new Uri($"dbs/areas/colls/routing/docs/{keyValue}", UriKind.Relative);
 
             GetMock(sut.Client)
-                .Setup(x => x.CreateDocumentAsync(collectionUri, document, null, false, default))
+                .Setup(x => x.CreateDocumentAsync(collectionUri, document, It.IsAny<RequestOptions>(), false, default))
                 .Returns(Task.FromResult(new ResourceResponse<Document>(new Document())));
             GetMock(sut.Client)
-                .Setup(x => x.ReadDocumentAsync<LocalAuthority>(documentUri, null, default))
-                .Returns(Task.FromResult(new DocumentResponse<LocalAuthority>(document)));
+                .Setup(x => x.ReadDocumentAsync<IncomingLocalAuthority>(documentUri, It.IsAny<RequestOptions>(), default))
+                .Returns(Task.FromResult(new DocumentResponse<IncomingLocalAuthority>(document)));
 
             // act
             var result = await sut.CreateDocumentAsync(collectionUri, document);
@@ -86,11 +87,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
             var documentUri = new Uri("dbs/areas/colls/routing/docs/0000123", UriKind.Relative);
 
             GetMock(sut.Client)
-                .Setup(x => x.ReadDocumentAsync(documentUri, null, default))
-                .Returns(Task.FromResult<ResourceResponse<Document>>(null));
+                .Setup(x => x.ReadDocumentAsync<LocalAuthority>(documentUri, It.IsAny<RequestOptions>(), default))
+                .Returns(Task.FromResult<DocumentResponse<LocalAuthority>>(null));
 
             // act
-            var result = await sut.DocumentExistsAsync(documentUri);
+            var result = await sut.DocumentExistsAsync<LocalAuthority>(documentUri, string.Empty);
 
             // assert
             Assert.False(result);
@@ -108,11 +109,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
             var documentUri = new Uri("dbs/areas/colls/routing/docs/0000123", UriKind.Relative);
 
             GetMock(sut.Client)
-                .Setup(x => x.ReadDocumentAsync(documentUri, null, default))
-                .Returns(Task.FromResult(new ResourceResponse<Document>(new Document())));
+                .Setup(x => x.ReadDocumentAsync<LocalAuthority>(documentUri, It.IsAny<RequestOptions>(), default))
+                .Returns(Task.FromResult(new DocumentResponse<LocalAuthority>(new LocalAuthority())));
 
             // act
-            var result = await sut.DocumentExistsAsync(documentUri);
+            var result = await sut.DocumentExistsAsync<LocalAuthority>(documentUri, string.Empty);
 
             // assert
             Assert.True(result);
@@ -131,11 +132,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
             var document = new LocalAuthority();
 
             GetMock(sut.Client)
-                .Setup(x => x.ReadDocumentAsync<LocalAuthority>(documentUri, null, default))
+                .Setup(x => x.ReadDocumentAsync<LocalAuthority>(documentUri, It.IsAny<RequestOptions>(), default))
                 .Returns(Task.FromResult(new DocumentResponse<LocalAuthority>(document)));
 
             // act
-            var result = await sut.ReadDocumentAsync<LocalAuthority>(documentUri);
+            var result = await sut.ReadDocumentAsync<LocalAuthority>(documentUri, string.Empty);
 
             // assert
             Assert.IsAssignableFrom<ILocalAuthority>(result);

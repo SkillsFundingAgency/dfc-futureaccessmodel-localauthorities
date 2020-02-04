@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using DFC.Swagger.Standard.Annotations;
+using Newtonsoft.Json;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Models
 {
@@ -23,6 +24,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Models
         /// </summary>
         [Key]
         [Required]
+        [JsonProperty("id")]
         [Display(Description = "The authority's unique identifier")]
         [StringLength(10, MinimumLength = 10)]
         [Example(Description = "E09000002")]
