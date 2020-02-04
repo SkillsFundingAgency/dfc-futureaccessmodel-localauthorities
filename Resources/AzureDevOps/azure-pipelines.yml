@@ -79,7 +79,7 @@ stages:
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-sit-fam-la-fa.$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://dfc-sit-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_PP
   displayName: Deploy to PP_FUTUREACCESSMODEL environment
@@ -100,5 +100,5 @@ stages:
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-pp-fam-la-fa.$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://dfc-pp-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
