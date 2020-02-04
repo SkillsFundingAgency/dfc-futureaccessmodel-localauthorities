@@ -31,6 +31,21 @@
         },
         "sharedAppServicePlanResourceGroup": {
             "value": "__famSharedResourceGroup__"
+        },
+        "apimResourceGroup": {
+            "value": "__SharedResourceGroupName__"
+        },
+        "apimInstanceName": {
+            "value": "__ApimServiceName__"
+        },
+        "apimProductId": {
+            "value": "__ApimProductId__"
+        },
+        "apimApiName": {
+            "value": "__ApimApiName__"
+        },
+        "apimApiSuffix": {
+            "value": "__ApimApiUrlSuffix__"
         }
     }
 }

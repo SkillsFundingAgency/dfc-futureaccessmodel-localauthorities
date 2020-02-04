@@ -8,6 +8,11 @@ parameters:
   EnvironmentTag: $(EnvironmentTag)
   ParentBusinessTag: $(ParentBusiness)
   ServiceOfferingTag: $(ServiceOffering)
+  ApimResourceGroup: ''
+  ApimInstanceName: ''
+  ApimProductId: ''
+  ApiName: ''
+  SwaggerSpecificationUrl: ''
 
 jobs:
 - deployment: DeployTo_${{ parameters.Environment }}
@@ -18,6 +23,9 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - checkout: dfc-devops
+          path: 's/dfc-devops/'
+
         - template: AzureDevOpsTemplates/Deploy/StepTemplates/dfc-arm-deploy.yml@dfc-devops
           parameters:
             ArmTemplateRoot: ${{ parameters.ArmTemplateRoot }}
@@ -26,20 +34,15 @@ jobs:
             ParentBusinessTag: ${{ parameters.ParentBusinessTag }}
             ResourceGroup: ${{ parameters.ResourceGroup }}
             ServiceOfferingTag: ${{ parameters.ServiceOfferingTag }}
-        - task: AzureFunctionApp@1
-          displayName: 'Azure Function App Deploy: ${{ parameters.FunctionAppName }}'
-          inputs:
-            azureSubscription: ${{ parameters.AzureSubscription }}
-            appType: functionApp
-            appName: ${{ parameters.FunctionAppName }}
-            deployToSlotOrASE: true
-            resourceGroupName: ${{ parameters.ResourceGroup }}
-            slotName: staging
-            package: ${{ parameters.FunctionAppPackage }}
-        - task: AzureAppServiceManage@0
-          displayName: 'Swap Slots: ${{ parameters.FunctionAppName }} staging to production'
-          inputs:
-            azureSubscription: ${{ parameters.AzureSubscription }}
-            WebAppName: ${{ parameters.FunctionAppName }}
-            ResourceGroupName: ${{ parameters.ResourceGroup }}
-            SourceSlot: staging
+
+        - template: AzureDevOpsTemplates/Deploy/StepTemplates/dfc-functionapp-apimapi-deploy.yml@dfc-devops
+          parameters:
+            AzureSubscription: ${{ parameters.AzureSubscription }}
+            FunctionAppName: ${{ parameters.FunctionAppName }}
+            FunctionResourceGroup: ${{ parameters.ResourceGroup }}
+            FunctionPackage: ${{ parameters.FunctionAppPackage }}
+            ApimResourceGroup: '${{ parameters.ApimResourceGroup }}'
+            ApimInstanceName: '${{ parameters.ApimInstanceName }}'
+            ApimProductId: '${{ parameters.ApimProductId }}'
+            ApiName: '${{ parameters.ApiName }}'
+            SwaggerSpecificationUrl: '${{ parameters.SwaggerSpecificationUrl }}'
