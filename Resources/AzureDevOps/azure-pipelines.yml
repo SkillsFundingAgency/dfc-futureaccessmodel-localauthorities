@@ -48,21 +48,17 @@ stages:
   - template: VariableTemplates\SharedEnvironmentVariables.yml
   - template: VariableTemplates\DevEnvironmentVariables.yml
   jobs:
-  - checkout: dfc-devops
-    path: 's/dfc-devops/'
   - template: JobTemplates/Deploy.yml
     parameters:
       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       Environment: DEV_FUTUREACCESSMODEL
       FunctionAppName: dfc-dev-fam-la-fa
       ResourceGroup: dfc-dev-fam-la-rg
-  - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-import-api-definition-to-apim.yml@dfc-devops
-    parameters:
-      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
+      ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://dfc-dev-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_SIT
   displayName: Deploy to SIT_FUTUREACCESSMODEL environment
@@ -73,21 +69,17 @@ stages:
   - template: VariableTemplates\SharedEnvironmentVariables.yml
   - template: VariableTemplates\SitEnvironmentVariables.yml
   jobs:
-  - checkout: dfc-devops
-    path: 's/dfc-devops/'
   - template: JobTemplates/Deploy.yml
     parameters:
       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       Environment: SIT_FUTUREACCESSMODEL
       FunctionAppName: dfc-sit-fam-la-fa
       ResourceGroup: dfc-sit-fam-la-rg
-  - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-import-api-definition-to-apim.yml@dfc-devops
-    parameters:
-      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
+      ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://dfc-sit-fam-la-fa.$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_PP
   displayName: Deploy to PP_FUTUREACCESSMODEL environment
@@ -98,18 +90,15 @@ stages:
   - template: VariableTemplates\SharedEnvironmentVariables.yml
   - template: VariableTemplates\PPEnvironmentVariables.yml
   jobs:
-  - checkout: dfc-devops
-    path: 's/dfc-devops/'
   - template: JobTemplates/Deploy.yml
     parameters:
       AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
       Environment: PP_FUTUREACCESSMODEL
       FunctionAppName: dfc-pp-fam-la-fa
       ResourceGroup: dfc-pp-fam-la-rg
-  - template: AzureDevOpsTemplates/Build/StepTemplates/dfc-import-api-definition-to-apim.yml@dfc-devops
-    parameters:
-      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
+      ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://dfc-pp-fam-la-fa.$(FunctionDomainName)${{ variables.SwaggerDefinitionPath }}'
+

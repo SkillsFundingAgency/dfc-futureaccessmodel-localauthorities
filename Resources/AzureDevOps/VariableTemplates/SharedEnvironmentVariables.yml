@@ -1,6 +1,8 @@
 ﻿variables:
 - name: ApimProductName
-  value: future-access-model
+  value: 'Future Access Model'
+- name:  ApimProductId
+  value: 'future-access-model'
 - name: ApimApiUrlSuffix
   value: futureaccessmodel/localauthorities
 - name: ApimApiName
