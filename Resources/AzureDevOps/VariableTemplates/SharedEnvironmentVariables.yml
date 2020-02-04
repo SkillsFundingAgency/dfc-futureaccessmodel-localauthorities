@@ -1,0 +1,9 @@
+﻿variables:
+- name: ApimProductName
+  value: future-access-model
+- name: ApimApiUrlSuffix
+  value: futureaccessmodel/localauthorities
+- name: ApimApiName
+  value: localauthorities
+- name: SwaggerDefinitionPath
+  value: /api/localauthorities/api-definition
