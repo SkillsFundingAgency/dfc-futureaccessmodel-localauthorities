@@ -81,7 +81,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             var documentPath = new Uri("/", UriKind.Relative);
 
             GetMock(sut.DocumentStore)
-                .Setup(x => x.GetDocument<LocalAuthority>(documentPath))
+                .Setup(x => x.GetDocument<LocalAuthority>(documentPath, "not_required"))
                 .Returns(Task.FromResult(new LocalAuthority()));
             GetMock(sut.StoragePaths)
                 .Setup(x => x.GetLocalAuthorityResourcePathFor(theAdminDistrict))
@@ -121,32 +121,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             var sut = MakeSUT();
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Add(new LocalAuthority()));
-        }
-
-        /// <summary>
-        /// add local authority with no parent touchpoint throws
-        /// </summary>
-        /// <returns>the currently running (test) task</returns>
-        [Fact]
-        public async Task AddLocalAuthorityWithNoParentTouchpointThrows()
-        {
-            // arrange
-            var sut = MakeSUT();
-            var touchpoint = "any old touchpoint";
-            var resourcePath = new Uri("any/old/resource/path", UriKind.Relative);
-            var la = new LocalAuthority { TouchpointID = touchpoint };
-
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetRoutingDetailResourcePathFor(touchpoint))
-                .Returns(resourcePath);
-
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(resourcePath))
-                .Returns(Task.FromResult(false));
-
-            // act / assert
-            await Assert.ThrowsAsync<NoContentException>(() => sut.Add(la));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Add(new IncomingLocalAuthority()));
         }
 
         /// <summary>
@@ -160,14 +135,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
             var resourcePath = new Uri("any/old/resource/path", UriKind.Relative);
-            var la = new LocalAuthority { TouchpointID = touchpoint };
-
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetRoutingDetailResourcePathFor(touchpoint))
-                .Returns(resourcePath);
+            var la = new IncomingLocalAuthority { TouchpointID = touchpoint };
 
             GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(resourcePath))
+                .Setup(x => x.DocumentExists<LocalAuthority>(resourcePath, "not_required"))
                 .Returns(Task.FromResult(true));
 
             // act / assert
@@ -185,22 +156,15 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
             var ladcode = "E000606060";
-            var resourcePath = new Uri("any/old/resource/path", UriKind.Relative);
             var laResourcePath = new Uri("any/old/la/resource/path", UriKind.Relative);
-            var la = new LocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
+            var la = new IncomingLocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
 
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetRoutingDetailResourcePathFor(touchpoint))
-                .Returns(resourcePath);
             GetMock(sut.StoragePaths)
                 .Setup(x => x.GetLocalAuthorityResourcePathFor(ladcode))
                 .Returns(laResourcePath);
 
             GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(resourcePath))
-                .Returns(Task.FromResult(true));
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(laResourcePath))
+                .Setup(x => x.DocumentExists<LocalAuthority>(laResourcePath, "not_required"))
                 .Returns(Task.FromResult(true));
 
             // act / assert
@@ -215,16 +179,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public async Task AddLocalAuthorityWithValidAuthorityMeetsVerification()
         {
             // arrange
+            const string pKey = "not_required";
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
             var ladcode = "E000606060";
-            var resourcePath = new Uri("any/old/resource/path", UriKind.Relative);
             var laResourcePath = new Uri("any/old/la/resource/path", UriKind.Relative);
-            var la = new LocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
+            var la = new IncomingLocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
 
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetRoutingDetailResourcePathFor(touchpoint))
-                .Returns(resourcePath);
             GetMock(sut.StoragePaths)
                 .Setup(x => x.GetLocalAuthorityResourcePathFor(ladcode))
                 .Returns(laResourcePath);
@@ -233,14 +194,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .Returns(laResourcePath);
 
             GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(resourcePath))
-                .Returns(Task.FromResult(true));
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists(laResourcePath))
+                .Setup(x => x.DocumentExists<LocalAuthority>(laResourcePath, pKey))
                 .Returns(Task.FromResult(false));
             GetMock(sut.DocumentStore)
-                .Setup(x => x.AddDocument<ILocalAuthority>(la, It.IsAny<Uri>()))
-                .Returns(Task.FromResult<ILocalAuthority>(la));
+                .Setup(x => x.AddDocument(la, It.IsAny<Uri>()))
+                .Returns(Task.FromResult(la));
 
             // act
             var result = await sut.Add(la);

@@ -22,6 +22,21 @@
         },
         "sharedAppServicePlanResourceGroup": {
             "value": "dfc-dev-fam-shared-rg"
+        },
+        "apimResourceGroup": {
+            "value": "dfc-test-template-rg"
+        },
+        "apimInstanceName": {
+            "value": "dfc-foo-shared-apim"
+        },
+        "apimProductId": {
+            "value": "an-apim-product"
+        },
+        "apimApiName": {
+            "value": "some-api-name"
+        },
+        "apimApiSuffix": {
+            "value": "api/suffix"
         }
     }
 }

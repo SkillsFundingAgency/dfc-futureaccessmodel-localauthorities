@@ -44,6 +44,21 @@
         "sharedAppServicePlanResourceGroup": {
             "type": "string",
             "defaultValue": ""
+        },
+        "apimResourceGroup": {
+            "type": "string"
+        },
+        "apimInstanceName": {
+            "type": "string"
+        },
+        "apimProductId": {
+            "type": "string"
+        },
+        "apimApiName": {
+            "type": "string"
+        },
+        "apimApiSuffix": {
+            "type": "string"
         }
     },
     "variables": {
@@ -214,6 +229,33 @@
                     "partitionKey": {
                         "value": "[variables('cosmosCollectionPartitionKey')]"
                     }
+                }
+            }
+        },
+        {
+            "name": "famLocalAuthoritiesApimApi",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('apimResourceGroup')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'APIM/apim-api.json')]",
+                "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                "apimProductInstanceName": {
+                    "value": "[parameters('apimProductId')]"
+                },
+                "apimServiceName": {
+                    "value": "[parameters('apimInstanceName')]"
+                },
+                "apiName": {
+                    "value": "[parameters('apimApiName')]"
+                },
+                "apiSuffix": {
+                    "value": "[parameters('apimApiSuffix')]"
+                }
                 }
             }
         }

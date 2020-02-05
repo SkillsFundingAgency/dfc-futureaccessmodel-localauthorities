@@ -20,19 +20,24 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers
 
         /// <summary>
         /// document exists (async)
+        /// this will throw if the document does not exist
         /// </summary>
+        /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="documentUri">the path to the document</param>
+        /// <param name="partitionKey">the partition key</param>
         /// <returns>true if it does</returns>
-        Task<bool> DocumentExistsAsync(Uri documentUri);
+        Task<bool> DocumentExistsAsync<TDocument>(Uri documentUri, string partitionKey)
+            where TDocument : class;
 
         /// <summary>
-        /// read document (async).
+        /// read document (async)
         /// throws if the document does not exist
         /// </summary>
-        /// <typeparam name="TResource">the type of resource</typeparam>
+        /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="documentUri">the doucment path</param>
+        /// <param name="partitionKey">the partition key</param>
         /// <returns>an instance of the requested type <typeparamref name="TResource"/></returns>
-        Task<TResource> ReadDocumentAsync<TResource>(Uri documentUri)
-            where TResource : class;
+        Task<TDocument> ReadDocumentAsync<TDocument>(Uri documentUri, string partitionKey)
+            where TDocument : class;
     }
 }

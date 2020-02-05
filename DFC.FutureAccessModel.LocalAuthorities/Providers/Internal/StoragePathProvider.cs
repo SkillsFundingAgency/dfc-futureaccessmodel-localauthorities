@@ -16,11 +16,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         public const string DocumentStoreIDKey = "DocumentStoreID";
 
         /// <summary>
-        /// the routing detail collections (variable) key
-        /// </summary>
-        public const string RoutingDetailCollectionIDKey = "RoutingDetailCollectionID";
-
-        /// <summary>
         /// the loca lauthority collection (variable) key
         /// </summary>
         public const string LocalAuthorityCollectionIDKey = "LocalAuthorityCollectionID";
@@ -39,11 +34,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// the local authority collection id (variable value)
         /// </summary>
         public string LocalAuthorityCollectionID { get; }
-
-        /// <summary>
-        /// the routing detail collection (path), used for new documents
-        /// </summary>
-        public Uri RoutingDetailCollection { get; }
 
         /// <summary>
         /// the local authority collection (path), used for new documents
@@ -66,20 +56,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             Settings = settings;
 
             DocumentStoreID = Settings.GetVariable(DocumentStoreIDKey);
-            RoutingDetailCollectionID = Settings.GetVariable(RoutingDetailCollectionIDKey);
             LocalAuthorityCollectionID = Settings.GetVariable(LocalAuthorityCollectionIDKey);
 
-            RoutingDetailCollection = UriFactory.CreateDocumentCollectionUri(DocumentStoreID, RoutingDetailCollectionID);
             LocalAuthorityCollection = UriFactory.CreateDocumentCollectionUri(DocumentStoreID, LocalAuthorityCollectionID);
         }
-
-        /// <summary>
-        /// get (the) routine detail path for
-        /// </summary>
-        /// <param name="theTouchpointID">the touchpoint id</param>
-        /// <returns>the uri for the requested storage path</returns>
-        public Uri GetRoutingDetailResourcePathFor(string theTouchpointID) =>
-            UriFactory.CreateDocumentUri(DocumentStoreID, RoutingDetailCollectionID, $"{theTouchpointID}");
 
         /// <summary>
         /// get (the) local authority resource path for...

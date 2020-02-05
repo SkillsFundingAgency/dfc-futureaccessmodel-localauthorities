@@ -78,20 +78,26 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// <summary>
         /// document exists
         /// </summary>
+        /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="partitionKey">the partition key</param>
         /// <returns>true if the document exists</returns>
-        public async Task<bool> DocumentExists(Uri usingStoragePath) =>
+        public async Task<bool> DocumentExists<TDocument>(Uri usingStoragePath, string partitionKey)
+            where TDocument : class =>
             await SafeOperations.Try(
-                () => ProcessDocumentExists(usingStoragePath),
+                () => ProcessDocumentExists<TDocument>(usingStoragePath, partitionKey),
                 x => Task.FromResult(false));
 
         /// <summary>
         /// document exists
         /// </summary>
+        /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="partitionKey">the partition key</param>
         /// <returns>true if the document exists</returns>
-        internal async Task<bool> ProcessDocumentExists(Uri usingStoragePath) =>
-            await Client.DocumentExistsAsync(usingStoragePath);
+        internal async Task<bool> ProcessDocumentExists<TDocument>(Uri usingStoragePath, string partitionKey)
+            where TDocument : class =>
+            await Client.DocumentExistsAsync<TDocument>(usingStoragePath, partitionKey);
 
         /// <summary>
         /// add (a) document (to the document store)
@@ -122,11 +128,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// </summary>
         /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="partitionKey">the partition key</param>
         /// <returns>the currently running task</returns>
-        public async Task<TDocument> GetDocument<TDocument>(Uri usingStoragePath)
+        public async Task<TDocument> GetDocument<TDocument>(Uri usingStoragePath, string partitionKey)
             where TDocument : class =>
             await SafeOperations.Try(
-                () => ProcessGetDocument<TDocument>(usingStoragePath),
+                () => ProcessGetDocument<TDocument>(usingStoragePath, partitionKey),
                 x => ProcessDocumentErrorHandler<TDocument>(x));
 
         /// <summary>
@@ -134,10 +141,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// </summary>
         /// <typeparam name="TDocument">the document type</typeparam>
         /// <param name="usingStoragePath">using (the) storage path</param>
-        /// <returns></returns>
-        internal async Task<TDocument> ProcessGetDocument<TDocument>(Uri usingStoragePath)
+        /// <param name="partitionKey">the partition key</param>
+        /// <returns>the currently running task containing the dcoument</returns>
+        internal async Task<TDocument> ProcessGetDocument<TDocument>(Uri usingStoragePath, string partitionKey)
             where TDocument : class =>
-            await Client.ReadDocumentAsync<TDocument>(usingStoragePath);
+            await Client.ReadDocumentAsync<TDocument>(usingStoragePath, partitionKey);
 
         /// <summary>
         /// process get document error handler. 
@@ -152,7 +160,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             where TDocument : class =>
             await Task.Run(() =>
             {
-                ProcessError(theException as DocumentClientException);
+                ProcessError(theException);
 
                 // we don't expect to ever get here...
                 return default(TDocument);
@@ -162,13 +170,35 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// process (the) error
         /// </summary>
         /// <param name="theException">the exception</param>
-        internal void ProcessError(DocumentClientException theException)
+        internal void ProcessError(Exception theException)
         {
             It.IsNull(theException)
                 .AsGuard<MalformedRequestException>();
 
+            ProcessDocumentClientError(theException as DocumentClientException);
+
+            (theException is ArgumentNullException)
+                .AsGuard<MalformedRequestException>();
+
+            throw theException;
+        }
+
+        /// <summary>
+        /// process (the) error
+        /// </summary>
+        /// <param name="theException">the exception</param>
+        internal void ProcessDocumentClientError(DocumentClientException theException)
+        {
+            if (It.IsNull(theException))
+            {
+                return;
+            }
+
             (HttpStatusCode.NotFound == theException.StatusCode)
                 .AsGuard<NoContentException>();
+
+            (HttpStatusCode.Conflict == theException.StatusCode)
+                .AsGuard<ConflictingResourceException>();
 
             LocalHttpStatusCode.TooManyRequests.ComparesTo(theException.StatusCode)
                 .AsGuard<MalformedRequestException>();
