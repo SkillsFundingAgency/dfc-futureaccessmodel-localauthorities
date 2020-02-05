@@ -48,5 +48,6 @@
         <Folder Include="Factories\" />
         <Folder Include="Factories\Internal\" />
         <Folder Include="Registration\Internal\" />
+        <Folder Include="ReferenceData\" />
     </ItemGroup>
 </Project>
