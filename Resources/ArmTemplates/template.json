@@ -66,7 +66,7 @@
         "appServicePlanResourceGroup": "[if(greater(length(parameters('SharedAppServicePlanResourceGroup')), 0), parameters('SharedAppServicePlanResourceGroup'), resourceGroup().name)]",
         "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
         "cosmosCollectionName": "LocalAuthorities",
-        "cosmosCollectionPartitionKey": "/LADCode",
+        "cosmosCollectionPartitionKey": "/PartitionKey",
         "cosmosDatabaseName": "dfc-prime-contractor-areas-db",
         "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-fam-la'))]",
         "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]",
