@@ -36,7 +36,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Conflict, Description = FunctionDescription.Conflict, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
-        [Display(Name = "Post", Description = "Ability to add the Local Authority details for the given Touchpoint.")]
+        [Display(Name = "Post the details of a new Local Authority", Description = "Ability to add the Local Authority details for the given Touchpoint.")]
         public static async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "areas/{touchpointID}/localauthorities")]HttpRequest theRequest,
             ILogger usingTraceWriter,

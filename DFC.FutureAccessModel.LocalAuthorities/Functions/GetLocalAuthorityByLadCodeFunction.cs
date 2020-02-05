@@ -32,7 +32,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = FunctionDescription.MalformedRequest, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
-        [Display(Name = "Get", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
+        [Display(Name = "Get Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public static async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,

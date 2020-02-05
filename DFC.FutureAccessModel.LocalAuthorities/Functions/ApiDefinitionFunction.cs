@@ -17,10 +17,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
     /// </summary>
     public static class ApiDefinitionFunction
     {
-        public const string ApiTitle = "localauthorities";
+        public const string ApiTitle = "Admin District support for the Omni Channel Area Routing API";
         public const string ApiVersion = "1.0.0";
         public const string ApiDefinitionName = "api-definition";
-        public const string ApiDefinitionRoute = ApiTitle + "/" + ApiDefinitionName;
         public const string ApiDescription =
             @"Management API for Local Authorities within Area Routing
             (enquiry redirection to local area contractors)";
@@ -33,7 +32,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>a http response containing the generated document</returns>
         [FunctionName("ApiDefinition")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = ApiDefinitionRoute)]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "localauthorities/api-definition")]HttpRequest theRequest,
             [Inject]ISwaggerDocumentGenerator theDocumentGenerator) =>
                 await Task.Run(() =>
                 {
