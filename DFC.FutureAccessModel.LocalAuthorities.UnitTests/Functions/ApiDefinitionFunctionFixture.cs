@@ -22,7 +22,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void TitleMeetsExpectation()
         {
             // arrange / act / assert
-            Assert.Equal("localauthorities", ApiDefinitionFunction.ApiTitle);
+            Assert.Equal("Admin District support for the Omni Channel Area Routing API", ApiDefinitionFunction.ApiTitle);
         }
 
         /// <summary>

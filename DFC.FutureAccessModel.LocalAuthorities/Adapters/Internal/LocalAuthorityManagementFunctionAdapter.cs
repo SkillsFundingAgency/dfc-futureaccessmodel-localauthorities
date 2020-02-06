@@ -91,14 +91,30 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             It.IsEmpty(theLADCode)
                 .AsGuard<ArgumentNullException>(nameof(theLADCode));
 
+            await inScope.Information($"seeking the admin district: '{theLADCode}'");
+
             var result = await Authorities.Get(theLADCode);
 
+            It.IsNull(result)
+                .AsGuard<ArgumentNullException>(theLADCode);
+            It.IsEmpty(result.LADCode)
+                .AsGuard<ArgumentNullException>(theLADCode);
+
+            await inScope.Information($"candidate search complete: '{result.LADCode}'");
+            await inScope.Information($"validating touchpoint integrity: '{result.TouchpointID}' == '{theTouchpoint}'");
+
             (result.TouchpointID != theTouchpoint)
-                .AsGuard<MalformedRequestException>();
+                .AsGuard<MalformedRequestException>(theTouchpoint);
+
+            await inScope.Information($"preparing response...");
+
+            var response = Respond.Ok().SetContent(result);
+
+            await inScope.Information($"preparation complete...");
 
             await inScope.ExitMethod();
 
-            return Respond.Ok().SetContent(result);
+            return response;
         }
 
         /// <summary>
@@ -138,18 +154,37 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             It.IsEmpty(usingContent)
                 .AsGuard<ArgumentNullException>(nameof(usingContent));
 
-            var candidate = JsonConvert.DeserializeObject<IncomingLocalAuthority>(usingContent);
+            await inScope.Information($"deserialising the submitted content: '{usingContent}'");
 
-            if (It.IsEmpty(candidate.TouchpointID))
+            var theCandidate = JsonConvert.DeserializeObject<IncomingLocalAuthority>(usingContent);
+
+            It.IsNull(theCandidate)
+                .AsGuard<MalformedRequestException>(nameof(ILocalAuthority.LADCode));
+            It.IsEmpty(theCandidate.LADCode)
+                .AsGuard<MalformedRequestException>(nameof(ILocalAuthority.LADCode));
+
+            await inScope.Information("deserialisation complete...");
+
+            if (It.IsEmpty(theCandidate.TouchpointID))
             {
-                candidate.TouchpointID = theTouchpoint;
+                await inScope.Information($"applying missing touchpoint details: '{theTouchpoint}'");
+                theCandidate.TouchpointID = theTouchpoint;
             }
 
-            var result = await Authorities.Add(candidate);
+            await inScope.Information($"adding the admin district candidate: '{theCandidate.LADCode}'");
+
+            var result = await Authorities.Add(theCandidate);
+
+            await inScope.Information($"candidate addition complete...");
+            await inScope.Information($"preparing response...");
+
+            var response = Respond.Created().SetContent(result);
+
+            await inScope.Information($"preparation complete...");
 
             await inScope.ExitMethod();
 
-            return Respond.Created().SetContent(result);
+            return response;
         }
     }
 }
