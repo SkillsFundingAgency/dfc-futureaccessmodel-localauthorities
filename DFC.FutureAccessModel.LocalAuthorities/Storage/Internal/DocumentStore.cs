@@ -160,28 +160,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             where TDocument : class =>
             await Task.Run(() =>
             {
+                ProcessDocumentClientError(theException as DocumentClientException);
                 ProcessError(theException);
 
                 // we don't expect to ever get here...
                 return default(TDocument);
             });
-
-        /// <summary>
-        /// process (the) error
-        /// </summary>
-        /// <param name="theException">the exception</param>
-        internal void ProcessError(Exception theException)
-        {
-            It.IsNull(theException)
-                .AsGuard<MalformedRequestException>();
-
-            ProcessDocumentClientError(theException as DocumentClientException);
-
-            (theException is ArgumentNullException)
-                .AsGuard<MalformedRequestException>();
-
-            throw theException;
-        }
 
         /// <summary>
         /// process (the) error
@@ -202,6 +186,21 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
 
             LocalHttpStatusCode.TooManyRequests.ComparesTo(theException.StatusCode)
                 .AsGuard<MalformedRequestException>();
+        }
+
+        /// <summary>
+        /// process (the) error
+        /// </summary>
+        /// <param name="theException">the exception</param>
+        internal void ProcessError(Exception theException)
+        {
+            (theException is ArgumentNullException)
+                .AsGuard<MalformedRequestException>();
+
+            It.IsNull(theException)
+                .AsGuard<ArgumentNullException>();
+
+            throw theException;
         }
     }
 }

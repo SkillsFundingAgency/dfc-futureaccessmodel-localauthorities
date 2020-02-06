@@ -85,6 +85,125 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         }
 
         /// <summary>
+        /// malformed meets expectation
+        /// </summary>
+        [Fact]
+        public void MalformedMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.Malformed(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+        }
+
+        /// <summary>
+        /// conflicted meets expectation
+        /// </summary>
+        [Fact]
+        public void ConflictedMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.Conflicted(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.Conflict, result.StatusCode);
+        }
+
+        /// <summary>
+        /// no content meets expectation
+        /// </summary>
+        [Fact]
+        public void NoContentMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.NoContent(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
+        }
+
+        /// <summary>
+        /// forbidden meets expectation
+        /// </summary>
+        [Fact]
+        public void ForbiddenMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.Forbidden(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.Forbidden, result.StatusCode);
+        }
+
+        /// <summary>
+        /// unprocessable entity meets expectation
+        /// </summary>
+        [Fact]
+        public void UnprocessableEntityMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.UnprocessableEntity(exception);
+
+            // assert
+            Assert.Equal((HttpStatusCode)422, result.StatusCode);
+        }
+
+        /// <summary>
+        /// unauthorized meets expectation
+        /// </summary>
+        [Fact]
+        public void UnauthorizedMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.Unauthorized(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
+        }
+
+        /// <summary>
+        /// unknown meets expectation
+        /// </summary>
+        [Fact]
+        public void UnknownErrorMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var exception = new Exception();
+
+            // act
+            var result = sut.UnknownError(exception);
+
+            // assert
+            Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
+        }
+
+        /// <summary>
         /// make scope logging context 
         /// </summary>
         /// <param name="itemBeingRecorded"></param>

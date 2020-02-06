@@ -106,6 +106,22 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         }
 
         /// <summary>
+        /// get (the) local authority resource path for the admin district meets expectation
+        /// </summary>
+        [Fact]
+        public void GetLocalAuthorityResourcePathForTheAdminDistrictMeetsExpectation()
+        {
+            // arrange
+            var sut = MakeSUT();
+
+            // act
+            var result = sut.GetLocalAuthorityResourcePathFor("0000000001");
+
+            // assert
+            Assert.Equal("dbs/Store/colls/Authorities/docs/0000000001", result.OriginalString);
+        }
+
+        /// <summary>
         /// make (a) 'system under test'
         /// </summary>
         /// <returns>the system under test</returns>
