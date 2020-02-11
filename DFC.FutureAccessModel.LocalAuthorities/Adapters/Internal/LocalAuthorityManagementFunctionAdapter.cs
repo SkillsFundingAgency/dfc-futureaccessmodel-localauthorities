@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 {
+    /// <summary>
+    /// the local authorities management function adapter
+    /// </summary>
     internal sealed class LocalAuthorityManagementFunctionAdapter :
         IManageLocalAuthorities
     {
@@ -71,9 +74,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
         public async Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
-            await SafeOperations.Try(
-                () => ProcessGetAuthorityFor(theTouchpoint, theLADCode, inScope),
-                x => Faults.GetResponseFor(x, inScope));
+            await SafeOperations.Try(() => ProcessGetAuthorityFor(theTouchpoint, theLADCode, inScope), x => Faults.GetResponseFor(x, inScope));
 
         /// <summary>
         /// process, get (the) local authority for...
@@ -82,7 +83,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> ProcessGetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope)
+        public async Task<HttpResponseMessage> ProcessGetAuthorityFor(
+            string theTouchpoint,
+            string theLADCode,
+            IScopeLoggingContext inScope)
         {
             await inScope.EnterMethod();
 
@@ -124,13 +128,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="usingContent">using content</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> AddNewAuthorityFor(
-            string theTouchpoint,
-            string usingContent,
-            IScopeLoggingContext inScope) =>
-            await SafeOperations.Try(
-                () => ProcessAddNewAuthorityFor(theTouchpoint, usingContent, inScope),
-                x => Faults.GetResponseFor(x, inScope));
+        public async Task<HttpResponseMessage> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope) =>
+            await SafeOperations.Try(() => ProcessAddNewAuthorityFor(theTouchpoint, usingContent, inScope), x => Faults.GetResponseFor(x, inScope));
 
         /// <summary>
         /// process, add new authority for...
@@ -179,6 +178,65 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             await inScope.Information($"preparing response...");
 
             var response = Respond.Created().SetContent(result);
+
+            await inScope.Information($"preparation complete...");
+
+            await inScope.ExitMethod();
+
+            return response;
+        }
+
+        /// <summary>
+        /// delete (the) local authority for...
+        /// </summary>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="theLADCode">the local adinistrative district code</param>
+        /// <param name="inScope">in scope</param>
+        /// <returns>the result of the operation</returns>
+        public async Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+            await SafeOperations.Try(() => ProcessDeleteAuthorityFor(theTouchpoint, theLADCode, inScope), x => Faults.GetResponseFor(x, inScope));
+
+        /// <summary>
+        /// process, delete (the) local authority for...
+        /// </summary>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="theLADCode">the local adinistrative district code</param>
+        /// <param name="inScope">in scope</param>
+        /// <returns>the result of the operation</returns>
+        public async Task<HttpResponseMessage> ProcessDeleteAuthorityFor(
+            string theTouchpoint,
+            string theLADCode,
+            IScopeLoggingContext inScope)
+        {
+            await inScope.EnterMethod();
+
+            It.IsEmpty(theTouchpoint)
+                .AsGuard<ArgumentNullException>(nameof(theTouchpoint));
+            It.IsEmpty(theLADCode)
+                .AsGuard<ArgumentNullException>(nameof(theLADCode));
+
+            await inScope.Information($"seeking the admin district: '{theLADCode}'");
+
+            var result = await Authorities.Get(theLADCode);
+
+            It.IsNull(result)
+                .AsGuard<NoContentException>(theLADCode);
+            It.IsEmpty(result.LADCode)
+                .AsGuard<ArgumentNullException>(theLADCode);
+
+            await inScope.Information($"candidate search complete: '{result.LADCode}'");
+            await inScope.Information($"validating touchpoint integrity: '{result.TouchpointID}' == '{theTouchpoint}'");
+
+            (result.TouchpointID != theTouchpoint)
+                .AsGuard<MalformedRequestException>(theTouchpoint);
+
+            await inScope.Information($"deleting authority: '{result.Name}'");
+
+            await Authorities.Delete(theLADCode);
+
+            await inScope.Information($"preparing response...");
+
+            var response = Respond.Ok();
 
             await inScope.Information($"preparation complete...");
 

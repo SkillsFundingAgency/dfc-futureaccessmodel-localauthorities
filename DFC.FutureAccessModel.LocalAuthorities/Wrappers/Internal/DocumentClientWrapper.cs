@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Azure.Documents;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
-using Microsoft.Azure.Documents.Client;
 using System.Linq;
 using System.Reflection;
-using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
 {
@@ -48,17 +48,17 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         /// <summary>
         /// create document (async)
         /// </summary>
-        /// <typeparam name="TResource"></typeparam>
-        /// <param name="documentCollectionUri">the document collection path</param>
-        /// <param name="document">the document</param>
+        /// <typeparam name="TDocument">the document type</typeparam>
+        /// <param name="usingCollectionPath">using collection path</param>
+        /// <param name="andCandidate">the candidate (document)</param>
         /// <returns>the stored document</returns>
-        public async Task<TDocument> CreateDocumentAsync<TDocument>(Uri documentCollectionUri, TDocument document)
+        public async Task<TDocument> CreateDocumentAsync<TDocument>(Uri usingCollectionPath, TDocument andCandidate)
             where TDocument : class
         {
-            await Client.CreateDocumentAsync(documentCollectionUri, document);
+            await Client.CreateDocumentAsync(usingCollectionPath, andCandidate);
 
-            var documentUri = MakeDocumentPathFor(document, documentCollectionUri);
-            var partitionKey = GetPartitionKey(document);
+            var documentUri = MakeDocumentPathFor(andCandidate, usingCollectionPath);
+            var partitionKey = GetPartitionKey(andCandidate);
 
             return await ReadDocumentAsync<TDocument>(documentUri, partitionKey) ?? default;
         }
@@ -68,27 +68,37 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         /// this will throw if the document does not exist
         /// </summary>
         /// <typeparam name="TDocument">the document type</typeparam>
-        /// <param name="documentUri">the path to the document</param>
-        /// <param name="partitionKey">the partition key</param>
+        /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="andPartitionKey">and partition key</param>
         /// <returns>true if it does</returns>
-        public async Task<bool> DocumentExistsAsync<TDocument>(Uri documentUri, string partitionKey)
+        public async Task<bool> DocumentExistsAsync<TDocument>(Uri usingStoragePath, string andPartitionKey)
             where TDocument : class =>
-            It.Has(await ReadDocumentAsync<TDocument>(documentUri, partitionKey));
+            It.Has(await ReadDocumentAsync<TDocument>(usingStoragePath, andPartitionKey));
 
         /// <summary>
         /// read document (async)
         /// throws if the document does not exist
         /// </summary>
         /// <typeparam name="TDocument">the document type</typeparam>
-        /// <param name="documentUri">the doucment path</param>
-        /// <param name="partitionKey">the partition key</param>
-        /// <returns>an instance of the requested type <typeparamref name="TResource"/></returns>
-        public async Task<TDocument> ReadDocumentAsync<TDocument>(Uri documentUri, string partitionKey)
+        /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="andPartitionKey">and partition key</param>
+        /// <returns>an instance of the requested type <typeparamref name="TDocument"/></returns>
+        public async Task<TDocument> ReadDocumentAsync<TDocument>(Uri usingStoragePath, string andPartitionKey)
             where TDocument : class
         {
-            var response = await Client.ReadDocumentAsync<TDocument>(documentUri, GetRequestOptions(partitionKey));
+            var response = await Client.ReadDocumentAsync<TDocument>(usingStoragePath, GetRequestOptions(andPartitionKey));
             return response?.Document;
         }
+
+        /// <summary>
+        /// delete document (async)
+        /// throws if the document does not exist
+        /// </summary>
+        /// <param name="usingStoragePath">using (the) storage path</param>
+        /// <param name="andPartitionKey">and partition key</param>
+        /// <returns>the running task</returns>
+        public async Task DeleteDocumentAsync(Uri usingStoragePath, string andPartitionKey) =>
+            await Client.DeleteDocumentAsync(usingStoragePath, GetRequestOptions(andPartitionKey));
 
         /// <summary>
         /// get (the) property details for...

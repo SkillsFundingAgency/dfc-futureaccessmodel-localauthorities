@@ -316,11 +316,59 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
-        /// process get document error handler throws malformed request exception for null incoming exception
+        /// delete document meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task ProcessGetDocumentErrorHandlerThrowsMalformedRequestForIncomingNull()
+        public async Task DeleteDocumentMeetsVerification()
+        {
+            // arrange
+            const string pKey = "any old partition key";
+            var sut = MakeSUT();
+            var testPath = new Uri("http://blahStore/blahCollection/blahID");
+
+            GetMock(sut.SafeOperations)
+                .Setup(x => x.Try(It.IsAny<Func<Task>>(), It.IsAny<Func<Exception, Task>>()))
+                .Returns(Task.CompletedTask);
+
+            // act
+            await sut.DeleteDocument(testPath, pKey);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
+            GetMock(sut.SafeOperations).VerifyAll();
+        }
+
+        /// <summary>
+        /// process delete document meets verification
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Fact]
+        public async Task ProcessDeleteDocumentMeetsVerification()
+        {
+            // arrange
+            const string pKey = "any old partition key";
+            var sut = MakeSUT();
+            var testPath = new Uri("http://blahStore/blahCollection/blahID");
+
+            GetMock(sut.Client)
+                .Setup(x => x.DeleteDocumentAsync(testPath, pKey))
+                .Returns(Task.CompletedTask);
+
+            // act
+            await sut.ProcessDeleteDocument(testPath, pKey);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
+            GetMock(sut.SafeOperations).VerifyAll();
+        }
+
+        /// <summary>
+        /// process document error handler throws malformed request exception for null incoming exception
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Fact]
+        public async Task ProcessDocumentErrorHandlerThrowsMalformedRequestForIncomingNull()
         {
             // arrange
             var sut = MakeSUT();
@@ -330,7 +378,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
-        /// process get document error handler meets expectation
+        /// process document error handler meets expectation
         /// </summary>
         /// <param name="httpCode">the http code</param>
         /// <param name="expectedException">the expected exception</param>
@@ -338,7 +386,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         [Theory]
         [InlineData(HttpStatusCode.NotFound, typeof(NoContentException))]
         [InlineData(HttpStatusCode.TooManyRequests, typeof(MalformedRequestException))]
-        public async Task ProcessGetDocumentErrorHandlerMeetsExpectation(HttpStatusCode httpCode, Type expectedException)
+        public async Task ProcessDocumentErrorHandlerMeetsExpectation(HttpStatusCode httpCode, Type expectedException)
         {
             // arrange
             var sut = MakeSUT();
@@ -349,12 +397,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
-        /// process get document error handler with null http status code
+        /// process document error handler with null http status code
         /// this shouldn't happen and is the test in place only for code coverage
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task ProcessGetDocumentErrorHandlerWithNullHttpStatusCode()
+        public async Task ProcessDocumentErrorHandlerWithNullHttpStatusCode()
         {
             // arrange
             var sut = MakeSUT();

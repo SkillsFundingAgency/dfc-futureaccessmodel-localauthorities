@@ -24,7 +24,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// </summary>
         /// <param name="theRequest">the request</param>
         /// <param name="usingTraceWriter">using (the) trace writer</param>
-        /// <returns></returns>
+        /// <param name="touchpointID">(the) touchpoint id</param>
+        /// <param name="ladCode">(the) local administrative district code</param>
+        /// <param name="factory">(the logging scope) factory</param>
+        /// <param name="adapter">(the local authorities management) adapter</param>
+        /// <returns>the http response to the operation</returns>
         [FunctionName("GetLocalAuthorityByLADCode")]
         [ProducesResponseType(typeof(LocalAuthority), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = FunctionDescription.ResourceFound, ShowSchema = true)]
@@ -34,7 +38,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Display(Name = "Get Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Admin, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
             string ladCode,

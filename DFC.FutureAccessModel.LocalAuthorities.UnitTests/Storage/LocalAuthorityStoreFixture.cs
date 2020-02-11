@@ -210,6 +210,33 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
+        /// delete local authority for the admin district meets verification
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Fact]
+        public async Task DeleteLocalAuthorityForTheAdminDistrictMeetsVerification()
+        {
+            // arrange
+            var sut = MakeSUT();
+            const string theAdminDistrict = "any old district";
+            var documentPath = new Uri("/", UriKind.Relative);
+
+            GetMock(sut.DocumentStore)
+                .Setup(x => x.DeleteDocument(documentPath, "not_required"))
+                .Returns(Task.CompletedTask);
+            GetMock(sut.StoragePaths)
+                .Setup(x => x.GetLocalAuthorityResourcePathFor(theAdminDistrict))
+                .Returns(documentPath);
+
+            // act
+            await sut.Delete(theAdminDistrict);
+
+            // assert
+            GetMock(sut.DocumentStore).VerifyAll();
+            GetMock(sut.StoragePaths).VerifyAll();
+        }
+
+        /// <summary>
         /// make (a) 'system under test'
         /// </summary>
         /// <returns>the system under test</returns>

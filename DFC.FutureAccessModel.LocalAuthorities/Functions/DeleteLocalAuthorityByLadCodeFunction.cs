@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
-    public static class PostLocalAuthorityFunction
+    public static class DeleteLocalAuthorityByLadCodeFunction
     {
         /// <summary>
         /// run...
@@ -25,22 +25,23 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <param name="theRequest">the request</param>
         /// <param name="usingTraceWriter">using (the) trace writer</param>
         /// <param name="touchpointID">(the) touchpoint id</param>
+        /// <param name="ladCode">(the) local administrative district code</param>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authorities management) adapter</param>
         /// <returns>the http response to the operation</returns>
-        [FunctionName("PostLocalAuthority")]
+        [FunctionName("DeleteLocalAuthorityByLADCode")]
         [ProducesResponseType(typeof(LocalAuthority), (int)HttpStatusCode.OK)]
-        [Response(HttpStatusCode = (int)HttpStatusCode.Created, Description = FunctionDescription.ResourceCreated, ShowSchema = true)]
-        [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = FunctionDescription.NoParentContent, ShowSchema = false)]
+        [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = FunctionDescription.ResourceFound, ShowSchema = true)]
+        [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = FunctionDescription.NoContent, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = FunctionDescription.MalformedRequest, ShowSchema = false)]
-        [Response(HttpStatusCode = (int)HttpStatusCode.Conflict, Description = FunctionDescription.Conflict, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
-        [Display(Name = "Post the details of a new Local Authority", Description = "Ability to add the Local Authority details for the given Touchpoint.")]
+        [Display(Name = "Delete a Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "areas/{touchpointID}/localauthorities")]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
+            string ladCode,
             [Inject] ICreateLoggingContextScopes factory,
             [Inject] IManageLocalAuthorities adapter)
         {
@@ -55,8 +56,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 
             using (var inScope = await factory.BeginScopeFor(theRequest, usingTraceWriter))
             {
-                var theContent = await theRequest.ReadAsStringAsync();
-                return await adapter.AddNewAuthorityFor(touchpointID, theContent, inScope);
+                return await adapter.DeleteAuthorityFor(touchpointID, ladCode, inScope);
             }
         }
     }

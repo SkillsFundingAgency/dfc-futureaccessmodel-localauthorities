@@ -143,6 +143,29 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         }
 
         /// <summary>
+        /// delete document with valid uri meets verfication
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task DeleteDocumentAsyncWithValidURIMeetsVerification()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var documentUri = new Uri("dbs/areas/colls/routing/docs/0000123", UriKind.Relative);
+            var document = new LocalAuthority();
+
+            GetMock(sut.Client)
+                .Setup(x => x.DeleteDocumentAsync(documentUri, It.IsAny<RequestOptions>(), default))
+                .Returns(Task.FromResult(new ResourceResponse<Document>()));
+
+            // act
+            await sut.DeleteDocumentAsync(documentUri, string.Empty);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
+        }
+
+        /// <summary>
         /// make document path for key value and collection meets expectation
         /// </summary>
         /// <param name="keyValue"></param>

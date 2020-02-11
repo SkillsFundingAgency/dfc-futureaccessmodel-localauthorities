@@ -23,5 +23,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage
         /// <param name="theCandidate">the candidate</param>
         /// <returns>the newly added local authority</returns>
         Task<ILocalAuthority> Add(IncomingLocalAuthority theCandidate);
+
+        /// <summary>
+        /// delete...
+        /// </summary>
+        /// <param name="theAdminDistrict">the admin distict (code)</param>
+        /// <returns>the currently running task</returns>
+        Task Delete(string theAdminDistrict);
     }
 }
