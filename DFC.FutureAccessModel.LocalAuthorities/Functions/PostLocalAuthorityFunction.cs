@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DFC.Functions.DI.Standard.Attributes;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
@@ -17,8 +16,33 @@ using Microsoft.Extensions.Logging;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
-    public static class PostLocalAuthorityFunction
+    /// <summary>
+    /// post local authority function
+    /// </summary>
+    public sealed class PostLocalAuthorityFunction :
+        LocalAuthorityFunction
     {
+        /// <summary>
+        /// (the local authority management) adapter
+        /// </summary>
+        public IManageLocalAuthorities Adapter { get; }
+
+        /// <summary>
+        /// initialises an instance of <see cref="PostLocalAuthorityFunction"/>
+        /// </summary>
+        /// <param name="factory">(the logging scope) factory</param>
+        /// <param name="adapter">(the local authority management) adapter</param>
+        public PostLocalAuthorityFunction(
+            ICreateLoggingContextScopes factory,
+            IManageLocalAuthorities adapter) :
+                base(factory)
+        {
+            It.IsNull(adapter)
+                .AsGuard<ArgumentNullException>(nameof(adapter));
+
+            Adapter = adapter;
+        }
+
         /// <summary>
         /// run...
         /// </summary>
@@ -37,27 +61,23 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Display(Name = "Post the details of a new Local Authority", Description = "Ability to add the Local Authority details for the given Touchpoint.")]
-        public static async Task<HttpResponseMessage> Run(
+        public async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Admin, "post", Route = "areas/{touchpointID}/localauthorities")]HttpRequest theRequest,
             ILogger usingTraceWriter,
-            string touchpointID,
-            [Inject] ICreateLoggingContextScopes factory,
-            [Inject] IManageLocalAuthorities adapter)
-        {
-            It.IsNull(theRequest)
-                .AsGuard<ArgumentNullException>(nameof(theRequest));
-            It.IsNull(usingTraceWriter)
-                .AsGuard<ArgumentNullException>(nameof(usingTraceWriter));
-            It.IsNull(factory)
-                .AsGuard<ArgumentNullException>(nameof(factory));
-            It.IsNull(adapter)
-                .AsGuard<ArgumentNullException>(nameof(adapter));
+            string touchpointID) =>
+                await RunActionScope(theRequest, usingTraceWriter, x => AddNewAuthorityUsing(theRequest, touchpointID, x));
 
-            using (var inScope = await factory.BeginScopeFor(theRequest, usingTraceWriter))
-            {
-                var theContent = await theRequest.ReadAsStringAsync();
-                return await adapter.AddNewAuthorityFor(touchpointID, theContent, inScope);
-            }
+        /// <summary>
+        /// add new authority using...
+        /// </summary>
+        /// <param name="theRequest">the request</param>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="inScope">in (logging) scope</param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> AddNewAuthorityUsing(HttpRequest theRequest, string theTouchpoint, IScopeLoggingContext inScope)
+        {
+            var theContent = await theRequest.ReadAsStringAsync();
+            return await Adapter.AddNewAuthorityFor(theTouchpoint, theContent, inScope);
         }
     }
 }

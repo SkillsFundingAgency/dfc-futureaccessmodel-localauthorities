@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DFC.Functions.DI.Standard.Attributes;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
@@ -17,8 +16,30 @@ using Microsoft.Extensions.Logging;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
-    public static class DeleteLocalAuthorityByLadCodeFunction
+    public sealed class DeleteLocalAuthorityByLadCodeFunction :
+        LocalAuthorityFunction
     {
+        /// <summary>
+        /// (the local authority management) adapter
+        /// </summary>
+        public IManageLocalAuthorities Adapter { get; }
+
+        /// <summary>
+        /// initialises an instance of <see cref="DeleteLocalAuthorityByLadCodeFunction"/>
+        /// </summary>
+        /// <param name="factory">(the logging scope) factory</param>
+        /// <param name="adapter">(the local authority management) adapter</param>
+        public DeleteLocalAuthorityByLadCodeFunction(
+            ICreateLoggingContextScopes factory,
+            IManageLocalAuthorities adapter) :
+                base(factory)
+        {
+            It.IsNull(adapter)
+                .AsGuard<ArgumentNullException>(nameof(adapter));
+
+            Adapter = adapter;
+        }
+
         /// <summary>
         /// run...
         /// </summary>
@@ -37,27 +58,21 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Display(Name = "Delete a Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
-        public static async Task<HttpResponseMessage> Run(
+        public async Task<HttpResponseMessage> Run(
             [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
-            string ladCode,
-            [Inject] ICreateLoggingContextScopes factory,
-            [Inject] IManageLocalAuthorities adapter)
-        {
-            It.IsNull(theRequest)
-                .AsGuard<ArgumentNullException>(nameof(theRequest));
-            It.IsNull(usingTraceWriter)
-                .AsGuard<ArgumentNullException>(nameof(usingTraceWriter));
-            It.IsNull(factory)
-                .AsGuard<ArgumentNullException>(nameof(factory));
-            It.IsNull(adapter)
-                .AsGuard<ArgumentNullException>(nameof(adapter));
+            string ladCode) =>
+                await RunActionScope(theRequest, usingTraceWriter, x => DeleteAuthorityFor(touchpointID, ladCode, x));
 
-            using (var inScope = await factory.BeginScopeFor(theRequest, usingTraceWriter))
-            {
-                return await adapter.DeleteAuthorityFor(touchpointID, ladCode, inScope);
-            }
-        }
+        /// <summary>
+        /// delete authority for...
+        /// </summary>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="theLADCode">the local authority district code</param>
+        /// <param name="inScope">in (logging) scope</param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+            await Adapter.DeleteAuthorityFor(theTouchpoint, theLADCode, inScope);
     }
 }
