@@ -364,6 +364,32 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         }
 
         /// <summary>
+        /// delete local authority for, neets expectation
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task DeleteAuthorityForMeetsVerification()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var scope = MakeStrictMock<IScopeLoggingContext>();
+
+            GetMock(sut.SafeOperations)
+                .Setup(x => x.Try(It.IsAny<Func<Task<HttpResponseMessage>>>(), It.IsAny<Func<Exception, Task<HttpResponseMessage>>>()))
+                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+            // act
+            var result = await sut.DeleteAuthorityFor(string.Empty, string.Empty, scope);
+
+            // assert
+            Assert.IsAssignableFrom<HttpResponseMessage>(result);
+            GetMock(sut.Authorities).VerifyAll();
+            GetMock(sut.Respond).VerifyAll();
+            GetMock(sut.Faults).VerifyAll();
+            GetMock(sut.SafeOperations).VerifyAll();
+        }
+
+        /// <summary>
         /// process get authority for, using invalid parameters throws
         /// </summary>
         /// <param name="touchpointID"></param>
