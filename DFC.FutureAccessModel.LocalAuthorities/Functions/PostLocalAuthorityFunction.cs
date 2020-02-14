@@ -1,11 +1,9 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
@@ -23,24 +21,23 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         LocalAuthorityFunction
     {
         /// <summary>
-        /// (the local authority management) adapter
-        /// </summary>
-        public IManageLocalAuthorities Adapter { get; }
-
-        /// <summary>
         /// initialises an instance of <see cref="PostLocalAuthorityFunction"/>
         /// </summary>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
-        public PostLocalAuthorityFunction(
-            ICreateLoggingContextScopes factory,
-            IManageLocalAuthorities adapter) :
-                base(factory)
-        {
-            It.IsNull(adapter)
-                .AsGuard<ArgumentNullException>(nameof(adapter));
+        public PostLocalAuthorityFunction(ICreateLoggingContextScopes factory, IManageLocalAuthorities adapter) : base(factory, adapter) { }
 
-            Adapter = adapter;
+        /// <summary>
+        /// add new authority using...
+        /// </summary>
+        /// <param name="theRequest">the request</param>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="inScope">in (logging) scope</param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> AddNewAuthorityUsing(HttpRequest theRequest, string theTouchpoint, IScopeLoggingContext inScope)
+        {
+            var theContent = await theRequest.ReadAsStringAsync();
+            return await Adapter.AddNewAuthorityFor(theTouchpoint, theContent, inScope);
         }
 
         /// <summary>
@@ -66,18 +63,5 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             ILogger usingTraceWriter,
             string touchpointID) =>
                 await RunActionScope(theRequest, usingTraceWriter, x => AddNewAuthorityUsing(theRequest, touchpointID, x));
-
-        /// <summary>
-        /// add new authority using...
-        /// </summary>
-        /// <param name="theRequest">the request</param>
-        /// <param name="theTouchpoint">the touchpoint</param>
-        /// <param name="inScope">in (logging) scope</param>
-        /// <returns></returns>
-        internal async Task<HttpResponseMessage> AddNewAuthorityUsing(HttpRequest theRequest, string theTouchpoint, IScopeLoggingContext inScope)
-        {
-            var theContent = await theRequest.ReadAsStringAsync();
-            return await Adapter.AddNewAuthorityFor(theTouchpoint, theContent, inScope);
-        }
     }
 }

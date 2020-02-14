@@ -1,11 +1,9 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
@@ -23,25 +21,21 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         LocalAuthorityFunction
     {
         /// <summary>
-        /// (the local authority management) adapter
-        /// </summary>
-        public IManageLocalAuthorities Adapter { get; }
-
-        /// <summary>
         /// initialises an instance of <see cref="GetLocalAuthorityByLadCodeFunction"/>
         /// </summary>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
-        public GetLocalAuthorityByLadCodeFunction(
-            ICreateLoggingContextScopes factory,
-            IManageLocalAuthorities adapter) :
-                base(factory)
-        {
-            It.IsNull(adapter)
-                .AsGuard<ArgumentNullException>(nameof(adapter));
+        public GetLocalAuthorityByLadCodeFunction(ICreateLoggingContextScopes factory, IManageLocalAuthorities adapter) : base(factory, adapter) { }
 
-            Adapter = adapter;
-        }
+        /// <summary>
+        /// get authority for...
+        /// </summary>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="theLADCode">the local authority district code</param>
+        /// <param name="inScope">in (logging) scope</param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+            await Adapter.GetAuthorityFor(theTouchpoint, theLADCode, inScope);
 
         /// <summary>
         /// run...
@@ -67,15 +61,5 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             string touchpointID,
             string ladCode) =>
                 await RunActionScope(theRequest, usingTraceWriter, x => GetAuthorityFor(touchpointID, ladCode, x));
-
-        /// <summary>
-        /// get authority for...
-        /// </summary>
-        /// <param name="theTouchpoint">the touchpoint</param>
-        /// <param name="theLADCode">the local authority district code</param>
-        /// <param name="inScope">in (logging) scope</param>
-        /// <returns></returns>
-        internal async Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
-            await Adapter.GetAuthorityFor(theTouchpoint, theLADCode, inScope);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using Microsoft.AspNetCore.Http;
@@ -16,16 +17,26 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public ICreateLoggingContextScopes Factory { get; }
 
         /// <summary>
+        /// (the local authority management) adapter
+        /// </summary>
+        public IManageLocalAuthorities Adapter { get; }
+
+        /// <summary>
         /// initialises an instance of <see cref="LocalAuthorityFunction"/>
         /// </summary>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
-        protected LocalAuthorityFunction(ICreateLoggingContextScopes factory)
+        protected LocalAuthorityFunction(
+            ICreateLoggingContextScopes factory,
+            IManageLocalAuthorities adapter)
         {
             It.IsNull(factory)
                 .AsGuard<ArgumentNullException>(nameof(factory));
+            It.IsNull(adapter)
+                .AsGuard<ArgumentNullException>(nameof(adapter));
 
             Factory = factory;
+            Adapter = adapter;
         }
 
         /// <summary>
