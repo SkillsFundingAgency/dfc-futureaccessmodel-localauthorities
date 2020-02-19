@@ -53,7 +53,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
         [Display(Name = "Delete a Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Admin, "delete", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
             string ladCode) =>
