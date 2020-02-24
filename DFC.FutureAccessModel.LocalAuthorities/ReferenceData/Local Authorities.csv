@@ -1,0 +1,327 @@
+TouchpointID,LADCode,LocalAuthority,BreakType,Expectation
+101,E06000031,Peterborough,post passed,201
+101,E06000032,Luton,post passed,201
+101,E06000033,Southend-on-Sea,post passed,201
+101,E06000034,Thurrock,post passed,201
+101,E06000042,Milton Keynes,post passed,201
+101,E06000055,Bedford,post passed,201
+101,E06000056,Central Bedfordshire,post passed,201
+101,E07000066,Basildon,post passed,201
+101,E07000067,Braintree,post passed,201
+101,E07000068,Brentwood,post passed,201
+101,E07000069,Castle Point,post passed,201
+101,E07000070,Chelmsford,post passed,201
+101,E07000071,Colchester,post passed,201
+101,E07000072,Epping Forest,post passed,201
+101,E07000073,Harlow,post passed,201
+101,E07000074,Maldon,post passed,201
+101,E07000075,Rochford,post passed,201
+101,E07000076,Tendring,post passed,201
+101,E07000077,Uttlesford,post passed,201
+101,E07000004,Aylesbury Vale,post passed,201
+101,E07000005,Chiltern,post passed,201
+101,E07000006,South Bucks,post passed,201
+101,E07000007,Wycombe,post passed,201
+101,E07000008,Cambridge,post passed,201
+101,E07000009,East Cambridgeshire,post passed,201
+101,E07000010,Fenland,post passed,201
+101,E07000011,Huntingdonshire,post passed,201
+101,E07000012,South Cambridgeshire,post passed,201
+101,E07000095,Broxbourne,post passed,201
+101,E07000096,Dacorum,post passed,201
+101,E07000098,Hertsmere,post passed,201
+101,E07000099,North Hertfordshire,post passed,201
+101,E07000102,Three Rivers,post passed,201
+101,E07000103,Watford,post passed,201
+101,E07000143,Breckland,post passed,201
+101,E07000144,Broadland,post passed,201
+101,E07000145,Great Yarmouth,post passed,201
+101,E07000146,King's Lynn and West Norfolk,post passed,201
+101,E07000147,North Norfolk,post passed,201
+101,E07000148,Norwich,post passed,201
+101,E07000149,South Norfolk,post passed,201
+101,E07000200,Babergh,post passed,201
+101,E07000201,Forest Heath,post passed,201
+101,E07000202,Ipswich,post passed,201
+101,E07000203,Mid Suffolk,post passed,201
+101,E07000204,St Edmundsbury,post passed,201
+101,E07000205,Suffolk Coastal,post passed,201
+101,E07000206,Waveney,post passed,201
+101,E07000240,St Albans,post passed,201
+101,E07000241,Welwyn Hatfield,post passed,201
+101,E07000242,East Hertfordshire,post passed,201
+101,E07000243,Stevenage,post passed,201
+102,E07000150,Corby,post passed,201
+102,E07000151,Daventry,post passed,201
+102,E07000152,East Northamptonshire,post passed,201
+102,E07000153,Kettering,post passed,201
+102,E07000154,Northampton,post passed,201
+102,E07000155,South Northamptonshire,post passed,201
+102,E07000156,Wellingborough,post passed,201
+102,E07000170,Ashfield,post passed,201
+102,E07000171,Bassetlaw,post passed,201
+102,E07000172,Broxtowe,post passed,201
+102,E07000173,Gedling,post passed,201
+102,E07000174,Mansfield,post passed,201
+102,E07000175,Newark and Sherwood,post passed,201
+102,E07000176,Rushcliffe,post passed,201
+102,E07000129,Blaby,post passed,201
+102,E07000130,Charnwood,post passed,201
+102,E07000131,Harborough,post passed,201
+102,E07000132,Hinckley and Bosworth,post passed,201
+102,E07000133,Melton,post passed,201
+102,E07000134,North West Leicestershire,post passed,201
+102,E07000135,Oadby and Wigston,post passed,201
+102,E07000136,Boston,post passed,201
+102,E07000137,East Lindsey,post passed,201
+102,E07000138,Lincoln,post passed,201
+102,E07000139,North Kesteven,post passed,201
+102,E07000140,South Holland,post passed,201
+102,E07000141,South Kesteven,post passed,201
+102,E07000142,West Lindsey,post passed,201
+102,E07000032,Amber Valley,post passed,201
+102,E07000033,Bolsover,post passed,201
+102,E07000034,Chesterfield,post passed,201
+102,E07000035,Derbyshire Dales,post passed,201
+102,E07000036,Erewash,post passed,201
+102,E07000037,High Peak,post passed,201
+102,E07000038,North East Derbyshire,post passed,201
+102,E07000039,South Derbyshire,post passed,201
+102,E06000015,Derby,post passed,201
+102,E06000016,Leicester,post passed,201
+102,E06000017,Rutland,post passed,201
+102,E06000018,Nottingham,post passed,201
+103,E09000001,City of London,post passed,201
+103,E09000002,Barking and Dagenham,post passed,201
+103,E09000003,Barnet,post passed,201
+103,E09000004,Bexley,post passed,201
+103,E09000005,Brent,post passed,201
+103,E09000006,Bromley,post passed,201
+103,E09000007,Camden,post passed,201
+103,E09000008,Croydon,post passed,201
+103,E09000009,Ealing,post passed,201
+103,E09000010,Enfield,post passed,201
+103,E09000011,Greenwich,post passed,201
+103,E09000012,Hackney,post passed,201
+103,E09000013,Hammersmith and Fulham,post passed,201
+103,E09000014,Haringey,post passed,201
+103,E09000015,Harrow,post passed,201
+103,E09000016,Havering,post passed,201
+103,E09000017,Hillingdon,post passed,201
+103,E09000018,Hounslow,post passed,201
+103,E09000019,Islington,post passed,201
+103,E09000020,Kensington and Chelsea,post passed,201
+103,E09000021,Kingston upon Thames,post passed,201
+103,E09000022,Lambeth,post passed,201
+103,E09000023,Lewisham,post passed,201
+103,E09000024,Merton,post passed,201
+103,E09000025,Newham,post passed,201
+103,E09000026,Redbridge,post passed,201
+103,E09000027,Richmond upon Thames,post passed,201
+103,E09000028,Southwark,post passed,201
+103,E09000029,Sutton,post passed,201
+103,E09000030,Tower Hamlets,post passed,201
+103,E09000031,Waltham Forest,post passed,201
+103,E09000032,Wandsworth,post passed,201
+103,E09000033,Westminster,post passed,201
+104,E07000234,Bromsgrove,post passed,201
+104,E07000235,Malvern Hills,post passed,201
+104,E07000236,Redditch,post passed,201
+104,E07000237,Worcester,post passed,201
+104,E07000238,Wychavon,post passed,201
+104,E07000239,Wyre Forest,post passed,201
+104,E08000025,Birmingham,post passed,201
+104,E08000026,Coventry,post passed,201
+104,E08000027,Dudley,post passed,201
+104,E08000028,Sandwell,post passed,201
+104,E08000029,Solihull,post passed,201
+104,E08000030,Walsall,post passed,201
+104,E08000031,Wolverhampton,post passed,201
+104,E07000192,Cannock Chase,post passed,201
+104,E07000193,East Staffordshire,post passed,201
+104,E07000194,Lichfield,post passed,201
+104,E07000195,Newcastle-under-Lyme,post passed,201
+104,E07000196,South Staffordshire,post passed,201
+104,E07000197,Stafford,post passed,201
+104,E07000198,Staffordshire Moorlands,post passed,201
+104,E07000199,Tamworth,post passed,201
+104,E07000218,North Warwickshire,post passed,201
+104,E07000219,Nuneaton and Bedworth,post passed,201
+104,E07000220,Rugby,post passed,201
+104,E07000221,Stratford-on-Avon,post passed,201
+104,E07000222,Warwick,post passed,201
+104,E06000019,County of Herefordshire,post passed,201
+104,E06000020,Telford and Wrekin,post passed,201
+104,E06000021,Stoke-on-Trent,post passed,201
+104,E06000051,Shropshire,post passed,201
+105,E06000049,Cheshire East,post passed,201
+105,E06000050,Cheshire West and Chester,post passed,201
+105,E06000006,Halton,post passed,201
+105,E06000007,Warrington,post passed,201
+105,E06000008,Blackburn with Darwen,post passed,201
+105,E06000009,Blackpool,post passed,201
+105,E07000117,Burnley,post passed,201
+105,E07000118,Chorley,post passed,201
+105,E07000119,Fylde,post passed,201
+105,E07000120,Hyndburn,post passed,201
+105,E07000121,Lancaster,post passed,201
+105,E07000122,Pendle,post passed,201
+105,E07000123,Preston,post passed,201
+105,E07000124,Ribble Valley,post passed,201
+105,E07000125,Rossendale,post passed,201
+105,E07000126,South Ribble,post passed,201
+105,E07000127,West Lancashire,post passed,201
+105,E07000128,Wyre,post passed,201
+105,E08000001,Bolton,post passed,201
+105,E08000002,Bury,post passed,201
+105,E08000003,Manchester,post passed,201
+105,E08000004,Oldham,post passed,201
+105,E08000005,Rochdale,post passed,201
+105,E08000006,Salford,post passed,201
+105,E08000007,Stockport,post passed,201
+105,E08000008,Tameside,post passed,201
+105,E08000009,Trafford,post passed,201
+105,E08000010,Wigan,post passed,201
+105,E08000011,Knowsley,post passed,201
+105,E08000012,Liverpool,post passed,201
+105,E08000013,St Helens,post passed,201
+105,E08000014,Sefton,post passed,201
+105,E08000015,Wirral,post passed,201
+106,E07000026,Allerdale,post passed,201
+106,E07000027,Barrow-in-Furness,post passed,201
+106,E07000028,Carlisle,post passed,201
+106,E07000029,Copeland,post passed,201
+106,E07000030,Eden,post passed,201
+106,E07000031,South Lakeland,post passed,201
+106,E06000057,Northumberland,post passed,201
+106,E06000001,Hartlepool,post passed,201
+106,E06000002,Middlesbrough,post passed,201
+106,E06000003,Redcar and Cleveland,post passed,201
+106,E06000004,Stockton-on-Tees,post passed,201
+106,E06000005,Darlington,post passed,201
+106,E08000021,Newcastle upon Tyne,post passed,201
+106,E08000022,North Tyneside,post passed,201
+106,E08000023,South Tyneside,post passed,201
+106,E08000024,Sunderland,post passed,201
+106,E06000047,County Durham,post passed,201
+106,E08000037,Gateshead,post passed,201
+107,E06000043,Brighton and Hove,post passed,201
+107,E06000044,Portsmouth,post passed,201
+107,E06000045,Southampton,post passed,201
+107,E06000046,Isle of Wight,post passed,201
+107,E06000035,Medway,post passed,201
+107,E06000036,Bracknell Forest,post passed,201
+107,E06000037,West Berkshire,post passed,201
+107,E06000038,Reading,post passed,201
+107,E06000039,Slough,post passed,201
+107,E06000040,Windsor and Maidenhead,post passed,201
+107,E06000041,Wokingham,post passed,201
+107,E07000084,Basingstoke and Deane,post passed,201
+107,E07000085,East Hampshire,post passed,201
+107,E07000086,Eastleigh,post passed,201
+107,E07000087,Fareham,post passed,201
+107,E07000088,Gosport,post passed,201
+107,E07000089,Hart,post passed,201
+107,E07000090,Havant,post passed,201
+107,E07000091,New Forest,post passed,201
+107,E07000092,Rushmoor,post passed,201
+107,E07000093,Test Valley,post passed,201
+107,E07000094,Winchester,post passed,201
+107,E07000105,Ashford,post passed,201
+107,E07000106,Canterbury,post passed,201
+107,E07000107,Dartford,post passed,201
+107,E07000108,Dover,post passed,201
+107,E07000109,Gravesham,post passed,201
+107,E07000110,Maidstone,post passed,201
+107,E07000111,Sevenoaks,post passed,201
+107,E07000112,Folkestone and Hythe,post passed,201
+107,E07000113,Swale,post passed,201
+107,E07000114,Thanet,post passed,201
+107,E07000115,Tonbridge and Malling,post passed,201
+107,E07000116,Tunbridge Wells,post passed,201
+107,E07000061,Eastbourne,post passed,201
+107,E07000062,Hastings,post passed,201
+107,E07000063,Lewes,post passed,201
+107,E07000064,Rother,post passed,201
+107,E07000065,Wealden,post passed,201
+107,E07000223,Adur,post passed,201
+107,E07000224,Arun,post passed,201
+107,E07000225,Chichester,post passed,201
+107,E07000226,Crawley,post passed,201
+107,E07000227,Horsham,post passed,201
+107,E07000228,Mid Sussex,post passed,201
+107,E07000229,Worthing,post passed,201
+107,E07000207,Elmbridge,post passed,201
+107,E07000208,Epsom and Ewell,post passed,201
+107,E07000209,Guildford,post passed,201
+107,E07000210,Mole Valley,post passed,201
+107,E07000211,Reigate and Banstead,post passed,201
+107,E07000212,Runnymede,post passed,201
+107,E07000213,Spelthorne,post passed,201
+107,E07000214,Surrey Heath,post passed,201
+107,E07000215,Tandridge,post passed,201
+107,E07000216,Waverley,post passed,201
+107,E07000217,Woking,post passed,201
+108,E07000177,Cherwell,post passed,201
+108,E07000178,Oxford,post passed,201
+108,E07000179,South Oxfordshire,post passed,201
+108,E07000180,Vale of White Horse,post passed,201
+108,E07000181,West Oxfordshire,post passed,201
+108,E07000187,Mendip,post passed,201
+108,E07000188,Sedgemoor,post passed,201
+108,E07000189,South Somerset,post passed,201
+108,E07000190,Taunton Deane,post passed,201
+108,E07000191,West Somerset,post passed,201
+108,E07000078,Cheltenham,post passed,201
+108,E07000079,Cotswold,post passed,201
+108,E07000080,Forest of Dean,post passed,201
+108,E07000081,Gloucester,post passed,201
+108,E07000082,Stroud,post passed,201
+108,E07000083,Tewkesbury,post passed,201
+108,E06000022,Bath and North East Somerset,post passed,201t
+108,E06000023,City of Bristol,post passed,201
+108,E06000024,North Somerset,post passed,201
+108,E06000025,South Gloucestershire,post passed,201
+108,E06000026,Plymouth,post passed,201
+108,E06000027,Torbay,post passed,201
+108,E06000028,Bournemouth,post passed,201
+108,E06000029,Poole,post passed,201
+108,E06000030,Swindon,post passed,201
+108,E06000052,Cornwall,post passed,201
+108,E06000053,Isles of Scilly,post passed,201
+108,E06000054,Wiltshire,post passed,201
+108,E07000040,East Devon,post passed,201
+108,E07000041,Exeter,post passed,201
+108,E07000042,Mid Devon,post passed,201
+108,E07000043,North Devon,post passed,201
+108,E07000044,South Hams,post passed,201
+108,E07000045,Teignbridge,post passed,201
+108,E07000046,Torridge,post passed,201
+108,E07000047,West Devon,post passed,201
+108,E07000048,Christchurch,post passed,201
+108,E07000049,East Dorset,post passed,201
+108,E07000050,North Dorset,post passed,201
+108,E07000051,Purbeck,post passed,201
+108,E07000052,West Dorset,post passed,201
+108,E07000053,Weymouth and Portland,post passed,201
+109,E06000010,City of Kingston upon Hull,post passed,201
+109,E06000011,East Riding of Yorkshire,post passed,201
+109,E06000012,North East Lincolnshire,post passed,201
+109,E06000013,North Lincolnshire,post passed,201
+109,E06000014,York,post passed,201
+109,E07000163,Craven,post passed,201
+109,E07000164,Hambleton,post passed,201
+109,E07000165,Harrogate,post passed,201
+109,E07000166,Richmondshire,post passed,201
+109,E07000167,Ryedale,post passed,201
+109,E07000168,Scarborough,post passed,201
+109,E07000169,Selby,post passed,201
+109,E08000032,Bradford,post passed,201
+109,E08000033,Calderdale,post passed,201
+109,E08000034,Kirklees,post passed,201
+109,E08000035,Leeds,post passed,201
+109,E08000036,Wakefield,post passed,201
+109,E08000016,Barnsley,post passed,201
+109,E08000017,Doncaster,post passed,201
+109,E08000018,Rotherham,post passed,201
+109,E08000019,Sheffield,post passed,201

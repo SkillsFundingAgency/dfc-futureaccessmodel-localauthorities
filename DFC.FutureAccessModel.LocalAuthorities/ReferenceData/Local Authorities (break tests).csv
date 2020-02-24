@@ -1,0 +1,13 @@
+TouchpointID,LADCode,LocalAuthority,BreakType,Expectation
+101,E06000031,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaZ,Upper name limit - post passed,201
+102,S06000032,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaZ,Name too long (51 and over) - post failed,422
+103,W06000033,Southend-on-Sea 2,Number in name - post failed,422
+101,E06000031,Pete,Lower name limit - post passed,201
+102,S06000032,Lut,Name too short (less then 4) - post failed,422
+103,V06000033,Southend-on-Sea,Invalid LAD Code Prefix - post failed,422
+101,EO6000031,Peterborough,Invalid LAD Code (contains Alpha at start) - post failed,422
+102,S060O0032,Luton,Invalid LAD Code (contains Alpha in middle) - post failed,422
+103,W0600003O,Southend-on-Sea,Invalid LAD Code (contains Alpha at end) - post failed,422
+101,6000031,Peterborough,Invalid LAD Code (no prefix) - post failed,422
+102,S0600003,Luton,Invalid LAD Code (too short) - post failed,422
+103,W060000331,Southend-on-Sea,Invalid LAD Code (too long) - post failed,422

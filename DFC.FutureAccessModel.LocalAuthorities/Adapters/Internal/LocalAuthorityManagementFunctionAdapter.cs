@@ -7,6 +7,7 @@ using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
+using DFC.FutureAccessModel.LocalAuthorities.Validation;
 using DFC.HTTP.Standard;
 using Newtonsoft.Json;
 
@@ -39,6 +40,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public IStoreLocalAuthorities Authorities { get; }
 
         /// <summary>
+        /// i validate local authorities
+        /// </summary>
+        public IValidateLocalAuthorities Authority { get; }
+
+        /// <summary>
         /// instantiates a new instance of <see cref="LocalAuthorityManagementFunctionAdapter"/>
         /// </summary>
         /// <param name="responseHelper"></param>
@@ -49,7 +55,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             IHttpResponseMessageHelper responseHelper,
             IProvideFaultResponses faultResponses,
             IProvideSafeOperations safeOperations,
-            IStoreLocalAuthorities authorities)
+            IStoreLocalAuthorities authorities,
+            IValidateLocalAuthorities validator)
         {
             It.IsNull(responseHelper)
                 .AsGuard<ArgumentNullException>(nameof(responseHelper));
@@ -59,11 +66,14 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .AsGuard<ArgumentNullException>(nameof(safeOperations));
             It.IsNull(authorities)
                 .AsGuard<ArgumentNullException>(nameof(authorities));
+            It.IsNull(validator)
+                .AsGuard<ArgumentNullException>(nameof(validator));
 
             Respond = responseHelper;
             Faults = faultResponses;
             SafeOperations = safeOperations;
             Authorities = authorities;
+            Authority = validator;
         }
 
         /// <summary>
@@ -159,8 +169,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             It.IsNull(theCandidate)
                 .AsGuard<MalformedRequestException>(nameof(ILocalAuthority.LADCode));
-            It.IsEmpty(theCandidate.LADCode)
-                .AsGuard<MalformedRequestException>(nameof(ILocalAuthority.LADCode));
 
             await inScope.Information("deserialisation complete...");
 
@@ -170,6 +178,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 theCandidate.TouchpointID = theTouchpoint;
             }
 
+            await inScope.Information($"validating the admin district candidate: '{theCandidate.LADCode}'");
+
+            await Authority.Validate(theCandidate);
+
+            await inScope.Information($"validation complete...");
             await inScope.Information($"adding the admin district candidate: '{theCandidate.LADCode}'");
 
             var result = await Authorities.Add(theCandidate);
@@ -180,7 +193,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var response = Respond.Created().SetContent(result);
 
             await inScope.Information($"preparation complete...");
-
             await inScope.ExitMethod();
 
             return response;
@@ -220,7 +232,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var result = await Authorities.Get(theLADCode);
 
             It.IsNull(result)
-                .AsGuard<NoContentException>(theLADCode);
+                .AsGuard<NoContentException>();
             It.IsEmpty(result.LADCode)
                 .AsGuard<ArgumentNullException>(theLADCode);
 
@@ -228,7 +240,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             await inScope.Information($"validating touchpoint integrity: '{result.TouchpointID}' == '{theTouchpoint}'");
 
             (result.TouchpointID != theTouchpoint)
-                .AsGuard<MalformedRequestException>(theTouchpoint);
+                .AsGuard<NoContentException>(NoContentException.GetMessage(theTouchpoint));
 
             await inScope.Information($"deleting authority: '{result.Name}'");
 

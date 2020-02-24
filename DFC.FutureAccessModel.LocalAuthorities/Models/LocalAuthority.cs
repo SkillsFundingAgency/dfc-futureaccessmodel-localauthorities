@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DFC.FutureAccessModel.LocalAuthorities.Validation;
 using DFC.Swagger.Standard.Annotations;
 using Newtonsoft.Json;
 
@@ -15,6 +16,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Models
         /// </summary>
         [Required]
         [Display(Description = "The authority's touchpoint")]
+        [RegularExpression(ValidationExpressions.TouchpointID)]
         [StringLength(10, MinimumLength = 10)]
         [Example(Description = "0000000101")]
         public string TouchpointID { get; set; }
@@ -26,7 +28,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Models
         [Required]
         [JsonProperty("id")]
         [Display(Description = "The authority's unique identifier")]
-        [StringLength(10, MinimumLength = 10)]
+        [RegularExpression(ValidationExpressions.LocalAdminDistrictCode)]
+        [StringLength(9, MinimumLength = 9)]
         [Example(Description = "E09000002")]
         public string LADCode { get; set; }
         
@@ -34,8 +37,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Models
         /// the (authority) name
         /// </summary>
         [Required]
-        [StringLength(50)]
-        [RegularExpression(ValidationExpressions.StandardText)]
+        [StringLength(50, MinimumLength = 4)]
+        [RegularExpression(ValidationExpressions.TownOrRegion)]
         [Display(Description = "The name of the authority")]
         [Example(Description = "Barking and Dagenham")]
         public string Name { get; set; }

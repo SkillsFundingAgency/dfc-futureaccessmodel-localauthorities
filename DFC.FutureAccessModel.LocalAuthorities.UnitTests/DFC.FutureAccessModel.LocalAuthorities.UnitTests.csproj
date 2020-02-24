@@ -25,6 +25,7 @@
         <Folder Include="Faults\" />
         <Folder Include="Adapters\" />
         <Folder Include="Registration\" />
+        <Folder Include="Validation\" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\DFC.FutureAccessModel.LocalAuthorities\DFC.FutureAccessModel.LocalAuthorities.csproj" />

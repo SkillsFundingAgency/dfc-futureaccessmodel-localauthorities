@@ -19,7 +19,7 @@
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.CosmosDB" Version="3.0.5" />
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="4.1.0" />
         <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.14" />
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.3.0.14607">
+        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.4.0.15306">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -28,6 +28,9 @@
     </ItemGroup>
     <ItemGroup>
         <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="ReferenceData\English Local Authorities.csv" />
     </ItemGroup>
    <ItemGroup>
         <None Update="host.json">
@@ -49,5 +52,7 @@
         <Folder Include="Factories\Internal\" />
         <Folder Include="Registration\Internal\" />
         <Folder Include="ReferenceData\" />
+        <Folder Include="Validation\" />
+        <Folder Include="Validation\Internal\" />
     </ItemGroup>
 </Project>

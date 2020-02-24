@@ -8,7 +8,7 @@ using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
 {
-    public class DocumentClientWrapperFixture :
+    public sealed class DocumentClientWrapperFixture :
         MoqTestingFixture
     {
         /// <summary>

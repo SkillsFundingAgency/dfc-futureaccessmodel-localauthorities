@@ -7,7 +7,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Registration
     /// <summary>
     /// web jobs ewxtension startup fixture
     /// </summary>
-    public class WebJobsExtensionStartupFixture
+    public sealed class WebJobsExtensionStartupFixture
     {
         /// <summary>
         /// test (the) registrations
@@ -26,7 +26,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Registration
                 .Where(x => x.IsClass && typeof(ISupportServiceRegistration).IsAssignableFrom(x));
             var registrations = assembly.GetCustomAttributes<InternalRegistrationAttribute>();
 
-            //assert
+            // assert
             Assert.Equal(types.Count(), registrations.Count());
         }
     }
