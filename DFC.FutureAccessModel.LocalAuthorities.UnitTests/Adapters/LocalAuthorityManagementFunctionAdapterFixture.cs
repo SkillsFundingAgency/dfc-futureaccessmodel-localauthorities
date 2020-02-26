@@ -21,51 +21,19 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         MoqTestingFixture
     {
         /// <summary>
-        /// build with null response helper throws
+        /// build with null (document) validator throws
         /// </summary>
         [Fact]
-        public void BuildWithNullResponseHelperThrows()
+        public void BuildWithNullDocumentValidatorThrows()
         {
             // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
             var store = MakeStrictMock<IStoreLocalAuthorities>();
+            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
             var faults = MakeStrictMock<IProvideFaultResponses>();
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new LocalAuthorityManagementFunctionAdapter(null, faults, safe, store, validator));
-        }
-
-        /// <summary>
-        /// build with null fault response provider throws
-        /// </summary>
-        [Fact]
-        public void BuildWithNullFaultsResponseProviderThrows()
-        {
-            // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
-
-            // act / assert
-            Assert.Throws<ArgumentNullException>(() => new LocalAuthorityManagementFunctionAdapter(helper, null, safe, store, validator));
-        }
-
-        /// <summary>
-        /// build with null safe opeations throws
-        /// </summary>
-        [Fact]
-        public void BuildWithNullSafeOperationsThrows()
-        {
-            // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
-
-            // act / assert
-            Assert.Throws<ArgumentNullException>(() => new LocalAuthorityManagementFunctionAdapter(helper, faults, null, store, validator));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store, helper, faults, safe));
         }
 
         /// <summary>
@@ -81,23 +49,55 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new LocalAuthorityManagementFunctionAdapter(helper, faults, safe, null, validator));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, null, helper, faults, safe));
         }
 
         /// <summary>
-        /// build with null (document) validator throws
+        /// build with null response helper throws
         /// </summary>
         [Fact]
-        public void BuildWithNullDocumentValidatorThrows()
+        public void BuildWithNullResponseHelperThrows()
         {
             // arrange
+            var validator = MakeStrictMock<IValidateLocalAuthorities>();
             var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
             var faults = MakeStrictMock<IProvideFaultResponses>();
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new LocalAuthorityManagementFunctionAdapter(helper, faults, safe, store, null));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, null, faults, safe));
+        }
+
+        /// <summary>
+        /// build with null fault response provider throws
+        /// </summary>
+        [Fact]
+        public void BuildWithNullFaultsResponseProviderThrows()
+        {
+            // arrange
+            var validator = MakeStrictMock<IValidateLocalAuthorities>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();
+            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var safe = MakeStrictMock<IProvideSafeOperations>();
+
+            // act / assert
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, helper, null, safe));
+        }
+
+        /// <summary>
+        /// build with null safe opeations throws
+        /// </summary>
+        [Fact]
+        public void BuildWithNullSafeOperationsThrows()
+        {
+            // arrange
+            var validator = MakeStrictMock<IValidateLocalAuthorities>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();
+            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var faults = MakeStrictMock<IProvideFaultResponses>();
+
+            // act / assert
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, helper, faults, null));
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Information($"applying missing touchpoint details: '{theTouchpoint}'"))
                 .Returns(Task.CompletedTask);
             GetMock(scope)
-                .Setup(x => x.Information($"validating the admin district candidate: ''"))
+                .Setup(x => x.Information($"validating the candidate: ''"))
                 .Returns(Task.CompletedTask);
 
             // act / assert
@@ -370,13 +370,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Information($"applying missing touchpoint details: '{theTouchpoint}'"))
                 .Returns(Task.CompletedTask);
             GetMock(scope)
-                .Setup(x => x.Information($"validating the admin district candidate: '{theLADCode}'"))
+                .Setup(x => x.Information($"validating the candidate: '{theLADCode}'"))
                 .Returns(Task.CompletedTask);
             GetMock(scope)
                 .Setup(x => x.Information($"validation complete..."))
                 .Returns(Task.CompletedTask);
             GetMock(scope)
-                .Setup(x => x.Information($"adding the admin district candidate: '{theLADCode}'"))
+                .Setup(x => x.Information($"adding the candidate: '{theLADCode}'"))
                 .Returns(Task.CompletedTask);
             GetMock(scope)
                 .Setup(x => x.Information($"candidate addition complete..."))
@@ -477,12 +477,19 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             GetMock(scope)
                 .Setup(x => x.Information($"seeking the admin district: '{theAdminDistrict}'"))
                 .Returns(Task.CompletedTask);
+            GetMock(scope)
+                .Setup(x => x.Information($"candidate search complete: ''"))
+                .Returns(Task.CompletedTask);
+            GetMock(scope)
+                .Setup(x => x.Information($"validating touchpoint integrity: '{localAuthority.TouchpointID}' == '{theTouchpoint}'"))
+                .Returns(Task.CompletedTask);
+
             GetMock(sut.Authorities)
                 .Setup(x => x.Get(theAdminDistrict))
                 .Returns(Task.FromResult<ILocalAuthority>(localAuthority));
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.ProcessDeleteAuthorityFor(theTouchpoint, theAdminDistrict, scope));
+            await Assert.ThrowsAsync<NoContentException>(() => sut.ProcessDeleteAuthorityFor(theTouchpoint, theAdminDistrict, scope));
         }
 
         /// <summary>

@@ -178,12 +178,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 theCandidate.TouchpointID = theTouchpoint;
             }
 
-            await inScope.Information($"validating the admin district candidate: '{theCandidate.LADCode}'");
+            await inScope.Information($"validating the candidate: '{theCandidate.LADCode}'");
 
             await Authority.Validate(theCandidate);
 
             await inScope.Information($"validation complete...");
-            await inScope.Information($"adding the admin district candidate: '{theCandidate.LADCode}'");
+            await inScope.Information($"adding the candidate: '{theCandidate.LADCode}'");
 
             var result = await Authorities.Add(theCandidate);
 
@@ -233,8 +233,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             It.IsNull(result)
                 .AsGuard<NoContentException>();
-            It.IsEmpty(result.LADCode)
-                .AsGuard<ArgumentNullException>(theLADCode);
 
             await inScope.Information($"candidate search complete: '{result.LADCode}'");
             await inScope.Information($"validating touchpoint integrity: '{result.TouchpointID}' == '{theTouchpoint}'");
@@ -251,7 +249,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var response = Respond.Ok();
 
             await inScope.Information($"preparation complete...");
-
             await inScope.ExitMethod();
 
             return response;

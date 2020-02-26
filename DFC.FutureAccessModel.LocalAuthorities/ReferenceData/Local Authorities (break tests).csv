@@ -1,13 +1,13 @@
-TouchpointID,LADCode,LocalAuthority,BreakType,Expectation
-101,E06000031,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaZ,Upper name limit - post passed,201
-102,S06000032,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaZ,Name too long (51 and over) - post failed,422
-103,W06000033,Southend-on-Sea 2,Number in name - post failed,422
-101,E06000031,Pete,Lower name limit - post passed,201
-102,S06000032,Lut,Name too short (less then 4) - post failed,422
-103,V06000033,Southend-on-Sea,Invalid LAD Code Prefix - post failed,422
-101,EO6000031,Peterborough,Invalid LAD Code (contains Alpha at start) - post failed,422
-102,S060O0032,Luton,Invalid LAD Code (contains Alpha in middle) - post failed,422
-103,W0600003O,Southend-on-Sea,Invalid LAD Code (contains Alpha at end) - post failed,422
-101,6000031,Peterborough,Invalid LAD Code (no prefix) - post failed,422
-102,S0600003,Luton,Invalid LAD Code (too short) - post failed,422
-103,W060000331,Southend-on-Sea,Invalid LAD Code (too long) - post failed,422
+TouchpointID,LADCode,LocalAuthority,TestText,PostExpectation,DeleteExpectation
+"0000000101",E06000031,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaZ,Upper name limit (50),201,200
+"0000000102",S06000032,Peterborough aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaZ,Name too long (51+),422,204
+"0000000103",W06000033,Southend-on-Sea 2,Illegal character in name,422,204
+"0000000101",E06000031,Pete,Lower name limit (4),201,200
+"0000000102",S06000032,Lut,Name too short (3-),422,204
+"0000000103",V06000033,Southend-on-Sea,LAD Code illegal prefix,422,204
+"0000000101",EO6000031,Peterborough,LAD Code illegal character at start,422,204
+"0000000102",S060O0032,Luton,LAD Code illegal character in middle,422,204
+"0000000103",W0600003O,Southend-on-Sea,LAD Code illegal character at end,422,204
+"0000000101",6000031,Peterborough,LAD Code no prefix,422,204
+"0000000102",S0600003,Luton,LAD Code too short,422,204
+"0000000103",W060000331,Southend-on-Sea,LAD Code too long,422,204

@@ -13,8 +13,10 @@
 					"script": {
 						"id": "24b46f0d-e212-4cac-a299-744a830abbf4",
 						"exec": [
+							"var expectedState = pm.variables.get(\"DeleteExpectation\");",
+							"",
 							"pm.test(\"Deleted ok\", function () {",
-							"    pm.response.to.have.status(200);",
+							"    pm.response.to.have.status(expectedState);",
 							"});",
 							""
 						],
@@ -42,12 +44,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{local_url}}/0000000{{TouchpointID}}/localauthorities/{{LADCode}}",
+					"raw": "{{local_url}}/{{TouchpointID}}/localauthorities/{{LADCode}}",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"0000000{{TouchpointID}}",
+						"{{TouchpointID}}",
 						"localauthorities",
 						"{{LADCode}}"
 					]
@@ -73,8 +75,8 @@
 					"script": {
 						"id": "76b84281-0493-42ad-8ab5-98e5a5838017",
 						"exec": [
-							"var breakType = pm.variables.get(\"BreakType\");",
-							"var expectedState = pm.variables.get(\"Expectation\");",
+							"var breakType = pm.variables.get(\"TestText\");",
+							"var expectedState = pm.variables.get(\"PostExpectation\");",
 							"",
 							"pm.test(breakType, function () {",
 							"    pm.response.to.have.status(expectedState);",
@@ -115,12 +117,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{local_url}}/0000000{{TouchpointID}}/localauthorities",
+					"raw": "{{local_url}}/{{TouchpointID}}/localauthorities",
 					"host": [
 						"{{local_url}}"
 					],
 					"path": [
-						"0000000{{TouchpointID}}",
+						"{{TouchpointID}}",
 						"localauthorities"
 					]
 				}

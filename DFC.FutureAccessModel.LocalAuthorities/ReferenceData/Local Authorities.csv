@@ -1,327 +1,327 @@
-TouchpointID,LADCode,LocalAuthority,BreakType,Expectation
-101,E06000031,Peterborough,post passed,201
-101,E06000032,Luton,post passed,201
-101,E06000033,Southend-on-Sea,post passed,201
-101,E06000034,Thurrock,post passed,201
-101,E06000042,Milton Keynes,post passed,201
-101,E06000055,Bedford,post passed,201
-101,E06000056,Central Bedfordshire,post passed,201
-101,E07000066,Basildon,post passed,201
-101,E07000067,Braintree,post passed,201
-101,E07000068,Brentwood,post passed,201
-101,E07000069,Castle Point,post passed,201
-101,E07000070,Chelmsford,post passed,201
-101,E07000071,Colchester,post passed,201
-101,E07000072,Epping Forest,post passed,201
-101,E07000073,Harlow,post passed,201
-101,E07000074,Maldon,post passed,201
-101,E07000075,Rochford,post passed,201
-101,E07000076,Tendring,post passed,201
-101,E07000077,Uttlesford,post passed,201
-101,E07000004,Aylesbury Vale,post passed,201
-101,E07000005,Chiltern,post passed,201
-101,E07000006,South Bucks,post passed,201
-101,E07000007,Wycombe,post passed,201
-101,E07000008,Cambridge,post passed,201
-101,E07000009,East Cambridgeshire,post passed,201
-101,E07000010,Fenland,post passed,201
-101,E07000011,Huntingdonshire,post passed,201
-101,E07000012,South Cambridgeshire,post passed,201
-101,E07000095,Broxbourne,post passed,201
-101,E07000096,Dacorum,post passed,201
-101,E07000098,Hertsmere,post passed,201
-101,E07000099,North Hertfordshire,post passed,201
-101,E07000102,Three Rivers,post passed,201
-101,E07000103,Watford,post passed,201
-101,E07000143,Breckland,post passed,201
-101,E07000144,Broadland,post passed,201
-101,E07000145,Great Yarmouth,post passed,201
-101,E07000146,King's Lynn and West Norfolk,post passed,201
-101,E07000147,North Norfolk,post passed,201
-101,E07000148,Norwich,post passed,201
-101,E07000149,South Norfolk,post passed,201
-101,E07000200,Babergh,post passed,201
-101,E07000201,Forest Heath,post passed,201
-101,E07000202,Ipswich,post passed,201
-101,E07000203,Mid Suffolk,post passed,201
-101,E07000204,St Edmundsbury,post passed,201
-101,E07000205,Suffolk Coastal,post passed,201
-101,E07000206,Waveney,post passed,201
-101,E07000240,St Albans,post passed,201
-101,E07000241,Welwyn Hatfield,post passed,201
-101,E07000242,East Hertfordshire,post passed,201
-101,E07000243,Stevenage,post passed,201
-102,E07000150,Corby,post passed,201
-102,E07000151,Daventry,post passed,201
-102,E07000152,East Northamptonshire,post passed,201
-102,E07000153,Kettering,post passed,201
-102,E07000154,Northampton,post passed,201
-102,E07000155,South Northamptonshire,post passed,201
-102,E07000156,Wellingborough,post passed,201
-102,E07000170,Ashfield,post passed,201
-102,E07000171,Bassetlaw,post passed,201
-102,E07000172,Broxtowe,post passed,201
-102,E07000173,Gedling,post passed,201
-102,E07000174,Mansfield,post passed,201
-102,E07000175,Newark and Sherwood,post passed,201
-102,E07000176,Rushcliffe,post passed,201
-102,E07000129,Blaby,post passed,201
-102,E07000130,Charnwood,post passed,201
-102,E07000131,Harborough,post passed,201
-102,E07000132,Hinckley and Bosworth,post passed,201
-102,E07000133,Melton,post passed,201
-102,E07000134,North West Leicestershire,post passed,201
-102,E07000135,Oadby and Wigston,post passed,201
-102,E07000136,Boston,post passed,201
-102,E07000137,East Lindsey,post passed,201
-102,E07000138,Lincoln,post passed,201
-102,E07000139,North Kesteven,post passed,201
-102,E07000140,South Holland,post passed,201
-102,E07000141,South Kesteven,post passed,201
-102,E07000142,West Lindsey,post passed,201
-102,E07000032,Amber Valley,post passed,201
-102,E07000033,Bolsover,post passed,201
-102,E07000034,Chesterfield,post passed,201
-102,E07000035,Derbyshire Dales,post passed,201
-102,E07000036,Erewash,post passed,201
-102,E07000037,High Peak,post passed,201
-102,E07000038,North East Derbyshire,post passed,201
-102,E07000039,South Derbyshire,post passed,201
-102,E06000015,Derby,post passed,201
-102,E06000016,Leicester,post passed,201
-102,E06000017,Rutland,post passed,201
-102,E06000018,Nottingham,post passed,201
-103,E09000001,City of London,post passed,201
-103,E09000002,Barking and Dagenham,post passed,201
-103,E09000003,Barnet,post passed,201
-103,E09000004,Bexley,post passed,201
-103,E09000005,Brent,post passed,201
-103,E09000006,Bromley,post passed,201
-103,E09000007,Camden,post passed,201
-103,E09000008,Croydon,post passed,201
-103,E09000009,Ealing,post passed,201
-103,E09000010,Enfield,post passed,201
-103,E09000011,Greenwich,post passed,201
-103,E09000012,Hackney,post passed,201
-103,E09000013,Hammersmith and Fulham,post passed,201
-103,E09000014,Haringey,post passed,201
-103,E09000015,Harrow,post passed,201
-103,E09000016,Havering,post passed,201
-103,E09000017,Hillingdon,post passed,201
-103,E09000018,Hounslow,post passed,201
-103,E09000019,Islington,post passed,201
-103,E09000020,Kensington and Chelsea,post passed,201
-103,E09000021,Kingston upon Thames,post passed,201
-103,E09000022,Lambeth,post passed,201
-103,E09000023,Lewisham,post passed,201
-103,E09000024,Merton,post passed,201
-103,E09000025,Newham,post passed,201
-103,E09000026,Redbridge,post passed,201
-103,E09000027,Richmond upon Thames,post passed,201
-103,E09000028,Southwark,post passed,201
-103,E09000029,Sutton,post passed,201
-103,E09000030,Tower Hamlets,post passed,201
-103,E09000031,Waltham Forest,post passed,201
-103,E09000032,Wandsworth,post passed,201
-103,E09000033,Westminster,post passed,201
-104,E07000234,Bromsgrove,post passed,201
-104,E07000235,Malvern Hills,post passed,201
-104,E07000236,Redditch,post passed,201
-104,E07000237,Worcester,post passed,201
-104,E07000238,Wychavon,post passed,201
-104,E07000239,Wyre Forest,post passed,201
-104,E08000025,Birmingham,post passed,201
-104,E08000026,Coventry,post passed,201
-104,E08000027,Dudley,post passed,201
-104,E08000028,Sandwell,post passed,201
-104,E08000029,Solihull,post passed,201
-104,E08000030,Walsall,post passed,201
-104,E08000031,Wolverhampton,post passed,201
-104,E07000192,Cannock Chase,post passed,201
-104,E07000193,East Staffordshire,post passed,201
-104,E07000194,Lichfield,post passed,201
-104,E07000195,Newcastle-under-Lyme,post passed,201
-104,E07000196,South Staffordshire,post passed,201
-104,E07000197,Stafford,post passed,201
-104,E07000198,Staffordshire Moorlands,post passed,201
-104,E07000199,Tamworth,post passed,201
-104,E07000218,North Warwickshire,post passed,201
-104,E07000219,Nuneaton and Bedworth,post passed,201
-104,E07000220,Rugby,post passed,201
-104,E07000221,Stratford-on-Avon,post passed,201
-104,E07000222,Warwick,post passed,201
-104,E06000019,County of Herefordshire,post passed,201
-104,E06000020,Telford and Wrekin,post passed,201
-104,E06000021,Stoke-on-Trent,post passed,201
-104,E06000051,Shropshire,post passed,201
-105,E06000049,Cheshire East,post passed,201
-105,E06000050,Cheshire West and Chester,post passed,201
-105,E06000006,Halton,post passed,201
-105,E06000007,Warrington,post passed,201
-105,E06000008,Blackburn with Darwen,post passed,201
-105,E06000009,Blackpool,post passed,201
-105,E07000117,Burnley,post passed,201
-105,E07000118,Chorley,post passed,201
-105,E07000119,Fylde,post passed,201
-105,E07000120,Hyndburn,post passed,201
-105,E07000121,Lancaster,post passed,201
-105,E07000122,Pendle,post passed,201
-105,E07000123,Preston,post passed,201
-105,E07000124,Ribble Valley,post passed,201
-105,E07000125,Rossendale,post passed,201
-105,E07000126,South Ribble,post passed,201
-105,E07000127,West Lancashire,post passed,201
-105,E07000128,Wyre,post passed,201
-105,E08000001,Bolton,post passed,201
-105,E08000002,Bury,post passed,201
-105,E08000003,Manchester,post passed,201
-105,E08000004,Oldham,post passed,201
-105,E08000005,Rochdale,post passed,201
-105,E08000006,Salford,post passed,201
-105,E08000007,Stockport,post passed,201
-105,E08000008,Tameside,post passed,201
-105,E08000009,Trafford,post passed,201
-105,E08000010,Wigan,post passed,201
-105,E08000011,Knowsley,post passed,201
-105,E08000012,Liverpool,post passed,201
-105,E08000013,St Helens,post passed,201
-105,E08000014,Sefton,post passed,201
-105,E08000015,Wirral,post passed,201
-106,E07000026,Allerdale,post passed,201
-106,E07000027,Barrow-in-Furness,post passed,201
-106,E07000028,Carlisle,post passed,201
-106,E07000029,Copeland,post passed,201
-106,E07000030,Eden,post passed,201
-106,E07000031,South Lakeland,post passed,201
-106,E06000057,Northumberland,post passed,201
-106,E06000001,Hartlepool,post passed,201
-106,E06000002,Middlesbrough,post passed,201
-106,E06000003,Redcar and Cleveland,post passed,201
-106,E06000004,Stockton-on-Tees,post passed,201
-106,E06000005,Darlington,post passed,201
-106,E08000021,Newcastle upon Tyne,post passed,201
-106,E08000022,North Tyneside,post passed,201
-106,E08000023,South Tyneside,post passed,201
-106,E08000024,Sunderland,post passed,201
-106,E06000047,County Durham,post passed,201
-106,E08000037,Gateshead,post passed,201
-107,E06000043,Brighton and Hove,post passed,201
-107,E06000044,Portsmouth,post passed,201
-107,E06000045,Southampton,post passed,201
-107,E06000046,Isle of Wight,post passed,201
-107,E06000035,Medway,post passed,201
-107,E06000036,Bracknell Forest,post passed,201
-107,E06000037,West Berkshire,post passed,201
-107,E06000038,Reading,post passed,201
-107,E06000039,Slough,post passed,201
-107,E06000040,Windsor and Maidenhead,post passed,201
-107,E06000041,Wokingham,post passed,201
-107,E07000084,Basingstoke and Deane,post passed,201
-107,E07000085,East Hampshire,post passed,201
-107,E07000086,Eastleigh,post passed,201
-107,E07000087,Fareham,post passed,201
-107,E07000088,Gosport,post passed,201
-107,E07000089,Hart,post passed,201
-107,E07000090,Havant,post passed,201
-107,E07000091,New Forest,post passed,201
-107,E07000092,Rushmoor,post passed,201
-107,E07000093,Test Valley,post passed,201
-107,E07000094,Winchester,post passed,201
-107,E07000105,Ashford,post passed,201
-107,E07000106,Canterbury,post passed,201
-107,E07000107,Dartford,post passed,201
-107,E07000108,Dover,post passed,201
-107,E07000109,Gravesham,post passed,201
-107,E07000110,Maidstone,post passed,201
-107,E07000111,Sevenoaks,post passed,201
-107,E07000112,Folkestone and Hythe,post passed,201
-107,E07000113,Swale,post passed,201
-107,E07000114,Thanet,post passed,201
-107,E07000115,Tonbridge and Malling,post passed,201
-107,E07000116,Tunbridge Wells,post passed,201
-107,E07000061,Eastbourne,post passed,201
-107,E07000062,Hastings,post passed,201
-107,E07000063,Lewes,post passed,201
-107,E07000064,Rother,post passed,201
-107,E07000065,Wealden,post passed,201
-107,E07000223,Adur,post passed,201
-107,E07000224,Arun,post passed,201
-107,E07000225,Chichester,post passed,201
-107,E07000226,Crawley,post passed,201
-107,E07000227,Horsham,post passed,201
-107,E07000228,Mid Sussex,post passed,201
-107,E07000229,Worthing,post passed,201
-107,E07000207,Elmbridge,post passed,201
-107,E07000208,Epsom and Ewell,post passed,201
-107,E07000209,Guildford,post passed,201
-107,E07000210,Mole Valley,post passed,201
-107,E07000211,Reigate and Banstead,post passed,201
-107,E07000212,Runnymede,post passed,201
-107,E07000213,Spelthorne,post passed,201
-107,E07000214,Surrey Heath,post passed,201
-107,E07000215,Tandridge,post passed,201
-107,E07000216,Waverley,post passed,201
-107,E07000217,Woking,post passed,201
-108,E07000177,Cherwell,post passed,201
-108,E07000178,Oxford,post passed,201
-108,E07000179,South Oxfordshire,post passed,201
-108,E07000180,Vale of White Horse,post passed,201
-108,E07000181,West Oxfordshire,post passed,201
-108,E07000187,Mendip,post passed,201
-108,E07000188,Sedgemoor,post passed,201
-108,E07000189,South Somerset,post passed,201
-108,E07000190,Taunton Deane,post passed,201
-108,E07000191,West Somerset,post passed,201
-108,E07000078,Cheltenham,post passed,201
-108,E07000079,Cotswold,post passed,201
-108,E07000080,Forest of Dean,post passed,201
-108,E07000081,Gloucester,post passed,201
-108,E07000082,Stroud,post passed,201
-108,E07000083,Tewkesbury,post passed,201
-108,E06000022,Bath and North East Somerset,post passed,201t
-108,E06000023,City of Bristol,post passed,201
-108,E06000024,North Somerset,post passed,201
-108,E06000025,South Gloucestershire,post passed,201
-108,E06000026,Plymouth,post passed,201
-108,E06000027,Torbay,post passed,201
-108,E06000028,Bournemouth,post passed,201
-108,E06000029,Poole,post passed,201
-108,E06000030,Swindon,post passed,201
-108,E06000052,Cornwall,post passed,201
-108,E06000053,Isles of Scilly,post passed,201
-108,E06000054,Wiltshire,post passed,201
-108,E07000040,East Devon,post passed,201
-108,E07000041,Exeter,post passed,201
-108,E07000042,Mid Devon,post passed,201
-108,E07000043,North Devon,post passed,201
-108,E07000044,South Hams,post passed,201
-108,E07000045,Teignbridge,post passed,201
-108,E07000046,Torridge,post passed,201
-108,E07000047,West Devon,post passed,201
-108,E07000048,Christchurch,post passed,201
-108,E07000049,East Dorset,post passed,201
-108,E07000050,North Dorset,post passed,201
-108,E07000051,Purbeck,post passed,201
-108,E07000052,West Dorset,post passed,201
-108,E07000053,Weymouth and Portland,post passed,201
-109,E06000010,City of Kingston upon Hull,post passed,201
-109,E06000011,East Riding of Yorkshire,post passed,201
-109,E06000012,North East Lincolnshire,post passed,201
-109,E06000013,North Lincolnshire,post passed,201
-109,E06000014,York,post passed,201
-109,E07000163,Craven,post passed,201
-109,E07000164,Hambleton,post passed,201
-109,E07000165,Harrogate,post passed,201
-109,E07000166,Richmondshire,post passed,201
-109,E07000167,Ryedale,post passed,201
-109,E07000168,Scarborough,post passed,201
-109,E07000169,Selby,post passed,201
-109,E08000032,Bradford,post passed,201
-109,E08000033,Calderdale,post passed,201
-109,E08000034,Kirklees,post passed,201
-109,E08000035,Leeds,post passed,201
-109,E08000036,Wakefield,post passed,201
-109,E08000016,Barnsley,post passed,201
-109,E08000017,Doncaster,post passed,201
-109,E08000018,Rotherham,post passed,201
-109,E08000019,Sheffield,post passed,201
+TouchpointID,LADCode,LocalAuthority,TestText,PostExpectation,DeleteExpectation
+"0000000101",E06000031,Peterborough,Done,201,200
+"0000000101",E06000032,Luton,Done,201,200
+"0000000101",E06000033,Southend-on-Sea,Done,201,200
+"0000000101",E06000034,Thurrock,Done,201,200
+"0000000101",E06000042,Milton Keynes,Done,201,200
+"0000000101",E06000055,Bedford,Done,201,200
+"0000000101",E06000056,Central Bedfordshire,Done,201,200
+"0000000101",E07000066,Basildon,Done,201,200
+"0000000101",E07000067,Braintree,Done,201,200
+"0000000101",E07000068,Brentwood,Done,201,200
+"0000000101",E07000069,Castle Point,Done,201,200
+"0000000101",E07000070,Chelmsford,Done,201,200
+"0000000101",E07000071,Colchester,Done,201,200
+"0000000101",E07000072,Epping Forest,Done,201,200
+"0000000101",E07000073,Harlow,Done,201,200
+"0000000101",E07000074,Maldon,Done,201,200
+"0000000101",E07000075,Rochford,Done,201,200
+"0000000101",E07000076,Tendring,Done,201,200
+"0000000101",E07000077,Uttlesford,Done,201,200
+"0000000101",E07000004,Aylesbury Vale,Done,201,200
+"0000000101",E07000005,Chiltern,Done,201,200
+"0000000101",E07000006,South Bucks,Done,201,200
+"0000000101",E07000007,Wycombe,Done,201,200
+"0000000101",E07000008,Cambridge,Done,201,200
+"0000000101",E07000009,East Cambridgeshire,Done,201,200
+"0000000101",E07000010,Fenland,Done,201,200
+"0000000101",E07000011,Huntingdonshire,Done,201,200
+"0000000101",E07000012,South Cambridgeshire,Done,201,200
+"0000000101",E07000095,Broxbourne,Done,201,200
+"0000000101",E07000096,Dacorum,Done,201,200
+"0000000101",E07000098,Hertsmere,Done,201,200
+"0000000101",E07000099,North Hertfordshire,Done,201,200
+"0000000101",E07000102,Three Rivers,Done,201,200
+"0000000101",E07000103,Watford,Done,201,200
+"0000000101",E07000143,Breckland,Done,201,200
+"0000000101",E07000144,Broadland,Done,201,200
+"0000000101",E07000145,Great Yarmouth,Done,201,200
+"0000000101",E07000146,King's Lynn and West Norfolk,Done,201,200
+"0000000101",E07000147,North Norfolk,Done,201,200
+"0000000101",E07000148,Norwich,Done,201,200
+"0000000101",E07000149,South Norfolk,Done,201,200
+"0000000101",E07000200,Babergh,Done,201,200
+"0000000101",E07000201,Forest Heath,Done,201,200
+"0000000101",E07000202,Ipswich,Done,201,200
+"0000000101",E07000203,Mid Suffolk,Done,201,200
+"0000000101",E07000204,St Edmundsbury,Done,201,200
+"0000000101",E07000205,Suffolk Coastal,Done,201,200
+"0000000101",E07000206,Waveney,Done,201,200
+"0000000101",E07000240,St Albans,Done,201,200
+"0000000101",E07000241,Welwyn Hatfield,Done,201,200
+"0000000101",E07000242,East Hertfordshire,Done,201,200
+"0000000101",E07000243,Stevenage,Done,201,200
+"0000000102",E07000150,Corby,Done,201,200
+"0000000102",E07000151,Daventry,Done,201,200
+"0000000102",E07000152,East Northamptonshire,Done,201,200
+"0000000102",E07000153,Kettering,Done,201,200
+"0000000102",E07000154,Northampton,Done,201,200
+"0000000102",E07000155,South Northamptonshire,Done,201,200
+"0000000102",E07000156,Wellingborough,Done,201,200
+"0000000102",E07000170,Ashfield,Done,201,200
+"0000000102",E07000171,Bassetlaw,Done,201,200
+"0000000102",E07000172,Broxtowe,Done,201,200
+"0000000102",E07000173,Gedling,Done,201,200
+"0000000102",E07000174,Mansfield,Done,201,200
+"0000000102",E07000175,Newark and Sherwood,Done,201,200
+"0000000102",E07000176,Rushcliffe,Done,201,200
+"0000000102",E07000129,Blaby,Done,201,200
+"0000000102",E07000130,Charnwood,Done,201,200
+"0000000102",E07000131,Harborough,Done,201,200
+"0000000102",E07000132,Hinckley and Bosworth,Done,201,200
+"0000000102",E07000133,Melton,Done,201,200
+"0000000102",E07000134,North West Leicestershire,Done,201,200
+"0000000102",E07000135,Oadby and Wigston,Done,201,200
+"0000000102",E07000136,Boston,Done,201,200
+"0000000102",E07000137,East Lindsey,Done,201,200
+"0000000102",E07000138,Lincoln,Done,201,200
+"0000000102",E07000139,North Kesteven,Done,201,200
+"0000000102",E07000140,South Holland,Done,201,200
+"0000000102",E07000141,South Kesteven,Done,201,200
+"0000000102",E07000142,West Lindsey,Done,201,200
+"0000000102",E07000032,Amber Valley,Done,201,200
+"0000000102",E07000033,Bolsover,Done,201,200
+"0000000102",E07000034,Chesterfield,Done,201,200
+"0000000102",E07000035,Derbyshire Dales,Done,201,200
+"0000000102",E07000036,Erewash,Done,201,200
+"0000000102",E07000037,High Peak,Done,201,200
+"0000000102",E07000038,North East Derbyshire,Done,201,200
+"0000000102",E07000039,South Derbyshire,Done,201,200
+"0000000102",E06000015,Derby,Done,201,200
+"0000000102",E06000016,Leicester,Done,201,200
+"0000000102",E06000017,Rutland,Done,201,200
+"0000000102",E06000018,Nottingham,Done,201,200
+"0000000103",E09000001,City of London,Done,201,200
+"0000000103",E09000002,Barking and Dagenham,Done,201,200
+"0000000103",E09000003,Barnet,Done,201,200
+"0000000103",E09000004,Bexley,Done,201,200
+"0000000103",E09000005,Brent,Done,201,200
+"0000000103",E09000006,Bromley,Done,201,200
+"0000000103",E09000007,Camden,Done,201,200
+"0000000103",E09000008,Croydon,Done,201,200
+"0000000103",E09000009,Ealing,Done,201,200
+"0000000103",E09000010,Enfield,Done,201,200
+"0000000103",E09000011,Greenwich,Done,201,200
+"0000000103",E09000012,Hackney,Done,201,200
+"0000000103",E09000013,Hammersmith and Fulham,Done,201,200
+"0000000103",E09000014,Haringey,Done,201,200
+"0000000103",E09000015,Harrow,Done,201,200
+"0000000103",E09000016,Havering,Done,201,200
+"0000000103",E09000017,Hillingdon,Done,201,200
+"0000000103",E09000018,Hounslow,Done,201,200
+"0000000103",E09000019,Islington,Done,201,200
+"0000000103",E09000020,Kensington and Chelsea,Done,201,200
+"0000000103",E09000021,Kingston upon Thames,Done,201,200
+"0000000103",E09000022,Lambeth,Done,201,200
+"0000000103",E09000023,Lewisham,Done,201,200
+"0000000103",E09000024,Merton,Done,201,200
+"0000000103",E09000025,Newham,Done,201,200
+"0000000103",E09000026,Redbridge,Done,201,200
+"0000000103",E09000027,Richmond upon Thames,Done,201,200
+"0000000103",E09000028,Southwark,Done,201,200
+"0000000103",E09000029,Sutton,Done,201,200
+"0000000103",E09000030,Tower Hamlets,Done,201,200
+"0000000103",E09000031,Waltham Forest,Done,201,200
+"0000000103",E09000032,Wandsworth,Done,201,200
+"0000000103",E09000033,Westminster,Done,201,200
+"0000000104",E07000234,Bromsgrove,Done,201,200
+"0000000104",E07000235,Malvern Hills,Done,201,200
+"0000000104",E07000236,Redditch,Done,201,200
+"0000000104",E07000237,Worcester,Done,201,200
+"0000000104",E07000238,Wychavon,Done,201,200
+"0000000104",E07000239,Wyre Forest,Done,201,200
+"0000000104",E08000025,Birmingham,Done,201,200
+"0000000104",E08000026,Coventry,Done,201,200
+"0000000104",E08000027,Dudley,Done,201,200
+"0000000104",E08000028,Sandwell,Done,201,200
+"0000000104",E08000029,Solihull,Done,201,200
+"0000000104",E08000030,Walsall,Done,201,200
+"0000000104",E08000031,Wolverhampton,Done,201,200
+"0000000104",E07000192,Cannock Chase,Done,201,200
+"0000000104",E07000193,East Staffordshire,Done,201,200
+"0000000104",E07000194,Lichfield,Done,201,200
+"0000000104",E07000195,Newcastle-under-Lyme,Done,201,200
+"0000000104",E07000196,South Staffordshire,Done,201,200
+"0000000104",E07000197,Stafford,Done,201,200
+"0000000104",E07000198,Staffordshire Moorlands,Done,201,200
+"0000000104",E07000199,Tamworth,Done,201,200
+"0000000104",E07000218,North Warwickshire,Done,201,200
+"0000000104",E07000219,Nuneaton and Bedworth,Done,201,200
+"0000000104",E07000220,Rugby,Done,201,200
+"0000000104",E07000221,Stratford-on-Avon,Done,201,200
+"0000000104",E07000222,Warwick,Done,201,200
+"0000000104",E06000019,County of Herefordshire,Done,201,200
+"0000000104",E06000020,Telford and Wrekin,Done,201,200
+"0000000104",E06000021,Stoke-on-Trent,Done,201,200
+"0000000104",E06000051,Shropshire,Done,201,200
+"0000000105",E06000049,Cheshire East,Done,201,200
+"0000000105",E06000050,Cheshire West and Chester,Done,201,200
+"0000000105",E06000006,Halton,Done,201,200
+"0000000105",E06000007,Warrington,Done,201,200
+"0000000105",E06000008,Blackburn with Darwen,Done,201,200
+"0000000105",E06000009,Blackpool,Done,201,200
+"0000000105",E07000117,Burnley,Done,201,200
+"0000000105",E07000118,Chorley,Done,201,200
+"0000000105",E07000119,Fylde,Done,201,200
+"0000000105",E07000120,Hyndburn,Done,201,200
+"0000000105",E07000121,Lancaster,Done,201,200
+"0000000105",E07000122,Pendle,Done,201,200
+"0000000105",E07000123,Preston,Done,201,200
+"0000000105",E07000124,Ribble Valley,Done,201,200
+"0000000105",E07000125,Rossendale,Done,201,200
+"0000000105",E07000126,South Ribble,Done,201,200
+"0000000105",E07000127,West Lancashire,Done,201,200
+"0000000105",E07000128,Wyre,Done,201,200
+"0000000105",E08000001,Bolton,Done,201,200
+"0000000105",E08000002,Bury,Done,201,200
+"0000000105",E08000003,Manchester,Done,201,200
+"0000000105",E08000004,Oldham,Done,201,200
+"0000000105",E08000005,Rochdale,Done,201,200
+"0000000105",E08000006,Salford,Done,201,200
+"0000000105",E08000007,Stockport,Done,201,200
+"0000000105",E08000008,Tameside,Done,201,200
+"0000000105",E08000009,Trafford,Done,201,200
+"0000000105",E08000010,Wigan,Done,201,200
+"0000000105",E08000011,Knowsley,Done,201,200
+"0000000105",E08000012,Liverpool,Done,201,200
+"0000000105",E08000013,St Helens,Done,201,200
+"0000000105",E08000014,Sefton,Done,201,200
+"0000000105",E08000015,Wirral,Done,201,200
+"0000000106",E07000026,Allerdale,Done,201,200
+"0000000106",E07000027,Barrow-in-Furness,Done,201,200
+"0000000106",E07000028,Carlisle,Done,201,200
+"0000000106",E07000029,Copeland,Done,201,200
+"0000000106",E07000030,Eden,Done,201,200
+"0000000106",E07000031,South Lakeland,Done,201,200
+"0000000106",E06000057,Northumberland,Done,201,200
+"0000000106",E06000001,Hartlepool,Done,201,200
+"0000000106",E06000002,Middlesbrough,Done,201,200
+"0000000106",E06000003,Redcar and Cleveland,Done,201,200
+"0000000106",E06000004,Stockton-on-Tees,Done,201,200
+"0000000106",E06000005,Darlington,Done,201,200
+"0000000106",E08000021,Newcastle upon Tyne,Done,201,200
+"0000000106",E08000022,North Tyneside,Done,201,200
+"0000000106",E08000023,South Tyneside,Done,201,200
+"0000000106",E08000024,Sunderland,Done,201,200
+"0000000106",E06000047,County Durham,Done,201,200
+"0000000106",E08000037,Gateshead,Done,201,200
+"0000000107",E06000043,Brighton and Hove,Done,201,200
+"0000000107",E06000044,Portsmouth,Done,201,200
+"0000000107",E06000045,Southampton,Done,201,200
+"0000000107",E06000046,Isle of Wight,Done,201,200
+"0000000107",E06000035,Medway,Done,201,200
+"0000000107",E06000036,Bracknell Forest,Done,201,200
+"0000000107",E06000037,West Berkshire,Done,201,200
+"0000000107",E06000038,Reading,Done,201,200
+"0000000107",E06000039,Slough,Done,201,200
+"0000000107",E06000040,Windsor and Maidenhead,Done,201,200
+"0000000107",E06000041,Wokingham,Done,201,200
+"0000000107",E07000084,Basingstoke and Deane,Done,201,200
+"0000000107",E07000085,East Hampshire,Done,201,200
+"0000000107",E07000086,Eastleigh,Done,201,200
+"0000000107",E07000087,Fareham,Done,201,200
+"0000000107",E07000088,Gosport,Done,201,200
+"0000000107",E07000089,Hart,Done,201,200
+"0000000107",E07000090,Havant,Done,201,200
+"0000000107",E07000091,New Forest,Done,201,200
+"0000000107",E07000092,Rushmoor,Done,201,200
+"0000000107",E07000093,Test Valley,Done,201,200
+"0000000107",E07000094,Winchester,Done,201,200
+"0000000107",E07000105,Ashford,Done,201,200
+"0000000107",E07000106,Canterbury,Done,201,200
+"0000000107",E07000107,Dartford,Done,201,200
+"0000000107",E07000108,Dover,Done,201,200
+"0000000107",E07000109,Gravesham,Done,201,200
+"0000000107",E07000110,Maidstone,Done,201,200
+"0000000107",E07000111,Sevenoaks,Done,201,200
+"0000000107",E07000112,Folkestone and Hythe,Done,201,200
+"0000000107",E07000113,Swale,Done,201,200
+"0000000107",E07000114,Thanet,Done,201,200
+"0000000107",E07000115,Tonbridge and Malling,Done,201,200
+"0000000107",E07000116,Tunbridge Wells,Done,201,200
+"0000000107",E07000061,Eastbourne,Done,201,200
+"0000000107",E07000062,Hastings,Done,201,200
+"0000000107",E07000063,Lewes,Done,201,200
+"0000000107",E07000064,Rother,Done,201,200
+"0000000107",E07000065,Wealden,Done,201,200
+"0000000107",E07000223,Adur,Done,201,200
+"0000000107",E07000224,Arun,Done,201,200
+"0000000107",E07000225,Chichester,Done,201,200
+"0000000107",E07000226,Crawley,Done,201,200
+"0000000107",E07000227,Horsham,Done,201,200
+"0000000107",E07000228,Mid Sussex,Done,201,200
+"0000000107",E07000229,Worthing,Done,201,200
+"0000000107",E07000207,Elmbridge,Done,201,200
+"0000000107",E07000208,Epsom and Ewell,Done,201,200
+"0000000107",E07000209,Guildford,Done,201,200
+"0000000107",E07000210,Mole Valley,Done,201,200
+"0000000107",E07000211,Reigate and Banstead,Done,201,200
+"0000000107",E07000212,Runnymede,Done,201,200
+"0000000107",E07000213,Spelthorne,Done,201,200
+"0000000107",E07000214,Surrey Heath,Done,201,200
+"0000000107",E07000215,Tandridge,Done,201,200
+"0000000107",E07000216,Waverley,Done,201,200
+"0000000107",E07000217,Woking,Done,201,200
+"0000000108",E07000177,Cherwell,Done,201,200
+"0000000108",E07000178,Oxford,Done,201,200
+"0000000108",E07000179,South Oxfordshire,Done,201,200
+"0000000108",E07000180,Vale of White Horse,Done,201,200
+"0000000108",E07000181,West Oxfordshire,Done,201,200
+"0000000108",E07000187,Mendip,Done,201,200
+"0000000108",E07000188,Sedgemoor,Done,201,200
+"0000000108",E07000189,South Somerset,Done,201,200
+"0000000108",E07000190,Taunton Deane,Done,201,200
+"0000000108",E07000191,West Somerset,Done,201,200
+"0000000108",E07000078,Cheltenham,Done,201,200
+"0000000108",E07000079,Cotswold,Done,201,200
+"0000000108",E07000080,Forest of Dean,Done,201,200
+"0000000108",E07000081,Gloucester,Done,201,200
+"0000000108",E07000082,Stroud,Done,201,200
+"0000000108",E07000083,Tewkesbury,Done,201,200
+"0000000108",E06000022,Bath and North East Somerset,Done,201,200
+"0000000108",E06000023,City of Bristol,Done,201,200
+"0000000108",E06000024,North Somerset,Done,201,200
+"0000000108",E06000025,South Gloucestershire,Done,201,200
+"0000000108",E06000026,Plymouth,Done,201,200
+"0000000108",E06000027,Torbay,Done,201,200
+"0000000108",E06000028,Bournemouth,Done,201,200
+"0000000108",E06000029,Poole,Done,201,200
+"0000000108",E06000030,Swindon,Done,201,200
+"0000000108",E06000052,Cornwall,Done,201,200
+"0000000108",E06000053,Isles of Scilly,Done,201,200
+"0000000108",E06000054,Wiltshire,Done,201,200
+"0000000108",E07000040,East Devon,Done,201,200
+"0000000108",E07000041,Exeter,Done,201,200
+"0000000108",E07000042,Mid Devon,Done,201,200
+"0000000108",E07000043,North Devon,Done,201,200
+"0000000108",E07000044,South Hams,Done,201,200
+"0000000108",E07000045,Teignbridge,Done,201,200
+"0000000108",E07000046,Torridge,Done,201,200
+"0000000108",E07000047,West Devon,Done,201,200
+"0000000108",E07000048,Christchurch,Done,201,200
+"0000000108",E07000049,East Dorset,Done,201,200
+"0000000108",E07000050,North Dorset,Done,201,200
+"0000000108",E07000051,Purbeck,Done,201,200
+"0000000108",E07000052,West Dorset,Done,201,200
+"0000000108",E07000053,Weymouth and Portland,Done,201,200
+"0000000109",E06000010,City of Kingston upon Hull,Done,201,200
+"0000000109",E06000011,East Riding of Yorkshire,Done,201,200
+"0000000109",E06000012,North East Lincolnshire,Done,201,200
+"0000000109",E06000013,North Lincolnshire,Done,201,200
+"0000000109",E06000014,York,Done,201,200
+"0000000109",E07000163,Craven,Done,201,200
+"0000000109",E07000164,Hambleton,Done,201,200
+"0000000109",E07000165,Harrogate,Done,201,200
+"0000000109",E07000166,Richmondshire,Done,201,200
+"0000000109",E07000167,Ryedale,Done,201,200
+"0000000109",E07000168,Scarborough,Done,201,200
+"0000000109",E07000169,Selby,Done,201,200
+"0000000109",E08000032,Bradford,Done,201,200
+"0000000109",E08000033,Calderdale,Done,201,200
+"0000000109",E08000034,Kirklees,Done,201,200
+"0000000109",E08000035,Leeds,Done,201,200
+"0000000109",E08000036,Wakefield,Done,201,200
+"0000000109",E08000016,Barnsley,Done,201,200
+"0000000109",E08000017,Doncaster,Done,201,200
+"0000000109",E08000018,Rotherham,Done,201,200
+"0000000109",E08000019,Sheffield,Done,201,200
