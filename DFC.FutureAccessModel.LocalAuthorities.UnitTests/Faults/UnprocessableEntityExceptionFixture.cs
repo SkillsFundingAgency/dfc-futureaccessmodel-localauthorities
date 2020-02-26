@@ -22,7 +22,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
             var message = sut.Message;
 
             // assert
-            Assert.Equal("{ \"errors\": [{  }] }", message);
+            Assert.Equal("", message);
         }
 
         /// <summary>

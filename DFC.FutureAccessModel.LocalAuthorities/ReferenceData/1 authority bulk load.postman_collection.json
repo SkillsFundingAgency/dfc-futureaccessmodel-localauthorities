@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "1bf41ce5-18fe-43fa-a296-a2de4e8ba40a",
+		"name": "1 authority bulk load",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "delete existing authority",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "24b46f0d-e212-4cac-a299-744a830abbf4",
+						"exec": [
+							"var expectedState = pm.variables.get(\"DeleteExpectation\");",
+							"",
+							"pm.test(\"Deleted ok\", function () {",
+							"    pm.response.to.have.status(expectedState);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{api_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Version",
+						"value": "1.0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local_url}}/{{TouchpointID}}/localauthorities/{{LADCode}}",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"{{TouchpointID}}",
+						"localauthorities",
+						"{{LADCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new authority",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f5f3bbe-173f-498b-ae17-04540c6a9c8e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "76b84281-0493-42ad-8ab5-98e5a5838017",
+						"exec": [
+							"var breakType = pm.variables.get(\"TestText\");",
+							"var expectedState = pm.variables.get(\"PostExpectation\");",
+							"",
+							"pm.test(breakType, function () {",
+							"    pm.response.to.have.status(expectedState);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{api_key}}"
+					},
+					{
+						"key": "Version",
+						"type": "text",
+						"value": "1.0.0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{LADCode}}\",\n    \"Name\": \"{{LocalAuthority}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{local_url}}/{{TouchpointID}}/localauthorities",
+					"host": [
+						"{{local_url}}"
+					],
+					"path": [
+						"{{TouchpointID}}",
+						"localauthorities"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "a3b63678-037b-4abb-92de-340b9fdd1eb6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8633bad9-9a2d-468e-b887-4ecff2cbb76f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

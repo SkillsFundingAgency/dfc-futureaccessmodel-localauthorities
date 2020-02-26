@@ -14,28 +14,25 @@ using Microsoft.Extensions.Logging;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
-    /// <summary>
-    /// get local authority by lad code function
-    /// </summary>
-    public sealed class GetLocalAuthorityByLadCodeFunction :
+    public sealed class DeleteLocalAuthorityByLadCodeFunction :
         LocalAuthorityFunction
     {
         /// <summary>
-        /// initialises an instance of <see cref="GetLocalAuthorityByLadCodeFunction"/>
+        /// initialises an instance of <see cref="DeleteLocalAuthorityByLadCodeFunction"/>
         /// </summary>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
-        public GetLocalAuthorityByLadCodeFunction(ICreateLoggingContextScopes factory, IManageLocalAuthorities adapter) : base(factory, adapter) { }
+        public DeleteLocalAuthorityByLadCodeFunction(ICreateLoggingContextScopes factory, IManageLocalAuthorities adapter) : base(factory, adapter) { }
 
         /// <summary>
-        /// get authority for...
+        /// delete authority for...
         /// </summary>
         /// <param name="theTouchpoint">the touchpoint</param>
         /// <param name="theLADCode">the local authority district code</param>
         /// <param name="inScope">in (logging) scope</param>
         /// <returns></returns>
-        internal async Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
-            await Adapter.GetAuthorityFor(theTouchpoint, theLADCode, inScope);
+        internal async Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+            await Adapter.DeleteAuthorityFor(theTouchpoint, theLADCode, inScope);
 
         /// <summary>
         /// run...
@@ -47,19 +44,19 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authorities management) adapter</param>
         /// <returns>the http response to the operation</returns>
-        [FunctionName("GetLocalAuthorityByLADCode")]
+        [FunctionName("DeleteLocalAuthorityByLADCode")]
         [ProducesResponseType(typeof(LocalAuthority), (int)HttpStatusCode.OK)]
         [Response(HttpStatusCode = (int)HttpStatusCode.OK, Description = FunctionDescription.ResourceFound, ShowSchema = true)]
         [Response(HttpStatusCode = (int)HttpStatusCode.NoContent, Description = FunctionDescription.NoContent, ShowSchema = false)]
+        [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.BadRequest, Description = FunctionDescription.MalformedRequest, ShowSchema = false)]
         [Response(HttpStatusCode = (int)HttpStatusCode.Unauthorized, Description = FunctionDescription.Unauthorised, ShowSchema = false)]
-        [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
-        [Display(Name = "Get Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
+        [Display(Name = "Delete a Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest theRequest,
             ILogger usingTraceWriter,
             string touchpointID,
             string ladCode) =>
-                await RunActionScope(theRequest, usingTraceWriter, x => GetAuthorityFor(touchpointID, ladCode, x));
+                await RunActionScope(theRequest, usingTraceWriter, x => DeleteAuthorityFor(touchpointID, ladCode, x));
     }
 }

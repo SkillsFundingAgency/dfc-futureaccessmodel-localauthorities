@@ -1,8 +1,6 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
@@ -13,9 +11,9 @@ using Xunit;
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
     /// <summary>
-    /// the get area routing detail by touchpoint ID function fixture
+    /// the get local authority by lad code function fixture
     /// </summary>
-    public sealed class PostLocalAuthorityFunctionFixture :
+    public sealed class DeleteLocalAuthorityByLadCodeFunctionFixture :
         MoqTestingFixture
     {
         /// <summary>
@@ -30,7 +28,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             var trace = MakeStrictMock<ILogger>();
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, trace, ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, trace, "", ""));
         }
 
         /// <summary>
@@ -45,7 +43,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             var request = MakeStrictMock<HttpRequest>();
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(request, null, ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(request, null, "", ""));
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             var adapter = MakeStrictMock<IManageLocalAuthorities>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(null, adapter));
+            Assert.Throws<ArgumentNullException>(() => new DeleteLocalAuthorityByLadCodeFunction(null, adapter));
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(factory, null));
+            Assert.Throws<ArgumentNullException>(() => new DeleteLocalAuthorityByLadCodeFunction(factory, null));
         }
 
         /// <summary>
@@ -83,16 +81,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public async Task RunMeetsExpectation()
         {
             // arrange
-            // const string theAdminDistrict = "E1234567";
+            const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
-            const string localAuthority = "{ \"LADCode\": \"E1234567\", \"Name\": \"Buckingham and Berks\" }";
 
             var request = MakeStrictMock<HttpRequest>();
-            GetMock(request)
-                .Setup(x => x.Body)
-                .Returns(new MemoryStream(Encoding.UTF8.GetBytes(localAuthority)));
-
             var trace = MakeStrictMock<ILogger>();
+
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.Dispose());
@@ -101,16 +95,14 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             GetMock(sut.Factory)
                 .Setup(x => x.BeginScopeFor(request, trace, "RunActionScope"))
                 .Returns(Task.FromResult(scope));
-
             GetMock(sut.Adapter)
-                .Setup(x => x.AddNewAuthorityFor(theTouchpoint, localAuthority, scope))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.Created)));
+                .Setup(x => x.DeleteAuthorityFor(theTouchpoint, theAdminDistrict, scope))
+                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
 
             // act
-            var result = await sut.Run(request, trace, theTouchpoint);
+            var result = await sut.Run(request, trace, theTouchpoint, theAdminDistrict);
 
             // assert
-            Assert.Equal(HttpStatusCode.Created, result.StatusCode);
             Assert.IsAssignableFrom<HttpResponseMessage>(result);
         }
 
@@ -118,7 +110,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// make (a) 'system under test'
         /// </summary>
         /// <returns>the system under test</returns>
-        internal PostLocalAuthorityFunction MakeSUT()
+        internal DeleteLocalAuthorityByLadCodeFunction MakeSUT()
         {
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
             var adapter = MakeStrictMock<IManageLocalAuthorities>();
@@ -132,9 +124,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
         /// <returns>the system under test</returns>
-        internal PostLocalAuthorityFunction MakeSUT(
+        internal DeleteLocalAuthorityByLadCodeFunction MakeSUT(
             ICreateLoggingContextScopes factory,
             IManageLocalAuthorities adapter) =>
-                new PostLocalAuthorityFunction(factory, adapter);
+                new DeleteLocalAuthorityByLadCodeFunction(factory, adapter);
     }
 }

@@ -28,5 +28,14 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
         Task<HttpResponseMessage> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope);
+
+        /// <summary>
+        /// delete (the) local authority for...
+        /// </summary>
+        /// <param name="theTouchpoint">the touchpoint</param>
+        /// <param name="theLADCode">the local adinistrative district code</param>
+        /// <param name="inScope">in scope</param>
+        /// <returns>the result of the operation</returns>
+        Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope);
     }
 }

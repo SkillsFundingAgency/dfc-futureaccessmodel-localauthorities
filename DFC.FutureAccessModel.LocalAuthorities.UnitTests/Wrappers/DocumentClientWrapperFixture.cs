@@ -8,7 +8,7 @@ using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
 {
-    public class DocumentClientWrapperFixture :
+    public sealed class DocumentClientWrapperFixture :
         MoqTestingFixture
     {
         /// <summary>
@@ -140,6 +140,29 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
 
             // assert
             Assert.IsAssignableFrom<ILocalAuthority>(result);
+        }
+
+        /// <summary>
+        /// delete document with valid uri meets verfication
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task DeleteDocumentAsyncWithValidURIMeetsVerification()
+        {
+            // arrange
+            var sut = MakeSUT();
+            var documentUri = new Uri("dbs/areas/colls/routing/docs/0000123", UriKind.Relative);
+            var document = new LocalAuthority();
+
+            GetMock(sut.Client)
+                .Setup(x => x.DeleteDocumentAsync(documentUri, It.IsAny<RequestOptions>(), default))
+                .Returns(Task.FromResult(new ResourceResponse<Document>()));
+
+            // act
+            await sut.DeleteDocumentAsync(documentUri, string.Empty);
+
+            // assert
+            GetMock(sut.Client).VerifyAll();
         }
 
         /// <summary>

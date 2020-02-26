@@ -5,8 +5,15 @@ using System.Linq;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Helpers
 {
-    public static class CollectionHelper
+    public static class Collection
     {
+        /// <summary>
+        /// returns an empty collection
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static ICollection<T> Empty<T>() => new List<T>();
+
         /// <summary>
         /// For each, to safe list and conducts the action
         /// </summary>
@@ -14,6 +21,24 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Helpers
         /// <param name="collection">The collection.</param>
         /// <param name="action">The action.</param>
         public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        {
+            It.IsNull(action)
+                .AsGuard<ArgumentNullException>();
+
+            var items = collection.SafeList();
+            foreach (var item in items)
+            {
+                action(item);
+            }
+        }
+
+        /// <summary>
+        /// For each, to safe list and conducts the action
+        /// </summary>
+        /// <typeparam name="T">of type</typeparam>
+        /// <param name="collection">The collection.</param>
+        /// <param name="action">The action.</param>
+        public static void ForEach<T>(this IReadOnlyCollection<T> collection, Action<T> action)
         {
             It.IsNull(action)
                 .AsGuard<ArgumentNullException>();

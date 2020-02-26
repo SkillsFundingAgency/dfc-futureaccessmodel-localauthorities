@@ -9,7 +9,7 @@ using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Registration
 {
-    public class ServiceRegistrationProviderFixture :
+    public sealed class ServiceRegistrationProviderFixture :
         MoqTestingFixture
     {
         /// <summary>
@@ -120,7 +120,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Registration
             // assert
             GetMock(services).Verify(
                 x => x.Add(It.IsAny<ServiceDescriptor>()),
-                Times.Exactly(12),
+                Times.Exactly(14),
                 "check for changes in the 'Registration/AssemblyRegistrations.cs' file");
         }
 

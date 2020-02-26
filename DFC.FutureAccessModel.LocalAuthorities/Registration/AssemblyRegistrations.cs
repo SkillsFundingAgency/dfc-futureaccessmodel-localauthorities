@@ -8,6 +8,8 @@ using DFC.FutureAccessModel.LocalAuthorities.Providers.Internal;
 using DFC.FutureAccessModel.LocalAuthorities.Registration;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
 using DFC.FutureAccessModel.LocalAuthorities.Storage.Internal;
+using DFC.FutureAccessModel.LocalAuthorities.Validation;
+using DFC.FutureAccessModel.LocalAuthorities.Validation.Internal;
 using DFC.HTTP.Standard;
 using DFC.Swagger.Standard;
 using Microsoft.Azure.WebJobs.Hosting;
@@ -27,6 +29,7 @@ using Microsoft.Azure.WebJobs.Hosting;
 // factories
 [assembly: InternalRegistration(typeof(ICreateDocumentClients), typeof(DocumentClientFactory), TypeOfRegistrationScope.Singleton)]
 [assembly: InternalRegistration(typeof(ICreateLoggingContextScopes), typeof(LoggingContextScopeFactory), TypeOfRegistrationScope.Singleton)]
+[assembly: InternalRegistration(typeof(ICreateValidationMessageContent), typeof(ValidationMessageContentFactory), TypeOfRegistrationScope.Singleton)]
 
 // providers
 [assembly: InternalRegistration(typeof(IProvideApplicationSettings), typeof(ApplicationSettingsProvider), TypeOfRegistrationScope.Singleton)]
@@ -37,3 +40,6 @@ using Microsoft.Azure.WebJobs.Hosting;
 // storage
 [assembly: InternalRegistration(typeof(IStoreLocalAuthorities), typeof(LocalAuthorityStore), TypeOfRegistrationScope.Singleton)]
 [assembly: InternalRegistration(typeof(IStoreDocuments), typeof(DocumentStore), TypeOfRegistrationScope.Singleton)]
+
+// validator
+[assembly: InternalRegistration(typeof(IValidateLocalAuthorities), typeof(LocalAuthorityValidator), TypeOfRegistrationScope.Singleton)]

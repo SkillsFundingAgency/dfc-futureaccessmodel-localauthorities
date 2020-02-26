@@ -35,7 +35,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         [InlineData(typeof(NoContentException), HttpStatusCode.NoContent, "Resource does not exist")]
         [InlineData(typeof(UnauthorizedException), HttpStatusCode.Unauthorized, "")]
         [InlineData(typeof(AccessForbiddenException), HttpStatusCode.Forbidden, "Insufficient access to this resource")]
-        [InlineData(typeof(UnprocessableEntityException), HttpStatusCode.UnprocessableEntity, "{ \"errors\": [{  }] }")]
+        [InlineData(typeof(UnprocessableEntityException), HttpStatusCode.UnprocessableEntity, "")]
         public async Task GetResponseForTheExceptionMeetsExpectation(Type testException, HttpStatusCode expectedState, string expectedMessage)
         {
             // arrange

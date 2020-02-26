@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Faults
@@ -20,7 +18,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         /// initialise an instance of the <see cref="UnprocessableEntityException"/>
         /// </summary>
         public UnprocessableEntityException() :
-            base(GetMessage())
+            base(string.Empty)
         {
         }
 
@@ -29,7 +27,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         /// </summary>
         /// <param name="message">message</param>
         public UnprocessableEntityException(string message) :
-            base(GetMessage())
+            base(message)
         {
         }
 
@@ -39,7 +37,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         /// <param name="message">message</param>
         /// <param name="innerException">inner exception</param>
         public UnprocessableEntityException(string message, Exception innerException) :
-            base(GetMessage(), innerException)
+            base(message, innerException)
         {
         }
 
@@ -51,17 +49,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         protected UnprocessableEntityException(SerializationInfo info, StreamingContext context) :
             base(info, context)
         {
-        }
-
-        /// <summary>
-        /// get message transforms the dictionary to a 'json string' of codes and errors
-        /// </summary>
-        /// <param name="errors">the dictionary of errors</param>
-        /// <returns>the message string</returns>
-        public static string GetMessage(IReadOnlyDictionary<string, string> errors = null)
-        {
-            var localErrs = errors ?? new Dictionary<string, string>();
-            return $"{{ \"errors\": [{{ {string.Join(",", localErrs.Select(x => $"\"error\": {{ \"code\": \"{x.Key}, \"message\": \"{x.Value}\" }}"))} }}] }}";
         }
     }
 }

@@ -55,7 +55,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
-        /// add
+        /// add...
         /// </summary>
         /// <param name="theCandidate">the candidate (authority)</param>
         /// <returns>the newly added local authority</returns>
@@ -78,6 +78,17 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .AsGuard<ConflictingResourceException>();
 
             return await DocumentStore.AddDocument(theCandidate, StoragePaths.LocalAuthorityCollection);
+        }
+
+        /// <summary>
+        /// delete...
+        /// </summary>
+        /// <param name="theAdminDistrict">the admin distict (code)</param>
+        /// <returns>the currently running task</returns>
+        public async Task Delete(string theAdminDistrict)
+        {
+            var usingPath = StoragePaths.GetLocalAuthorityResourcePathFor(theAdminDistrict);
+            await DocumentStore.DeleteDocument(usingPath, _partitionKey);
         }
     }
 }
