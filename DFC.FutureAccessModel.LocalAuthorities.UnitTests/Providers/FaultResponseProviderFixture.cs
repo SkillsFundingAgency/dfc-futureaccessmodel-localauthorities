@@ -33,8 +33,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         [Theory]
         [InlineData(typeof(MalformedRequestException), HttpStatusCode.BadRequest, "")]
         [InlineData(typeof(NoContentException), HttpStatusCode.NoContent, "Resource does not exist")]
-        [InlineData(typeof(UnauthorizedException), HttpStatusCode.Unauthorized, "")]
-        [InlineData(typeof(AccessForbiddenException), HttpStatusCode.Forbidden, "Insufficient access to this resource")]
         [InlineData(typeof(UnprocessableEntityException), HttpStatusCode.UnprocessableEntity, "")]
         public async Task GetResponseForTheExceptionMeetsExpectation(Type testException, HttpStatusCode expectedState, string expectedMessage)
         {
@@ -136,23 +134,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         }
 
         /// <summary>
-        /// forbidden meets expectation
-        /// </summary>
-        [Fact]
-        public void ForbiddenMeetsExpectation()
-        {
-            // arrange
-            var sut = MakeSUT();
-            var exception = new Exception();
-
-            // act
-            var result = sut.Forbidden(exception);
-
-            // assert
-            Assert.Equal(HttpStatusCode.Forbidden, result.StatusCode);
-        }
-
-        /// <summary>
         /// unprocessable entity meets expectation
         /// </summary>
         [Fact]
@@ -167,23 +148,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // assert
             Assert.Equal((HttpStatusCode)422, result.StatusCode);
-        }
-
-        /// <summary>
-        /// unauthorized meets expectation
-        /// </summary>
-        [Fact]
-        public void UnauthorizedMeetsExpectation()
-        {
-            // arrange
-            var sut = MakeSUT();
-            var exception = new Exception();
-
-            // act
-            var result = sut.Unauthorized(exception);
-
-            // assert
-            Assert.Equal(HttpStatusCode.Unauthorized, result.StatusCode);
         }
 
         /// <summary>

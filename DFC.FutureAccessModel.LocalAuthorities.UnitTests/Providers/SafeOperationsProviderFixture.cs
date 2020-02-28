@@ -28,9 +28,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// <returns>the currently running (test) task</returns>
         [Theory]
         [InlineData(typeof(MalformedRequestException))]
-        [InlineData(typeof(UnauthorizedException))]
         [InlineData(typeof(NoContentException))]
-        [InlineData(typeof(AccessForbiddenException))]
         [InlineData(typeof(UnprocessableEntityException))]
         [InlineData(typeof(ArgumentNullException))]
         public async Task VoidTryWithExceptionMeetsExpectation(Type expectedException)

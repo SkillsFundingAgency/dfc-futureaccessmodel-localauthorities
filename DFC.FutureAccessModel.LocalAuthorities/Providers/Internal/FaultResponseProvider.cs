@@ -30,8 +30,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             _faultMap.Add(typeof(MalformedRequestException), Malformed);
             _faultMap.Add(typeof(NoContentException), NoContent);
             _faultMap.Add(typeof(UnprocessableEntityException), UnprocessableEntity);
-            _faultMap.Add(typeof(AccessForbiddenException), Forbidden);
-            _faultMap.Add(typeof(UnauthorizedException), Unauthorized);
         }
 
         /// <summary>
@@ -87,14 +85,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
                 .SetContent(string.Empty);
 
         /// <summary>
-        /// the forbidden action
-        /// </summary>
-        /// <returns>a 'forbidden' message</returns>
-        internal HttpResponseMessage Forbidden(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.Forbidden)
-                .SetContent(theException.Message);
-
-        /// <summary>
         /// the no content action
         /// </summary>
         /// <returns>a 'no content' message</returns>
@@ -109,14 +99,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         internal HttpResponseMessage UnprocessableEntity(Exception theException) =>
             new HttpResponseMessage(LocalHttpStatusCode.UnprocessableEntity.AsHttpStatusCode())
                 .SetContent(theException.Message);
-
-        /// <summary>
-        /// the unauthorised action
-        /// </summary>
-        /// <returns>an 'unauthorised' message</returns>
-        internal HttpResponseMessage Unauthorized(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.Unauthorized)
-                .SetContent(string.Empty);
 
         /// <summary>
         /// the unknown error action
