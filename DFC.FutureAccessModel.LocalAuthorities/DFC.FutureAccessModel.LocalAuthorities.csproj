@@ -55,4 +55,8 @@
         <Folder Include="Validation\" />
         <Folder Include="Validation\Internal\" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Faults\AccessForbiddenException.cs" />
+      <Compile Remove="Faults\UnauthorizedException.cs" />
+    </ItemGroup>
 </Project>

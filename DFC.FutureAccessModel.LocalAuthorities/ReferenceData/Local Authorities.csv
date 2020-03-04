@@ -51,6 +51,8 @@ TouchpointID,LADCode,LocalAuthority,TestText,PostExpectation,DeleteExpectation
 "0000000101",E07000241,Welwyn Hatfield,Done,201,200
 "0000000101",E07000242,East Hertfordshire,Done,201,200
 "0000000101",E07000243,Stevenage,Done,201,200
+"0000000101",E07000244,East Suffolk,Done,201,200
+"0000000101",E07000245,West Suffolk,Done,201,200
 "0000000102",E07000150,Corby,Done,201,200
 "0000000102",E07000151,Daventry,Done,201,200
 "0000000102",E07000152,East Northamptonshire,Done,201,200
@@ -290,6 +292,8 @@ TouchpointID,LADCode,LocalAuthority,TestText,PostExpectation,DeleteExpectation
 "0000000108",E06000052,Cornwall,Done,201,200
 "0000000108",E06000053,Isles of Scilly,Done,201,200
 "0000000108",E06000054,Wiltshire,Done,201,200
+"0000000108",E06000058,"Bournemouth, Christchurch and Poole",Done,201,200
+"0000000108",E06000059,Dorset,Done,201,200
 "0000000108",E07000040,East Devon,Done,201,200
 "0000000108",E07000041,Exeter,Done,201,200
 "0000000108",E07000042,Mid Devon,Done,201,200
@@ -304,6 +308,7 @@ TouchpointID,LADCode,LocalAuthority,TestText,PostExpectation,DeleteExpectation
 "0000000108",E07000051,Purbeck,Done,201,200
 "0000000108",E07000052,West Dorset,Done,201,200
 "0000000108",E07000053,Weymouth and Portland,Done,201,200
+"0000000108",E07000246,Somerset West and Taunton,Done,201,200
 "0000000109",E06000010,City of Kingston upon Hull,Done,201,200
 "0000000109",E06000011,East Riding of Yorkshire,Done,201,200
 "0000000109",E06000012,North East Lincolnshire,Done,201,200
