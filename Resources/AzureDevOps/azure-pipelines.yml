@@ -102,3 +102,24 @@ stages:
       ApiName: '${{ variables.ApimApiName }}'
       SwaggerSpecificationUrl: 'https://dfc-pp-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
+- stage: DeployTo_PRD
+  displayName: Deploy to PRD_FUTUREACCESSMODEL environment
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  variables:
+  - group: dfc-shared-prd
+  - group: dfc-futureaccessmodel-shared-prd
+  - template: VariableTemplates\SharedEnvironmentVariables.yml
+  - template: VariableTemplates\PRDEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
+      Environment: PRD_FUTUREACCESSMODEL
+      FunctionAppName: dfc-prd-fam-la-fa
+      ResourceGroup: dfc-prd-fam-la-rg
+      ApimResourceGroup: '$(sharedResourceGroup)'
+      ApimInstanceName: '$(ApimServiceName)'
+      ApimProductId: '${{ variables.ApimProductId }}'
+      ApiName: '${{ variables.ApimApiName }}'
+      SwaggerSpecificationUrl: 'https://dfc-prd-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+
