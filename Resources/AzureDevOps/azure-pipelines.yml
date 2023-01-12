@@ -39,6 +39,27 @@ stages:
         BuildPlatform: 'any cpu'
         BuildConfiguration: 'release'
 
+- stage: DeployTo_LAB
+  displayName: Deploy to LAB_FUTUREACCESSMODEL environment
+  condition: succeeded()
+  variables:
+  - group: dfc-shared-lab
+  - group: dfc-futureaccessmodel-shared-lab
+  - template: VariableTemplates\SharedEnvironmentVariables.yml
+  - template: VariableTemplates\LabEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/Deploy.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      Environment: LAB_FUTUREACCESSMODEL
+      FunctionAppName: dfc-lab-fam-la-fa
+      ResourceGroup: dfc-lab-fam-la-rg
+      ApimResourceGroup: '$(sharedResourceGroup)'
+      ApimInstanceName: '$(ApimServiceName)'
+      ApimProductId: '${{ variables.ApimProductId }}'
+      ApiName: '${{ variables.ApimApiName }}'
+      SwaggerSpecificationUrl: 'https://dfc-lab-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+
 - stage: DeployTo_DEV
   displayName: Deploy to DEV_FUTUREACCESSMODEL environment
   condition: succeeded()
