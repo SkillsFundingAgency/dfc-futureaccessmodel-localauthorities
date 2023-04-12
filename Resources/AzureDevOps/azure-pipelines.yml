@@ -41,7 +41,7 @@ stages:
 
 - stage: DeployTo_DEV
   displayName: Deploy to DEV_FUTUREACCESSMODEL environment
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: succeeded()
   variables:
   - group: dfc-shared-dev
   - group: dfc-futureaccessmodel-shared-dev
@@ -62,7 +62,7 @@ stages:
 
 - stage: DeployTo_SIT
   displayName: Deploy to SIT_FUTUREACCESSMODEL environment
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  condition: succeeded()
   variables:
   - group: dfc-shared-sit
   - group: dfc-futureaccessmodel-shared-sit
@@ -83,7 +83,7 @@ stages:
 
 - stage: DeployTo_PP
   displayName: Deploy to PP_FUTUREACCESSMODEL environment
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   variables:
   - group: dfc-shared-pp
   - group: dfc-futureaccessmodel-shared-pp
@@ -104,7 +104,7 @@ stages:
 
 - stage: DeployTo_PRD
   displayName: Deploy to PRD_FUTUREACCESSMODEL environment
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: succeeded()
   variables:
   - group: dfc-shared-prd
   - group: dfc-futureaccessmodel-shared-prd
