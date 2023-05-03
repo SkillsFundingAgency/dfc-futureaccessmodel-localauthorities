@@ -46,6 +46,9 @@
         },
         "apimApiSuffix": {
             "value": "__ApimApiUrlSuffix__"
+        },
+        "appInsightsInstrumentationKey": {
+            "value": "__appInsightsInstrumentationKey__" 
         }
     }
 }
