@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "appInsightsInstrumentationKey":{
+            "type": "string"
+        },
         "appSharedResourceGroup": {
             "type": "string"
         },
@@ -70,7 +73,7 @@
         "cosmosDatabaseName": "dfc-prime-contractor-areas-db",
         "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-fam-la'))]",
         "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]",
-        "functionAppInsightsName": "[concat(variables('functionAppName'), '-ai')]"
+        "FunctionAppInsightInstrumentationKey":"[parameters('appInsightsInstrumentationKey')]"
     },
     "resources": [
         {
@@ -105,27 +108,7 @@
                     }
                 }
             }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[variables('functionAppInsightsName')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'application-insights.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appInsightsName": {
-                        "value": "[variables('functionAppInsightsName')]"
-                    },
-                    "attachedService": {
-                        "value": "[variables('functionAppName')]"
-                    }
-                }
-            }
-        },
+        },        
         {
             "apiVersion": "2017-05-10",
             "name": "[variables('functionAppName')]",
@@ -164,7 +147,7 @@
                             },
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference(variables('functionAppInsightsName')).outputs.InstrumentationKey.value]"
+                                "value": "[variables('FunctionAppInsightInstrumentationKey')]"
                             },
                             {
                                 "name": "AzureWebJobsStorage",
@@ -197,10 +180,7 @@
                         ]
                     }
                 }
-            },
-            "dependsOn": [
-                "[variables('functionAppInsightsName')]"
-            ]
+            }
         },
         {
             "apiVersion": "2017-05-10",
@@ -244,18 +224,18 @@
                 "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                "apimProductInstanceName": {
-                    "value": "[parameters('apimProductId')]"
-                },
-                "apimServiceName": {
-                    "value": "[parameters('apimInstanceName')]"
-                },
-                "apiName": {
-                    "value": "[parameters('apimApiName')]"
-                },
-                "apiSuffix": {
-                    "value": "[parameters('apimApiSuffix')]"
-                }
+                    "apimProductInstanceName": {
+                        "value": "[parameters('apimProductId')]"
+                    },
+                    "apimServiceName": {
+                        "value": "[parameters('apimInstanceName')]"
+                    },
+                    "apiName": {
+                        "value": "[parameters('apimApiName')]"
+                    },
+                    "apiSuffix": {
+                        "value": "[parameters('apimApiSuffix')]"
+                    }
                 }
             }
         }
