@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "appInsightsInstrumentationKey": {
+            "type": "string"
+        },
         "appSharedResourceGroup": {
             "type": "string"
         },
@@ -69,8 +72,7 @@
         "cosmosCollectionPartitionKey": "/PartitionKey",
         "cosmosDatabaseName": "dfc-prime-contractor-areas-db",
         "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-fam-la'))]",
-        "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]",
-        "functionAppInsightsName": "[concat(variables('functionAppName'), '-ai')]"
+        "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]"
     },
     "resources": [
         {
@@ -102,26 +104,6 @@
                     },
                     "nonASETier": {
                         "value": "[parameters('aspTier')]"
-                    }
-                }
-            }
-        },
-        {
-            "apiVersion": "2017-05-10",
-            "name": "[variables('functionAppInsightsName')]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(variables('buildingBlocksDfcBaseUrl'), 'application-insights.json')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "appInsightsName": {
-                        "value": "[variables('functionAppInsightsName')]"
-                    },
-                    "attachedService": {
-                        "value": "[variables('functionAppName')]"
                     }
                 }
             }
@@ -164,7 +146,7 @@
                             },
                             {
                                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                "value": "[reference(variables('functionAppInsightsName')).outputs.InstrumentationKey.value]"
+                                "value": "[parameters('appInsightsInstrumentationKey')]"
                             },
                             {
                                 "name": "AzureWebJobsStorage",
@@ -197,10 +179,7 @@
                         ]
                     }
                 }
-            },
-            "dependsOn": [
-                "[variables('functionAppInsightsName')]"
-            ]
+            }
         },
         {
             "apiVersion": "2017-05-10",
