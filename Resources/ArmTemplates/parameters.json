@@ -46,6 +46,12 @@
         },
         "apimApiSuffix": {
             "value": "__ApimApiUrlSuffix__"
+        },
+        "workspaceName": {
+            "value": "__sharedLogAnalyticsWorkspace__"
+        },
+        "workspaceResourceGroup": {
+            "value": "__sharedLogAnalyticsResourceGroup__"
         }
     }
 }
