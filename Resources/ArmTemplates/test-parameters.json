@@ -37,6 +37,12 @@
         },
         "apimApiSuffix": {
             "value": "api/suffix"
+        },
+        "workspaceName": {
+            "value": "aTestLogAnalyticsAccount"
+        },
+        "workspaceResourceGroup": {
+            "value": "aResourceGroup"
         }
     }
 }
