@@ -1,3 +1,5 @@
 variables:
 - name: ReleaseEnvironmentName
   value: PP
+- name: FunctionAppName
+  value: dfc-pp-fam-la-fa-ver2
