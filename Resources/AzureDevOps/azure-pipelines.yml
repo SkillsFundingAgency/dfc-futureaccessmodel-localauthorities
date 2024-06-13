@@ -14,7 +14,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.10.3
+    ref: refs/tags/v1.16.0
     endpoint: 'GitHub (ESFA)'
 
 stages:
@@ -52,13 +52,13 @@ stages:
     parameters:
       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       Environment: LAB_FUTUREACCESSMODEL
-      FunctionAppName: dfc-lab-fam-la-fa
+      FunctionAppName: '$(FunctionAppName)'
       ResourceGroup: dfc-lab-fam-la-rg
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-lab-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_DEV
   displayName: Deploy to DEV_FUTUREACCESSMODEL environment
@@ -73,13 +73,13 @@ stages:
     parameters:
       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       Environment: DEV_FUTUREACCESSMODEL
-      FunctionAppName: dfc-dev-fam-la-fa
+      FunctionAppName: '$(FunctionAppName)'
       ResourceGroup: dfc-dev-fam-la-rg
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-dev-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_SIT
   displayName: Deploy to SIT_FUTUREACCESSMODEL environment
@@ -94,13 +94,13 @@ stages:
     parameters:
       AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
       Environment: SIT_FUTUREACCESSMODEL
-      FunctionAppName: dfc-sit-fam-la-fa
+      FunctionAppName: '$(FunctionAppName)'
       ResourceGroup: dfc-sit-fam-la-rg
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-sit-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_PP
   displayName: Deploy to PP_FUTUREACCESSMODEL environment
@@ -115,13 +115,13 @@ stages:
     parameters:
       AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
       Environment: PP_FUTUREACCESSMODEL
-      FunctionAppName: dfc-pp-fam-la-fa
+      FunctionAppName: '$(FunctionAppName)'
       ResourceGroup: dfc-pp-fam-la-rg
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-pp-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 
 - stage: DeployTo_PRD
   displayName: Deploy to PRD_FUTUREACCESSMODEL environment
@@ -136,11 +136,11 @@ stages:
     parameters:
       AzureSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
       Environment: PRD_FUTUREACCESSMODEL
-      FunctionAppName: dfc-prd-fam-la-fa
+      FunctionAppName: '$(FunctionAppName)'
       ResourceGroup: dfc-prd-fam-la-rg
       ApimResourceGroup: '$(sharedResourceGroup)'
       ApimInstanceName: '$(ApimServiceName)'
       ApimProductId: '${{ variables.ApimProductId }}'
       ApiName: '${{ variables.ApimApiName }}'
-      SwaggerSpecificationUrl: 'https://dfc-prd-fam-la-fa.$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
+      SwaggerSpecificationUrl: 'https://$(FunctionAppName).$(FunctionAppDomain)${{ variables.SwaggerDefinitionPath }}'
 

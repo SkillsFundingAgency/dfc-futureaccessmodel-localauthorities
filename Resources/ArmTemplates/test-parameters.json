@@ -17,6 +17,9 @@
         "environment": {
             "value": "FOO"
         },
+        "functionAppName": {
+            "value": "dfc-foo-fam-la-fa-ver2"
+        },
         "sharedAppServicePlanName": {
             "value": "dfc-dev-fam-shared-asp"
         },
