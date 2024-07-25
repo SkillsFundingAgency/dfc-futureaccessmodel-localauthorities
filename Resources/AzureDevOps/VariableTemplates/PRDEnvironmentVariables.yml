@@ -2,4 +2,4 @@ variables:
 - name: ReleaseEnvironmentName
   value: PRD
 - name: FunctionAppName
-  value: dfc-prd-fam-la-fa
+  value: dfc-prd-fam-la-fa-ver2
