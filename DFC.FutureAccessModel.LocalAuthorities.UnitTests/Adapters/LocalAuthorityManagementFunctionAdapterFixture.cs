@@ -9,6 +9,7 @@ using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
 using DFC.FutureAccessModel.LocalAuthorities.Validation;
 using DFC.HTTP.Standard;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
@@ -27,13 +28,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullDocumentValidatorThrows()
         {
             // arrange
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();            
             var faults = MakeStrictMock<IProvideFaultResponses>();
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store, helper, faults, safe));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store, faults, safe));
         }
 
         /// <summary>
@@ -43,30 +43,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullStorageProviderThrows()
         {
             // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var validator = MakeStrictMock<IValidateLocalAuthorities>();            
             var faults = MakeStrictMock<IProvideFaultResponses>();
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, null, helper, faults, safe));
-        }
-
-        /// <summary>
-        /// build with null response helper throws
-        /// </summary>
-        [Fact]
-        public void BuildWithNullResponseHelperThrows()
-        {
-            // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
-
-            // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, null, faults, safe));
-        }
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, null, faults, safe));
+        }        
 
         /// <summary>
         /// build with null fault response provider throws
@@ -76,12 +59,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         {
             // arrange
             var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();            
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, helper, null, safe));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, null, safe));
         }
 
         /// <summary>
@@ -92,12 +74,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         {
             // arrange
             var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();            
             var faults = MakeStrictMock<IProvideFaultResponses>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, helper, faults, null));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, faults, null));
         }
 
         /// <summary>
@@ -112,16 +93,15 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var scope = MakeStrictMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
-                .Setup(x => x.Try(It.IsAny<Func<Task<HttpResponseMessage>>>(), It.IsAny<Func<Exception, Task<HttpResponseMessage>>>()))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+                .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
+                .Returns(Task.FromResult<IActionResult>(new OkResult()));
 
             // act
             var result = await sut.GetAuthorityFor(string.Empty, string.Empty, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
-            GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
+            Assert.IsAssignableFrom<IActionResult>(result);
+            GetMock(sut.Authorities).VerifyAll();            
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -205,11 +185,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             GetMock(sut.Authorities)
                 .Setup(x => x.Get(theAdminDistrict))
                 .Returns(Task.FromResult<ILocalAuthority>(localAuthority));
-
-            GetMock(sut.Respond)
-                .Setup(x => x.Ok())
-                .Returns(new HttpResponseMessage());
-
+            
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessGetAuthorityFor"))
@@ -237,9 +213,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var result = await sut.ProcessGetAuthorityFor(theTouchpoint, theAdminDistrict, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
-            GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
+            Assert.IsAssignableFrom<IActionResult>(result);
+            GetMock(sut.Authorities).VerifyAll();            
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -256,16 +231,15 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var scope = MakeStrictMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
-                .Setup(x => x.Try(It.IsAny<Func<Task<HttpResponseMessage>>>(), It.IsAny<Func<Exception, Task<HttpResponseMessage>>>()))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+                .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
+                .Returns(Task.FromResult<IActionResult>(new OkResult()));
 
             // act
             var result = await sut.AddNewAuthorityFor(string.Empty, string.Empty, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
-            GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
+            Assert.IsAssignableFrom<IActionResult>(result);
+            GetMock(sut.Authorities).VerifyAll();            
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -352,9 +326,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             GetMock(sut.Authorities)
                 .Setup(x => x.Add(It.IsAny<IncomingLocalAuthority>()))
                 .Returns(Task.FromResult<ILocalAuthority>(new LocalAuthority()));
-            GetMock(sut.Respond)
-                .Setup(x => x.Created())
-                .Returns(new HttpResponseMessage());
 
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
@@ -395,9 +366,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var result = await sut.ProcessAddNewAuthorityFor(theTouchpoint, theContent, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
+            Assert.IsAssignableFrom<IActionResult>(result);
             GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -414,16 +384,15 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var scope = MakeStrictMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
-                .Setup(x => x.Try(It.IsAny<Func<Task<HttpResponseMessage>>>(), It.IsAny<Func<Exception, Task<HttpResponseMessage>>>()))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+                .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
+                .Returns(Task.FromResult<IActionResult>(new OkResult()));
 
             // act
             var result = await sut.DeleteAuthorityFor(string.Empty, string.Empty, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
+            Assert.IsAssignableFrom<IActionResult>(result);
             GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -519,10 +488,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Delete(theAdminDistrict))
                 .Returns(Task.CompletedTask);
 
-            GetMock(sut.Respond)
-                .Setup(x => x.Ok())
-                .Returns(new HttpResponseMessage());
-
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessDeleteAuthorityFor"))
@@ -553,9 +518,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             var result = await sut.ProcessDeleteAuthorityFor(theTouchpoint, theAdminDistrict, scope);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
-            GetMock(sut.Authorities).VerifyAll();
-            GetMock(sut.Respond).VerifyAll();
+            Assert.IsAssignableFrom<IActionResult>(result);
+            GetMock(sut.Authorities).VerifyAll();            
             GetMock(sut.Faults).VerifyAll();
             GetMock(sut.SafeOperations).VerifyAll();
         }
@@ -567,12 +531,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         internal LocalAuthorityManagementFunctionAdapter MakeSUT()
         {
             var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var helper = MakeStrictMock<IHttpResponseMessageHelper>();
+            var store = MakeStrictMock<IStoreLocalAuthorities>();            
             var faults = MakeStrictMock<IProvideFaultResponses>();
             var safe = MakeStrictMock<IProvideSafeOperations>();
 
-            return MakeSUT(validator, store, helper, faults, safe);
+            return MakeSUT(validator, store, faults, safe);
         }
 
         /// <summary>
@@ -585,10 +548,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <returns>the system under test</returns>
         internal LocalAuthorityManagementFunctionAdapter MakeSUT(
             IValidateLocalAuthorities validator,
-            IStoreLocalAuthorities store,
-            IHttpResponseMessageHelper helper,
+            IStoreLocalAuthorities store,            
             IProvideFaultResponses faults,
             IProvideSafeOperations safe) =>
-                new LocalAuthorityManagementFunctionAdapter(helper, faults, safe, store, validator);
+                new LocalAuthorityManagementFunctionAdapter(faults, safe, store, validator);
     }
 }

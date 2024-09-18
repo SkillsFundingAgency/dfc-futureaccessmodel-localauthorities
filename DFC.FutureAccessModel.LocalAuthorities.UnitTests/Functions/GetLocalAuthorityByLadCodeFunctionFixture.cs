@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -24,27 +26,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public async Task RunWithNullRequestThrows()
         {
             // arrange
-            var sut = MakeSUT();
-            var trace = MakeStrictMock<ILogger>();
+            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
+            var sut = MakeSUT(logger);
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, trace, "", ""));
-        }
-
-        /// <summary>
-        /// run with null trace throws
-        /// </summary>
-        /// <returns>the currently running (test) task</returns>
-        [Fact]
-        public async Task RunWithNullTraceThrows()
-        {
-            // arrange
-            var sut = MakeSUT();
-            var request = MakeStrictMock<HttpRequest>();
-
-            // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(request, null, "", ""));
-        }
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, "", ""));
+        }        
 
         /// <summary>
         /// run with null factory throws
@@ -55,9 +42,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         {
             // arrange
             var adapter = MakeStrictMock<IManageLocalAuthorities>();
+            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(null, adapter));
+            Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(null, adapter, logger));
         }
 
         /// <summary>
@@ -69,9 +57,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         {
             // arrange
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
+            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(factory, null));
+            Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(factory, null, logger));
         }
 
         /// <summary>
@@ -84,38 +73,38 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
 
-            var request = MakeStrictMock<HttpRequest>();
-            var trace = MakeStrictMock<ILogger>();
+            var request = MakeStrictMock<HttpRequest>();            
+            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.Dispose());
 
-            var sut = MakeSUT();
+            var sut = MakeSUT(logger);
             GetMock(sut.Factory)
-                .Setup(x => x.BeginScopeFor(request, trace, "RunActionScope"))
+                .Setup(x => x.BeginScopeFor(request, logger, "RunActionScope"))
                 .Returns(Task.FromResult(scope));
             GetMock(sut.Adapter)
                 .Setup(x => x.GetAuthorityFor(theTouchpoint, theAdminDistrict, scope))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+                .Returns(Task.FromResult<IActionResult>(new OkResult()));
 
             // act
-            var result = await sut.Run(request, trace, theTouchpoint, theAdminDistrict);
+            var result = await sut.Run(request, theTouchpoint, theAdminDistrict);
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
+            Assert.IsAssignableFrom<IActionResult>(result);
         }
 
         /// <summary>
         /// make (a) 'system under test'
         /// </summary>
         /// <returns>the system under test</returns>
-        internal GetLocalAuthorityByLadCodeFunction MakeSUT()
+        internal GetLocalAuthorityByLadCodeFunction MakeSUT(ILogger<GetLocalAuthorityByLadCodeFunction> logger)
         {
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();
+            var adapter = MakeStrictMock<IManageLocalAuthorities>();            
 
-            return MakeSUT(factory, adapter);
+            return MakeSUT(factory, adapter, logger);
         }
 
         /// <summary>
@@ -126,7 +115,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>the system under test</returns>
         internal GetLocalAuthorityByLadCodeFunction MakeSUT(
             ICreateLoggingContextScopes factory,
-            IManageLocalAuthorities adapter) =>
-                new GetLocalAuthorityByLadCodeFunction(factory, adapter);
+            IManageLocalAuthorities adapter,
+            ILogger<GetLocalAuthorityByLadCodeFunction> logger) =>
+                new GetLocalAuthorityByLadCodeFunction(factory, adapter, logger);
     }
 }

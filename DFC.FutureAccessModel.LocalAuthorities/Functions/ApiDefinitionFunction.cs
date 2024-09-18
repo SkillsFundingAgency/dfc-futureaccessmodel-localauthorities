@@ -2,12 +2,13 @@
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
@@ -43,19 +44,19 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <summary>
         /// run... (the api document generator function)
         /// </summary>
-        /// <param name="theRequest">the http request</param>
+        /// <param name="request">the http request</param>
         /// <param name="theDocumentGenerator">the document generator</param>
         /// <returns>a http response containing the generated document</returns>
-        [FunctionName("ApiDefinition")]
-        public async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "localauthorities/api-definition")]HttpRequest theRequest) =>
-                await Task.Run(() =>
+        [Function("ApiDefinition")]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "localauthorities/api-definition")]HttpRequest request) =>
+                await Task.Run<IActionResult>(() =>
                 {
-                    It.IsNull(theRequest)
-                        .AsGuard<ArgumentNullException>(nameof(theRequest));
+                    It.IsNull(request)
+                        .AsGuard<ArgumentNullException>(nameof(request));
 
-                    var theDocument = Generator.GenerateSwaggerDocument(
-                        theRequest,
+                    var document = Generator.GenerateSwaggerDocument(
+                        request,
                         ApiTitle,
                         ApiDescription,
                         ApiDefinitionName,
@@ -63,10 +64,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
                         Assembly.GetExecutingAssembly(),
                         false, false); // don't include some irrelevant default parameters
 
-                    return new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StringContent(theDocument)
-                    };
+                    if (string.IsNullOrEmpty(document))
+                        return new NoContentResult();
+
+                    return new OkObjectResult(document);
                 });
     }
 }

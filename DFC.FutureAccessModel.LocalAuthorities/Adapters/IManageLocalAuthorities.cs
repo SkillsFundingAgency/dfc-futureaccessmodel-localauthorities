@@ -1,15 +1,14 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
 {
     /// <summary>
     /// i manage local authorities
     /// </summary>
-    public interface IManageLocalAuthorities :
-        ISupportServiceRegistration
+    public interface IManageLocalAuthorities        
     {
         /// <summary>
         /// get (the) local authority for...
@@ -18,7 +17,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope);
+        Task<IActionResult> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope);
 
         /// <summary>
         /// add new authority for...
@@ -27,7 +26,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
         /// <param name="usingContent">using content</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        Task<HttpResponseMessage> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope);
+        Task<IActionResult> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope);
 
         /// <summary>
         /// delete (the) local authority for...
@@ -36,6 +35,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope);
+        Task<IActionResult> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope);
     }
 }

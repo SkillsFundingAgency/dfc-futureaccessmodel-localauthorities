@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -109,11 +110,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 
             // act
             var result = await sut.Run(request);
+            var resultResponse = result as OkObjectResult;
 
             // assert
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
-            Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal(documentContent, await result.Content.ReadAsStringAsync());
+            Assert.IsAssignableFrom<IActionResult>(result);
+            Assert.Equal((int)HttpStatusCode.OK, resultResponse.StatusCode);
+            Assert.Equal(documentContent, resultResponse.Value);
         }
 
         /// <summary>

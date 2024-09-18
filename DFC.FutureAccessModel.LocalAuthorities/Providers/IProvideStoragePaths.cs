@@ -1,13 +1,9 @@
-﻿using System;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Providers
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Providers
 {
     /// <summary>
     /// i provide storage paths
     /// </summary>
-    public interface IProvideStoragePaths :
-        ISupportServiceRegistration
+    public interface IProvideStoragePaths
     {
         /// <summary>
         /// the local authority collection (path), used for new documents

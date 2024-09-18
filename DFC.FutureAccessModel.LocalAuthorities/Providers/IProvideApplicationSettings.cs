@@ -1,12 +1,9 @@
-﻿using DFC.FutureAccessModel.LocalAuthorities.Registration;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Providers
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Providers
 {
     /// <summary>
     /// i provide application settings
     /// </summary>
-    public interface IProvideApplicationSettings :
-        ISupportServiceRegistration
+    public interface IProvideApplicationSettings
     {
         /// <summary>
         /// get (the) variable
