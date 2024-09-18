@@ -1,17 +1,12 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
 using DFC.FutureAccessModel.LocalAuthorities.Validation;
-using DFC.HTTP.Standard;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Amqp.Framing;
+using Newtonsoft.Json;
 using System.Net;
 using System.Text.Json;
 
@@ -32,7 +27,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// the safe operations (provider)
         /// </summary>
         public IProvideSafeOperations SafeOperations { get; }
-        
+
         /// <summary>
         /// i store local authorities
         /// </summary>
@@ -55,7 +50,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             IProvideSafeOperations safeOperations,
             IStoreLocalAuthorities authorities,
             IValidateLocalAuthorities validator)
-        {            
+        {
             It.IsNull(faultResponses)
                 .AsGuard<ArgumentNullException>(nameof(faultResponses));
             It.IsNull(safeOperations)
@@ -64,7 +59,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .AsGuard<ArgumentNullException>(nameof(authorities));
             It.IsNull(validator)
                 .AsGuard<ArgumentNullException>(nameof(validator));
-            
+
             Faults = faultResponses;
             SafeOperations = safeOperations;
             Authorities = authorities;

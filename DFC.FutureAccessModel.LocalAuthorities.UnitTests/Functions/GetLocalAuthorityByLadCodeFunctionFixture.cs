@@ -1,13 +1,10 @@
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -31,7 +28,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 
             // act / assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, "", ""));
-        }        
+        }
 
         /// <summary>
         /// run with null factory throws
@@ -73,7 +70,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
 
-            var request = MakeStrictMock<HttpRequest>();            
+            var request = MakeStrictMock<HttpRequest>();
             var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             var scope = MakeStrictMock<IScopeLoggingContext>();
@@ -102,7 +99,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         internal GetLocalAuthorityByLadCodeFunction MakeSUT(ILogger<GetLocalAuthorityByLadCodeFunction> logger)
         {
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();            
+            var adapter = MakeStrictMock<IManageLocalAuthorities>();
 
             return MakeSUT(factory, adapter, logger);
         }

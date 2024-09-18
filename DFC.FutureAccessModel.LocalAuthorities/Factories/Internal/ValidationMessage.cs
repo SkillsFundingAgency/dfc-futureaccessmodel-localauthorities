@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using Newtonsoft.Json;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal

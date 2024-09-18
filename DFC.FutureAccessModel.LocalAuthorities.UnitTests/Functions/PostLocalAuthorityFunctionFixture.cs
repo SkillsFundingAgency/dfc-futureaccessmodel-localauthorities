@@ -1,17 +1,15 @@
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -31,11 +29,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         {
             // arrange
             var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
-            var sut = MakeSUT(logger);            
+            var sut = MakeSUT(logger);
 
             // act / assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, ""));
-        }        
+        }
 
         /// <summary>
         /// run with null factory throws
@@ -65,7 +63,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(factory, null, logger));
-        }        
+        }
 
         /// <summary>
         /// run meets expectation
@@ -76,13 +74,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             // arrange
             // const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
-            const string localAuthority = "{ \"LADCode\": \"E1234567\", \"Name\": \"Buckingham and Berks\" }";            
+            const string localAuthority = "{ \"LADCode\": \"E1234567\", \"Name\": \"Buckingham and Berks\" }";
 
             //var request = MakeStrictMock<HttpRequest>();
             var request = new Mock<HttpRequest>().Object;
             GetMock(request)
                 .Setup(x => x.Body)
-                .Returns(new MemoryStream(Encoding.UTF8.GetBytes(localAuthority)));            
+                .Returns(new MemoryStream(Encoding.UTF8.GetBytes(localAuthority)));
 
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)

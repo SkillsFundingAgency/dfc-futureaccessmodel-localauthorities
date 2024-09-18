@@ -1,11 +1,10 @@
-﻿using System;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
+using DFC.FutureAccessModel.LocalAuthorities.Faults;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
-using Grpc.Core;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
@@ -98,7 +97,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var resultResponse = result as InternalServerErrorResult;
 
             // assert
-            Assert.Equal((int)expectedState, resultResponse.StatusCode);            
+            Assert.Equal((int)expectedState, resultResponse.StatusCode);
         }
 
         /// <summary>

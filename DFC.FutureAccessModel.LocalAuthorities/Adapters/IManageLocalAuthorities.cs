@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
@@ -8,7 +6,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters
     /// <summary>
     /// i manage local authorities
     /// </summary>
-    public interface IManageLocalAuthorities        
+    public interface IManageLocalAuthorities
     {
         /// <summary>
         /// get (the) local authority for...

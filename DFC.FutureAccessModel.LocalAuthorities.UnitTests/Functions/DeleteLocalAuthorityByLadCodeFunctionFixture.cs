@@ -1,12 +1,10 @@
-using System;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -72,7 +70,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
 
-            var request = MakeStrictMock<HttpRequest>();            
+            var request = MakeStrictMock<HttpRequest>();
 
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)

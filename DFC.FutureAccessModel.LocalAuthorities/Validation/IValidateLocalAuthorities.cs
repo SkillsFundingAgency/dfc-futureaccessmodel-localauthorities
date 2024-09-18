@@ -5,7 +5,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Validation
     /// <summary>
     /// i validate local authorities
     /// </summary>
-    public interface IValidateLocalAuthorities        
+    public interface IValidateLocalAuthorities
     {
         /// <summary>
         /// validate...

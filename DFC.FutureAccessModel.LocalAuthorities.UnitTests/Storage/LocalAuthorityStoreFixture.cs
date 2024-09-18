@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal

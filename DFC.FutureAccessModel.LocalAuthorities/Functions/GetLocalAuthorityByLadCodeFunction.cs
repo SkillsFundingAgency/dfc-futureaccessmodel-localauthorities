@@ -1,15 +1,13 @@
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
@@ -26,9 +24,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// </summary>
         /// <param name="factory">(the logging scope) factory</param>
         /// <param name="adapter">(the local authority management) adapter</param>
-        public GetLocalAuthorityByLadCodeFunction(ICreateLoggingContextScopes factory, 
-            IManageLocalAuthorities adapter, 
-            ILogger<GetLocalAuthorityByLadCodeFunction> logger) : base(factory, adapter) 
+        public GetLocalAuthorityByLadCodeFunction(ICreateLoggingContextScopes factory,
+            IManageLocalAuthorities adapter,
+            ILogger<GetLocalAuthorityByLadCodeFunction> logger) : base(factory, adapter)
         {
             _logger = logger;
         }
@@ -61,7 +59,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         [Response(HttpStatusCode = (int)HttpStatusCode.Forbidden, Description = FunctionDescription.Forbidden, ShowSchema = false)]
         [Display(Name = "Get Local Authority by Local Administrative District Code", Description = "Ability to get a Local Authority detail for the given Touchpoint and LADCode.")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")]HttpRequest request,            
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "areas/{touchpointID}/localauthorities/{ladCode}")] HttpRequest request,
             string touchpointID,
             string ladCode) =>
                 await RunActionScope(request, _logger, x => GetAuthorityFor(touchpointID, ladCode, x));

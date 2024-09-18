@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Helpers
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Helpers
 {
     /// <summary>
     /// a static helper class to increase code readability

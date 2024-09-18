@@ -1,14 +1,9 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Text.Json;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.Swagger.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
+using System.Reflection;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
 {
@@ -49,7 +44,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>a http response containing the generated document</returns>
         [Function("ApiDefinition")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "localauthorities/api-definition")]HttpRequest request) =>
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "localauthorities/api-definition")] HttpRequest request) =>
                 await Task.Run<IActionResult>(() =>
                 {
                     It.IsNull(request)

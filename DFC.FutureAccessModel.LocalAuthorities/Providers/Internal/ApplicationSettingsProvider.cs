@@ -1,7 +1,5 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 #if DEBUG
-using System.IO;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using Microsoft.Extensions.Configuration;
 #endif

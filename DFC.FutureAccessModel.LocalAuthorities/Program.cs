@@ -17,7 +17,7 @@ using Microsoft.Extensions.Logging;
 var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
     .ConfigureServices(services =>
-    {        
+    {
         services.AddLogging();
         services.AddSingleton<ILoggerHelper, LoggerHelper>();
         services.AddSingleton<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();

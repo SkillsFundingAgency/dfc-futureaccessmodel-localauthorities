@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 {
     /// <summary>
     /// the safe operations providers
