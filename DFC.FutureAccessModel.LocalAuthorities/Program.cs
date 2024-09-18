@@ -10,6 +10,7 @@ using DFC.FutureAccessModel.LocalAuthorities.Storage.Internal;
 using DFC.FutureAccessModel.LocalAuthorities.Validation;
 using DFC.FutureAccessModel.LocalAuthorities.Validation.Internal;
 using DFC.Swagger.Standard;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -18,6 +19,8 @@ var host = new HostBuilder()
     .ConfigureFunctionsWebApplication()
     .ConfigureServices(services =>
     {
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
         services.AddLogging();
         services.AddSingleton<ILoggerHelper, LoggerHelper>();
         services.AddSingleton<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
