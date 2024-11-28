@@ -1,8 +1,6 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using DFC.Common.Standard.Logging;
+﻿using DFC.Common.Standard.Logging;
 using Microsoft.Extensions.Logging;
+using System.Runtime.CompilerServices;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
 {

@@ -1,13 +1,15 @@
-using System;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using DFC.FutureAccessModel.LocalAuthorities.Adapters;
 using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Moq;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Functions
@@ -26,26 +28,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public async Task RunWithNullRequestThrows()
         {
             // arrange
-            var sut = MakeSUT();
-            var trace = MakeStrictMock<ILogger>();
+            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
+            var sut = MakeSUT(logger);
 
             // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, trace, ""));
-        }
-
-        /// <summary>
-        /// run with null trace throws
-        /// </summary>
-        /// <returns>the currently running (test) task</returns>
-        [Fact]
-        public async Task RunWithNullTraceThrows()
-        {
-            // arrange
-            var sut = MakeSUT();
-            var request = MakeStrictMock<HttpRequest>();
-
-            // act / assert
-            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(request, null, ""));
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Run(null, ""));
         }
 
         /// <summary>
@@ -56,10 +43,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullFactoryThrows()
         {
             // arrange
+            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
             var adapter = MakeStrictMock<IManageLocalAuthorities>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(null, adapter));
+            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(null, adapter, logger));
         }
 
         /// <summary>
@@ -70,10 +58,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullAdapterThrows()
         {
             // arrange
+            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
 
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(factory, null));
+            Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(factory, null, logger));
         }
 
         /// <summary>
@@ -87,43 +76,47 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string theTouchpoint = "00000000112";
             const string localAuthority = "{ \"LADCode\": \"E1234567\", \"Name\": \"Buckingham and Berks\" }";
 
-            var request = MakeStrictMock<HttpRequest>();
+            //var request = MakeStrictMock<HttpRequest>();
+            var request = new Mock<HttpRequest>().Object;
             GetMock(request)
                 .Setup(x => x.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes(localAuthority)));
 
-            var trace = MakeStrictMock<ILogger>();
             var scope = MakeStrictMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.Dispose());
 
-            var sut = MakeSUT();
+            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
+            var sut = MakeSUT(logger);
             GetMock(sut.Factory)
-                .Setup(x => x.BeginScopeFor(request, trace, "RunActionScope"))
+                .Setup(x => x.BeginScopeFor(request, logger, "RunActionScope"))
                 .Returns(Task.FromResult(scope));
 
             GetMock(sut.Adapter)
                 .Setup(x => x.AddNewAuthorityFor(theTouchpoint, localAuthority, scope))
-                .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.Created)));
+                .Returns(Task.FromResult<IActionResult>(new JsonResult(localAuthority, new JsonSerializerSettings())
+                { StatusCode = (int)HttpStatusCode.Created }));
 
             // act
-            var result = await sut.Run(request, trace, theTouchpoint);
+            var result = await sut.Run(request, theTouchpoint);
+            var resultResponse = result as JsonResult;
 
             // assert
-            Assert.Equal(HttpStatusCode.Created, result.StatusCode);
-            Assert.IsAssignableFrom<HttpResponseMessage>(result);
+            Assert.Equal((int)HttpStatusCode.Created, resultResponse.StatusCode);
+            Assert.IsAssignableFrom<IActionResult>(result);
         }
 
         /// <summary>
         /// make (a) 'system under test'
         /// </summary>
+        /// <param name="logger">logger</param>
         /// <returns>the system under test</returns>
-        internal PostLocalAuthorityFunction MakeSUT()
+        internal PostLocalAuthorityFunction MakeSUT(ILogger<PostLocalAuthorityFunction> logger)
         {
             var factory = MakeStrictMock<ICreateLoggingContextScopes>();
             var adapter = MakeStrictMock<IManageLocalAuthorities>();
 
-            return MakeSUT(factory, adapter);
+            return MakeSUT(factory, adapter, logger);
         }
 
         /// <summary>
@@ -134,7 +127,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>the system under test</returns>
         internal PostLocalAuthorityFunction MakeSUT(
             ICreateLoggingContextScopes factory,
-            IManageLocalAuthorities adapter) =>
-                new PostLocalAuthorityFunction(factory, adapter);
+            IManageLocalAuthorities adapter,
+            ILogger<PostLocalAuthorityFunction> logger) =>
+                new PostLocalAuthorityFunction(factory, adapter, logger);
     }
 }

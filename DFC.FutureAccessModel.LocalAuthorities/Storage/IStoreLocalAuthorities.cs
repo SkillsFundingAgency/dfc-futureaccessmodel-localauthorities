@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Models;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Models;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Storage
 {
     /// <summary>
     /// i store local authorities
     /// </summary>
-    public interface IStoreLocalAuthorities :
-        ISupportServiceRegistration
+    public interface IStoreLocalAuthorities
     {
         /// <summary>
         /// get...

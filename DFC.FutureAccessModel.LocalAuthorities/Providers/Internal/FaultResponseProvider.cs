@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
-using DFC.FutureAccessModel.LocalAuthorities.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Web.Http;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 {
@@ -19,7 +16,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// <summary>
         /// the method action map
         /// </summary>
-        private readonly Dictionary<Type, Func<Exception, HttpResponseMessage>> _faultMap = new Dictionary<Type, Func<Exception, HttpResponseMessage>>();
+        private readonly Dictionary<Type, Func<Exception, IActionResult>> _faultMap = new Dictionary<Type, Func<Exception, IActionResult>>();
 
         /// <summary>
         /// initialises an instance of <see cref="FaultResponseProvider"/>
@@ -38,7 +35,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// <param name="theException">the exception</param>
         /// <param name="useLoggingScope">use (the) logging scope</param>
         /// <returns>the currently running task containing the http response message</returns>
-        public async Task<HttpResponseMessage> GetResponseFor(Exception theException, IScopeLoggingContext useLoggingScope)
+        public async Task<IActionResult> GetResponseFor(Exception theException, IScopeLoggingContext useLoggingScope)
         {
             if (_faultMap.ContainsKey(theException.GetType()))
             {
@@ -71,41 +68,36 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// the malformed request action
         /// </summary>
         /// <returns>a 'bad request' message</returns>
-        internal HttpResponseMessage Malformed(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.BadRequest)
-                .SetContent(string.Empty);
+        internal IActionResult Malformed(Exception theException) =>
+            new BadRequestObjectResult(HttpStatusCode.BadRequest);
 
         /// <summary>
         /// the conflicted request action
         /// </summary>
         /// <param name="theException">the exception</param>
         /// <returns>a conflicted message</returns>
-        internal HttpResponseMessage Conflicted(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.Conflict)
-                .SetContent(string.Empty);
+        internal IActionResult Conflicted(Exception theException) =>
+            new ConflictObjectResult(HttpStatusCode.Conflict);
 
         /// <summary>
         /// the no content action
         /// </summary>
         /// <returns>a 'no content' message</returns>
-        internal HttpResponseMessage NoContent(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.NoContent)
-                .SetContent(theException.Message);
+        internal IActionResult NoContent(Exception theException) =>
+            new NoContentResult();
 
         /// <summary>
         /// the unprocessable entity action
         /// </summary>
         /// <returns>a 'unprocessable entity' message</returns>
-        internal HttpResponseMessage UnprocessableEntity(Exception theException) =>
-            new HttpResponseMessage(LocalHttpStatusCode.UnprocessableEntity.AsHttpStatusCode())
-                .SetContent(theException.Message);
+        internal IActionResult UnprocessableEntity(Exception theException) =>
+            new UnprocessableEntityObjectResult(theException.Message);
 
         /// <summary>
         /// the unknown error action
         /// </summary>
         /// <returns>an 'internal server error' message</returns>
-        internal HttpResponseMessage UnknownError(Exception theException) =>
-            new HttpResponseMessage(HttpStatusCode.InternalServerError)
-                .SetContent(theException?.Message ?? theException?.StackTrace ?? string.Empty);
+        internal IActionResult UnknownError(Exception theException) =>
+            new InternalServerErrorResult();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using Microsoft.Azure.Documents.Client;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal

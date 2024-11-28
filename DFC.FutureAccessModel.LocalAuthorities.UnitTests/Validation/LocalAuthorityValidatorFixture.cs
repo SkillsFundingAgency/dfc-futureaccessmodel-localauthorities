@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Validation.Internal

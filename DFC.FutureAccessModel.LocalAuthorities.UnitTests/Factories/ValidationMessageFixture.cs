@@ -11,7 +11,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         [Theory]
         [InlineData("1", "2", "3")]
         [InlineData("1")]
-        [InlineData("1", "2", "3","4","5","6","7")]
+        [InlineData("1", "2", "3", "4", "5", "6", "7")]
         [InlineData("1", "2", "3", "4")]
         public void AddMeetsVerification(params string[] codes)
         {
@@ -21,7 +21,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
             var sut = MakeSUT();
 
             // act
-            foreach(var code in codes)
+            foreach (var code in codes)
                 sut.Add(code, message);
 
             // assert

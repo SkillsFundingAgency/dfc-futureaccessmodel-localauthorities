@@ -1,14 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Providers
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Providers
 {
     /// <summary>
     /// i provide safe operations
     /// </summary>
-    public interface IProvideSafeOperations :
-        ISupportServiceRegistration
+    public interface IProvideSafeOperations
     {
         /// <summary>
         /// try...

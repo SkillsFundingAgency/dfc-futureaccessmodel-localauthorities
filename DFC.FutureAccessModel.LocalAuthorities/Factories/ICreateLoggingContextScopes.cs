@@ -1,16 +1,13 @@
-﻿using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Runtime.CompilerServices;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories
 {
     /// <summary>
     /// i create logging context scopes
     /// </summary>
-    public interface ICreateLoggingContextScopes :
-        ISupportServiceRegistration
+    public interface ICreateLoggingContextScopes
     {
         /// <summary>
         /// begin scope

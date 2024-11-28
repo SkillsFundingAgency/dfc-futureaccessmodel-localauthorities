@@ -1,14 +1,14 @@
-﻿using System;
-using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
 using Microsoft.Azure.Documents;
 using Moq;
+using System;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal

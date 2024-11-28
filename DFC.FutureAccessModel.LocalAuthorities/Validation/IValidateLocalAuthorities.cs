@@ -1,14 +1,11 @@
-﻿using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Models;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Models;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Validation
 {
     /// <summary>
     /// i validate local authorities
     /// </summary>
-    public interface IValidateLocalAuthorities :
-        ISupportServiceRegistration
+    public interface IValidateLocalAuthorities
     {
         /// <summary>
         /// validate...

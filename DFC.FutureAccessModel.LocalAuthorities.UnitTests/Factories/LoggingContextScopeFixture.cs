@@ -1,11 +1,8 @@
-﻿using System;
-using System.Net;
-using System.Threading.Tasks;
-using DFC.Common.Standard.Logging;
+﻿using DFC.Common.Standard.Logging;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
