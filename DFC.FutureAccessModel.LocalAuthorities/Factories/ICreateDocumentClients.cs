@@ -1,14 +1,11 @@
-﻿using System;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
-using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories
 {
     /// <summary>
     /// i create document clients
     /// </summary>
-    public interface ICreateDocumentClients :
-        ISupportServiceRegistration
+    public interface ICreateDocumentClients
     {
         /// <summary>
         /// create client...

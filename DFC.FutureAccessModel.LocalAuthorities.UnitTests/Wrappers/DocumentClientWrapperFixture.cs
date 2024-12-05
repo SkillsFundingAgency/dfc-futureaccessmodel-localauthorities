@@ -1,9 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Models;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Models;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Moq;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal

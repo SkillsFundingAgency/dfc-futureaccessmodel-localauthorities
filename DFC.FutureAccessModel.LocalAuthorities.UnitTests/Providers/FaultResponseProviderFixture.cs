@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
+using DFC.FutureAccessModel.LocalAuthorities.Faults;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
+using System.Web.Http;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
@@ -49,8 +51,24 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var result = await sut.GetResponseFor(exception, logger);
 
             // assert
-            Assert.Equal(expectedState, result.StatusCode);
-            Assert.Equal(expectedMessage, await result.Content.ReadAsStringAsync());
+            var statusCode = (int)expectedState;
+            switch (testException)
+            {
+                case var _ when testException == typeof(MalformedRequestException):
+                    Assert.IsType<BadRequestObjectResult>(result);
+                    Assert.Equal(statusCode, (result as BadRequestObjectResult).StatusCode);
+                    break;
+
+                case var _ when testException == typeof(NoContentException):
+                    Assert.IsType<NoContentResult>(result);
+                    Assert.Equal(statusCode, (result as NoContentResult).StatusCode);
+                    break;
+
+                case var _ when testException == typeof(UnprocessableEntityException):
+                    Assert.IsType<UnprocessableEntityObjectResult>(result);
+                    Assert.Equal(statusCode, (result as UnprocessableEntityObjectResult).StatusCode);
+                    break;
+            }
         }
 
         /// <summary>
@@ -76,10 +94,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = await sut.GetResponseFor(exception, logger);
+            var resultResponse = result as InternalServerErrorResult;
 
             // assert
-            Assert.Equal(expectedState, result.StatusCode);
-            Assert.Equal(expectedMessage, await result.Content.ReadAsStringAsync());
+            Assert.Equal((int)expectedState, resultResponse.StatusCode);
         }
 
         /// <summary>
@@ -94,9 +112,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = sut.Malformed(exception);
+            var resultResponse = result as BadRequestObjectResult;
 
             // assert
-            Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.BadRequest, resultResponse.StatusCode);
         }
 
         /// <summary>
@@ -111,9 +130,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = sut.Conflicted(exception);
+            var resultResponse = result as ConflictObjectResult;
 
             // assert
-            Assert.Equal(HttpStatusCode.Conflict, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.Conflict, resultResponse.StatusCode);
         }
 
         /// <summary>
@@ -128,9 +148,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = sut.NoContent(exception);
+            var resultResponse = result as NoContentResult;
 
             // assert
-            Assert.Equal(HttpStatusCode.NoContent, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.NoContent, resultResponse.StatusCode);
         }
 
         /// <summary>
@@ -145,9 +166,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = sut.UnprocessableEntity(exception);
+            var resultResponse = result as UnprocessableEntityObjectResult;
 
             // assert
-            Assert.Equal((HttpStatusCode)422, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.UnprocessableContent, resultResponse.StatusCode);
         }
 
         /// <summary>
@@ -162,9 +184,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
 
             // act
             var result = sut.UnknownError(exception);
+            var resultResponse = result as InternalServerErrorResult;
 
             // assert
-            Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
+            Assert.Equal((int)HttpStatusCode.InternalServerError, resultResponse.StatusCode);
         }
 
         /// <summary>

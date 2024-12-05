@@ -1,11 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.FutureAccessModel.LocalAuthorities", "DFC.FutureAccessModel.LocalAuthorities\DFC.FutureAccessModel.LocalAuthorities.csproj", "{59E035DA-D3AD-4674-A00C-AF52820B923D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FutureAccessModel.LocalAuthorities", "DFC.FutureAccessModel.LocalAuthorities\DFC.FutureAccessModel.LocalAuthorities.csproj", "{59E035DA-D3AD-4674-A00C-AF52820B923D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.FutureAccessModel.LocalAuthorities.UnitTests", "DFC.FutureAccessModel.LocalAuthorities.UnitTests\DFC.FutureAccessModel.LocalAuthorities.UnitTests.csproj", "{D19A668C-220B-45AD-A18D-4CDA9585AE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.FutureAccessModel.LocalAuthorities.UnitTests", "DFC.FutureAccessModel.LocalAuthorities.UnitTests\DFC.FutureAccessModel.LocalAuthorities.UnitTests.csproj", "{D19A668C-220B-45AD-A18D-4CDA9585AE1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

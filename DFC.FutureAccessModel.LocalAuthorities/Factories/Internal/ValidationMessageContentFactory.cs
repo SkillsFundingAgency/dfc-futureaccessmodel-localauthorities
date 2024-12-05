@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using System.ComponentModel.DataAnnotations;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
 {

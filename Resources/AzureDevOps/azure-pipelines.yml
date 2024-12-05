@@ -14,7 +14,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.16.0
+    ref: refs/tags/v1.16.2
     endpoint: 'GitHub (ESFA)'
 
 stages:
@@ -38,6 +38,8 @@ stages:
         SolutionBaseName: $(SolutionBaseName)
         BuildPlatform: 'any cpu'
         BuildConfiguration: 'release'
+        GitVersionVersion: 5.12.x
+        DotNetCoreVersion: 8.x
 
 - stage: DeployTo_LAB
   displayName: Deploy to LAB_FUTUREACCESSMODEL environment

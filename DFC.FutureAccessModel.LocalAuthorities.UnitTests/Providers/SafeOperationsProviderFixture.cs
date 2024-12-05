@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Faults;
+using System;
 using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using Xunit;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal

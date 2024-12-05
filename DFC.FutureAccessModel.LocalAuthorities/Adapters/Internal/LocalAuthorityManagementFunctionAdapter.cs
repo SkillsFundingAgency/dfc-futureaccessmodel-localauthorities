@@ -1,15 +1,14 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Factories;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Factories;
 using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
 using DFC.FutureAccessModel.LocalAuthorities.Providers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
 using DFC.FutureAccessModel.LocalAuthorities.Validation;
-using DFC.HTTP.Standard;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net;
+using System.Text.Json;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 {
@@ -30,11 +29,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public IProvideSafeOperations SafeOperations { get; }
 
         /// <summary>
-        /// the response (helper)
-        /// </summary>
-        public IHttpResponseMessageHelper Respond { get; }
-
-        /// <summary>
         /// i store local authorities
         /// </summary>
         public IStoreLocalAuthorities Authorities { get; }
@@ -52,14 +46,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="safeOperations"></param>
         /// <param name="authorities"></param>
         public LocalAuthorityManagementFunctionAdapter(
-            IHttpResponseMessageHelper responseHelper,
             IProvideFaultResponses faultResponses,
             IProvideSafeOperations safeOperations,
             IStoreLocalAuthorities authorities,
             IValidateLocalAuthorities validator)
         {
-            It.IsNull(responseHelper)
-                .AsGuard<ArgumentNullException>(nameof(responseHelper));
             It.IsNull(faultResponses)
                 .AsGuard<ArgumentNullException>(nameof(faultResponses));
             It.IsNull(safeOperations)
@@ -69,7 +60,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             It.IsNull(validator)
                 .AsGuard<ArgumentNullException>(nameof(validator));
 
-            Respond = responseHelper;
             Faults = faultResponses;
             SafeOperations = safeOperations;
             Authorities = authorities;
@@ -83,7 +73,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+        public async Task<IActionResult> GetAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
             await SafeOperations.Try(() => ProcessGetAuthorityFor(theTouchpoint, theLADCode, inScope), x => Faults.GetResponseFor(x, inScope));
 
         /// <summary>
@@ -93,7 +83,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> ProcessGetAuthorityFor(
+        public async Task<IActionResult> ProcessGetAuthorityFor(
             string theTouchpoint,
             string theLADCode,
             IScopeLoggingContext inScope)
@@ -122,7 +112,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             await inScope.Information($"preparing response...");
 
-            var response = Respond.Ok().SetContent(result);
+            var response = new OkObjectResult(result);
 
             await inScope.Information($"preparation complete...");
 
@@ -138,7 +128,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="usingContent">using content</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope) =>
+        public async Task<IActionResult> AddNewAuthorityFor(string theTouchpoint, string usingContent, IScopeLoggingContext inScope) =>
             await SafeOperations.Try(() => ProcessAddNewAuthorityFor(theTouchpoint, usingContent, inScope), x => Faults.GetResponseFor(x, inScope));
 
         /// <summary>
@@ -151,7 +141,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="usingContent">using content</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> ProcessAddNewAuthorityFor(
+        public async Task<IActionResult> ProcessAddNewAuthorityFor(
             string theTouchpoint,
             string usingContent,
             IScopeLoggingContext inScope)
@@ -190,7 +180,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             await inScope.Information($"candidate addition complete...");
             await inScope.Information($"preparing response...");
 
-            var response = Respond.Created().SetContent(result);
+            var response = new JsonResult(result, new JsonSerializerOptions())
+            {
+                StatusCode = (int)HttpStatusCode.Created
+            };
 
             await inScope.Information($"preparation complete...");
             await inScope.ExitMethod();
@@ -205,7 +198,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
+        public async Task<IActionResult> DeleteAuthorityFor(string theTouchpoint, string theLADCode, IScopeLoggingContext inScope) =>
             await SafeOperations.Try(() => ProcessDeleteAuthorityFor(theTouchpoint, theLADCode, inScope), x => Faults.GetResponseFor(x, inScope));
 
         /// <summary>
@@ -215,7 +208,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <param name="theLADCode">the local adinistrative district code</param>
         /// <param name="inScope">in scope</param>
         /// <returns>the result of the operation</returns>
-        public async Task<HttpResponseMessage> ProcessDeleteAuthorityFor(
+        public async Task<IActionResult> ProcessDeleteAuthorityFor(
             string theTouchpoint,
             string theLADCode,
             IScopeLoggingContext inScope)
@@ -246,7 +239,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             await inScope.Information($"preparing response...");
 
-            var response = Respond.Ok();
+            var response = new OkResult();
 
             await inScope.Information($"preparation complete...");
             await inScope.ExitMethod();

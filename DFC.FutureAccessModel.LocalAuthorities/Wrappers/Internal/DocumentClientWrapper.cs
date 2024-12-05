@@ -1,13 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using DFC.FutureAccessModel.LocalAuthorities.Storage;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
 {
@@ -138,7 +135,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         internal RequestOptions GetRequestOptions(string partitionKey) =>
         new RequestOptions
         {
-            PartitionKey = new PartitionKey(partitionKey), 
+            PartitionKey = new PartitionKey(partitionKey),
         };
 
         /// <summary>

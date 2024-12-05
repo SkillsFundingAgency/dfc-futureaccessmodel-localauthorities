@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers
 {
     /// <summary>
     /// i document client (shim)

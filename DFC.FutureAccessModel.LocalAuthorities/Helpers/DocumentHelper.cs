@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Microsoft.Azure.Documents;
+﻿using Microsoft.Azure.Documents;
 using Newtonsoft.Json;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Helpers

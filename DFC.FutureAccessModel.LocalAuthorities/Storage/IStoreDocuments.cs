@@ -1,14 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using DFC.FutureAccessModel.LocalAuthorities.Registration;
-
-namespace DFC.FutureAccessModel.LocalAuthorities.Storage
+﻿namespace DFC.FutureAccessModel.LocalAuthorities.Storage
 {
     /// <summary>
     /// i store documents
     /// </summary>
-    public interface IStoreDocuments :
-        ISupportServiceRegistration
+    public interface IStoreDocuments
     {
         /// <summary>
         /// document exists...

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using DFC.Common.Standard.Logging;
+﻿using DFC.Common.Standard.Logging;
 using DFC.FutureAccessModel.LocalAuthorities.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Runtime.CompilerServices;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
 {

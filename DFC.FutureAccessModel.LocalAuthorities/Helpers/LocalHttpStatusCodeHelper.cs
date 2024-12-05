@@ -1,5 +1,5 @@
-﻿using System.Net;
-using DFC.FutureAccessModel.LocalAuthorities.Models;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Models;
+using System.Net;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Helpers
 {

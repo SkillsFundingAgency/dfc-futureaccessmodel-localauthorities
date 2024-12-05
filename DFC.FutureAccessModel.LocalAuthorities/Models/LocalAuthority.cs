@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DFC.FutureAccessModel.LocalAuthorities.Validation;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Validation;
 using DFC.Swagger.Standard.Annotations;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Models
 {
@@ -32,7 +32,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Models
         [StringLength(9, MinimumLength = 9)]
         [Example(Description = "E09000002")]
         public string LADCode { get; set; }
-        
+
         /// <summary>
         /// the (authority) name
         /// </summary>
