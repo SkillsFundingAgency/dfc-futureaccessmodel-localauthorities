@@ -197,7 +197,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// <returns>a logging context scope</returns>
         internal IScopeLoggingContext MakeLoggingContext(string itemBeingRecorded)
         {
-            var logger = MakeStrictMock<IScopeLoggingContext>();
+            var logger = MakeMock<IScopeLoggingContext>();
             GetMock(logger)
                 .Setup(x => x.Information(itemBeingRecorded))
                 .Returns(Task.CompletedTask);

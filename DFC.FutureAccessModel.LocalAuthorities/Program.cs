@@ -27,8 +27,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities
                 {
                     services.AddApplicationInsightsTelemetryWorkerService();
                     services.ConfigureFunctionsApplicationInsights();
-                    services.AddLogging();
-                    services.AddSingleton<ILoggerHelper, LoggerHelper>();
+                    services.AddLogging();                    
                     services.AddSingleton<ISwaggerDocumentGenerator, SwaggerDocumentGenerator>();
                     services.AddSingleton<IManageLocalAuthorities, LocalAuthorityManagementFunctionAdapter>();
                     services.AddSingleton<ICreateDocumentClients, DocumentClientFactory>();

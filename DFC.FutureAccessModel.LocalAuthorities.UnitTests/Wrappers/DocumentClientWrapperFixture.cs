@@ -38,7 +38,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         public void BuildWithClientMeetsExpectation()
         {
             // arrange
-            var client = MakeStrictMock<IDocumentClient>();
+            var client = MakeMock<IDocumentClient>();
 
             // act
             var sut = new DocumentClientWrapper(client);
@@ -194,6 +194,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Wrappers.Internal
         /// </summary>
         /// <returns>a system under test</returns>
         internal DocumentClientWrapper MakeSUT() =>
-            new DocumentClientWrapper(MakeStrictMock<IDocumentClient>());
+            new DocumentClientWrapper(MakeMock<IDocumentClient>());
     }
 }

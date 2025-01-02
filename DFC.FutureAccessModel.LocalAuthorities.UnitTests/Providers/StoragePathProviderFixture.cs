@@ -127,7 +127,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// <returns>the system under test</returns>
         internal StoragePathProvider MakeSUT()
         {
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
+            var settings = MakeMock<IProvideApplicationSettings>();
             GetMock(settings)
                 .Setup(x => x.GetVariable(StoragePathProvider.DocumentStoreIDKey))
                 .Returns(documentStoreName);

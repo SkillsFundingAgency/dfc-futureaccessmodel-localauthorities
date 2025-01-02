@@ -1,6 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
 
@@ -25,24 +23,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <summary>
         /// the value for an unfound key item
         /// </summary>
-        public const string ValueNotFound = "(not found)";
-
-        /// <summary>
-        /// the DFC logging helper
-        /// </summary>
-        public ILoggerHelper LoggerHelper { get; }
+        public const string ValueNotFound = "(not found)";        
 
         /// <summary>
         /// initalises a new instance of the <see cref="LoggingContextScopeFactory"/>
-        /// </summary>
-        /// <param name="log">the microsoft log</param>
-        /// <param name="logHelper">the DFC logging helper</param>
-        public LoggingContextScopeFactory(ILoggerHelper logHelper)
-        {
-            It.IsNull(logHelper)
-                .AsGuard<ArgumentNullException>(nameof(logHelper));
-
-            LoggerHelper = logHelper;
+        /// </summary>                
+        public LoggingContextScopeFactory()
+        {            
         }
 
         /// <summary>
@@ -57,7 +44,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
             ILogger usingTraceWriter,
             [CallerMemberName] string initialisingRoutine = null)
         {
-            var scope = new LoggingContextScope(usingTraceWriter, LoggerHelper, initialisingRoutine);
+            var scope = new LoggingContextScope(usingTraceWriter, initialisingRoutine);
 
             await scope.Information($"beginning scope for remote host, address: '{theRequest.HttpContext.Connection.RemoteIpAddress}' port: '{theRequest.HttpContext.Connection.RemotePort}'");
             await scope.Information($"request verb: '{theRequest.Method}'");

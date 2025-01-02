@@ -25,9 +25,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullDocumentValidatorThrows()
         {
             // arrange
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
+            var store = MakeMock<IStoreLocalAuthorities>();
+            var faults = MakeMock<IProvideFaultResponses>();
+            var safe = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store, faults, safe));
@@ -40,9 +40,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullStorageProviderThrows()
         {
             // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
+            var validator = MakeMock<IValidateLocalAuthorities>();
+            var faults = MakeMock<IProvideFaultResponses>();
+            var safe = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, null, faults, safe));
@@ -55,9 +55,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullFaultsResponseProviderThrows()
         {
             // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
+            var validator = MakeMock<IValidateLocalAuthorities>();
+            var store = MakeMock<IStoreLocalAuthorities>();
+            var safe = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, null, safe));
@@ -70,9 +70,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         public void BuildWithNullSafeOperationsThrows()
         {
             // arrange
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
+            var validator = MakeMock<IValidateLocalAuthorities>();
+            var store = MakeMock<IStoreLocalAuthorities>();
+            var faults = MakeMock<IProvideFaultResponses>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(validator, store, faults, null));
@@ -87,7 +87,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         {
             // arrange
             var sut = MakeSUT();
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
                 .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
@@ -119,7 +119,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             // arrange
             var sut = MakeSUT();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessGetAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -146,7 +146,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             var sut = MakeSUT();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessGetAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -183,7 +183,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Get(theAdminDistrict))
                 .Returns(Task.FromResult<ILocalAuthority>(localAuthority));
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessGetAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -225,7 +225,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         {
             // arrange
             var sut = MakeSUT();
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
                 .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
@@ -257,7 +257,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             // arrange
             var sut = MakeSUT();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessAddNewAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -283,7 +283,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Validate(It.IsAny<ILocalAuthority>()))
                 .Throws(new UnprocessableEntityException());
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessAddNewAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -324,7 +324,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Add(It.IsAny<IncomingLocalAuthority>()))
                 .Returns(Task.FromResult<ILocalAuthority>(new LocalAuthority()));
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessAddNewAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -378,7 +378,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         {
             // arrange
             var sut = MakeSUT();
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
 
             GetMock(sut.SafeOperations)
                 .Setup(x => x.Try(It.IsAny<Func<Task<IActionResult>>>(), It.IsAny<Func<Exception, Task<IActionResult>>>()))
@@ -409,7 +409,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
             // arrange
             var sut = MakeSUT();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessDeleteAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -436,7 +436,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
 
             var sut = MakeSUT();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessDeleteAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -485,7 +485,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
                 .Setup(x => x.Delete(theAdminDistrict))
                 .Returns(Task.CompletedTask);
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.EnterMethod("ProcessDeleteAuthorityFor"))
                 .Returns(Task.CompletedTask);
@@ -527,10 +527,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Adapters.Internal
         /// <returns>the system under test</returns>
         internal LocalAuthorityManagementFunctionAdapter MakeSUT()
         {
-            var validator = MakeStrictMock<IValidateLocalAuthorities>();
-            var store = MakeStrictMock<IStoreLocalAuthorities>();
-            var faults = MakeStrictMock<IProvideFaultResponses>();
-            var safe = MakeStrictMock<IProvideSafeOperations>();
+            var validator = MakeMock<IValidateLocalAuthorities>();
+            var store = MakeMock<IStoreLocalAuthorities>();
+            var faults = MakeMock<IProvideFaultResponses>();
+            var safe = MakeMock<IProvideSafeOperations>();
 
             return MakeSUT(validator, store, faults, safe);
         }

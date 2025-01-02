@@ -66,8 +66,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildWithNullSettingsThrows()
         {
             // arrange
-            var factory = MakeStrictMock<ICreateDocumentClients>();
-            var safeOps = MakeStrictMock<IProvideSafeOperations>();
+            var factory = MakeMock<ICreateDocumentClients>();
+            var safeOps = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(null, factory, safeOps));
@@ -80,8 +80,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildWithNullFactoryThrows()
         {
             // arrange
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
-            var safeOps = MakeStrictMock<IProvideSafeOperations>();
+            var settings = MakeMock<IProvideApplicationSettings>();
+            var safeOps = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(settings, null, safeOps));
@@ -94,8 +94,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildWithNullSafeOperationsThrows()
         {
             // arrange
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
-            var factory = MakeStrictMock<ICreateDocumentClients>();
+            var settings = MakeMock<IProvideApplicationSettings>();
+            var factory = MakeMock<ICreateDocumentClients>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(settings, factory, null));
@@ -115,7 +115,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildFailureMeetsExpectation(string endpointAddress, string accountKey, Type expectedException)
         {
             // arrange
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
+            var settings = MakeMock<IProvideApplicationSettings>();
             GetMock(settings)
                 .Setup(x => x.GetVariable(storeEndpointAddressKey))
                 .Returns(endpointAddress);
@@ -123,8 +123,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .Setup(x => x.GetVariable(storeAccountKey))
                 .Returns(accountKey);
 
-            var factory = MakeStrictMock<ICreateDocumentClients>();
-            var safeOps = MakeStrictMock<IProvideSafeOperations>();
+            var factory = MakeMock<ICreateDocumentClients>();
+            var safeOps = MakeMock<IProvideSafeOperations>();
 
             // act / assert
             Assert.Throws(expectedException, () => MakeSUT(settings, factory, safeOps));
@@ -139,7 +139,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             // arrange
             const string accountKeyValue = "anyOldAccountKey";
 
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
+            var settings = MakeMock<IProvideApplicationSettings>();
             GetMock(settings)
                 .Setup(x => x.GetVariable(storeEndpointAddressKey))
                 .Returns("http://localhost:123/");
@@ -147,12 +147,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .Setup(x => x.GetVariable(storeAccountKey))
                 .Returns(accountKeyValue);
 
-            var factory = MakeStrictMock<ICreateDocumentClients>();
+            var factory = MakeMock<ICreateDocumentClients>();
             GetMock(factory)
                 .Setup(x => x.CreateClient(It.IsAny<Uri>(), accountKeyValue))
                 .Returns<IDocumentClient>(null);
 
-            var safeOps = MakeStrictMock<IProvideSafeOperations>();
+            var safeOps = MakeMock<IProvideSafeOperations>();
 
             // act
             var sut = MakeSUT(settings, factory, safeOps);
@@ -456,7 +456,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         {
             const string accountKeyValue = "anyOldAccountKey";
 
-            var settings = MakeStrictMock<IProvideApplicationSettings>();
+            var settings = MakeMock<IProvideApplicationSettings>();
             GetMock(settings)
                 .Setup(x => x.GetVariable(storeEndpointAddressKey))
                 .Returns("http://localhost:123/");
@@ -464,12 +464,12 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
                 .Setup(x => x.GetVariable(storeAccountKey))
                 .Returns(accountKeyValue);
 
-            var factory = MakeStrictMock<ICreateDocumentClients>();
+            var factory = MakeMock<ICreateDocumentClients>();
             GetMock(factory)
                 .Setup(x => x.CreateClient(It.IsAny<Uri>(), accountKeyValue))
-                .Returns(MakeStrictMock<IWrapDocumentClient>());
+                .Returns(MakeMock<IWrapDocumentClient>());
 
-            var safeOperator = MakeStrictMock<IProvideSafeOperations>();
+            var safeOperator = MakeMock<IProvideSafeOperations>();
 
             return MakeSUT(settings, factory, safeOperator);
         }

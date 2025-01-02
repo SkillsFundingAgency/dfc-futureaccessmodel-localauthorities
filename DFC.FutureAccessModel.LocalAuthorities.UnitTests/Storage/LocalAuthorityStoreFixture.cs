@@ -31,7 +31,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildWithNullPathsThrows()
         {
             // arrange
-            var store = MakeStrictMock<IStoreDocuments>();
+            var store = MakeMock<IStoreDocuments>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store));
@@ -44,7 +44,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildWithNullStoreThrows()
         {
             // arrange
-            var paths = MakeStrictMock<IProvideStoragePaths>();
+            var paths = MakeMock<IProvideStoragePaths>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => MakeSUT(paths, null));
@@ -57,8 +57,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public void BuildMeetsVerification()
         {
             // arrange
-            var paths = MakeStrictMock<IProvideStoragePaths>();
-            var store = MakeStrictMock<IStoreDocuments>();
+            var paths = MakeMock<IProvideStoragePaths>();
+            var store = MakeMock<IStoreDocuments>();
 
             // act
             var sut = MakeSUT(paths, store);
@@ -242,8 +242,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// <returns>the system under test</returns>
         internal LocalAuthorityStore MakeSUT()
         {
-            var paths = MakeStrictMock<IProvideStoragePaths>();
-            var store = MakeStrictMock<IStoreDocuments>();
+            var paths = MakeMock<IProvideStoragePaths>();
+            var store = MakeMock<IStoreDocuments>();
 
             return MakeSUT(paths, store);
         }
