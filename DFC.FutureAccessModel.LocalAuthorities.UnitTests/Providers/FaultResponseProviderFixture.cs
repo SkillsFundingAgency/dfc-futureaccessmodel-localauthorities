@@ -97,7 +97,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var resultResponse = result as InternalServerErrorResult;
 
             // assert
-            Assert.Equal((int)expectedState, resultResponse.StatusCode);
+            Assert.Equal((int)expectedState, resultResponse.StatusCode);            
+            Assert.Equal(expectedMessage, exception.Message);
         }
 
         /// <summary>
@@ -111,7 +112,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var exception = new Exception();
 
             // act
-            var result = sut.Malformed(exception);
+            var result = FaultResponseProvider.Malformed(exception);
             var resultResponse = result as BadRequestObjectResult;
 
             // assert
@@ -129,7 +130,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var exception = new Exception();
 
             // act
-            var result = sut.Conflicted(exception);
+            var result = FaultResponseProvider.Conflicted(exception);
             var resultResponse = result as ConflictObjectResult;
 
             // assert
@@ -147,7 +148,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var exception = new Exception();
 
             // act
-            var result = sut.NoContent(exception);
+            var result = FaultResponseProvider.NoContent(exception);
             var resultResponse = result as NoContentResult;
 
             // assert
@@ -165,7 +166,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var exception = new Exception();
 
             // act
-            var result = sut.UnprocessableEntity(exception);
+            var result = FaultResponseProvider.UnprocessableEntity(exception);
             var resultResponse = result as UnprocessableEntityObjectResult;
 
             // assert
@@ -183,7 +184,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
             var exception = new Exception();
 
             // act
-            var result = sut.UnknownError(exception);
+            var result = FaultResponseProvider.UnknownError(exception);
             var resultResponse = result as InternalServerErrorResult;
 
             // assert

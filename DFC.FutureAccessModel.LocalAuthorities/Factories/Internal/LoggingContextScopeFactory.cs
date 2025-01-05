@@ -62,7 +62,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <param name="theRequest">the request</param>
         /// <param name="theHeaderItem">the header item</param>
         /// <returns>the header item value or a default string '(not found)'</returns>
-        internal string GetHeaderItemFrom(HttpRequest theRequest, string theHeaderItem) =>
+        internal static string GetHeaderItemFrom(HttpRequest theRequest, string theHeaderItem) =>
             theRequest.Headers.ContainsKey(theHeaderItem)
                 ? theRequest.Headers[theHeaderItem].FirstOrDefault()
                 : ValueNotFound;
