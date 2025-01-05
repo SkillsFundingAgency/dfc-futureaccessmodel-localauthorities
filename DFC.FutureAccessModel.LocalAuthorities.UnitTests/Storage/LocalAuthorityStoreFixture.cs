@@ -1,6 +1,7 @@
 ﻿using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using DFC.FutureAccessModel.LocalAuthorities.Models;
-using DFC.FutureAccessModel.LocalAuthorities.Providers;
+using DFC.FutureAccessModel.LocalAuthorities.Wrappers;
+using Microsoft.Azure.Cosmos;
 using Moq;
 using System;
 using System.Threading.Tasks;
@@ -25,29 +26,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         }
 
         /// <summary>
-        /// build with null paths throws
+        /// build with null cosmos db wrapper throws
         /// </summary>
         [Fact]
-        public void BuildWithNullPathsThrows()
+        public void BuildWithNullCosmosDbWrapperThrows()
         {
-            // arrange
-            var store = MakeMock<IStoreDocuments>();
-
             // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(null, store));
-        }
-
-        /// <summary>
-        /// build with null store throws
-        /// </summary>
-        [Fact]
-        public void BuildWithNullStoreThrows()
-        {
-            // arrange
-            var paths = MakeMock<IProvideStoragePaths>();
-
-            // act / assert
-            Assert.Throws<ArgumentNullException>(() => MakeSUT(paths, null));
+            Assert.Throws<ArgumentNullException>(() => MakeSUT(null));
         }
 
         /// <summary>
@@ -56,16 +41,14 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         [Fact]
         public void BuildMeetsVerification()
         {
-            // arrange
-            var paths = MakeMock<IProvideStoragePaths>();
-            var store = MakeMock<IStoreDocuments>();
+            // arrange            
+            var cosmosDbWrapper = MakeMock<IWrapCosmosDbClient>();
 
             // act
-            var sut = MakeSUT(paths, store);
+            var sut = MakeSUT(cosmosDbWrapper);
 
             // assert
-            GetMock(sut.DocumentStore).VerifyAll();
-            GetMock(sut.StoragePaths).VerifyAll();
+            GetMock(sut.CosmosDbWrapper).VerifyAll();
         }
 
         /// <summary>
@@ -78,21 +61,16 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             // arrange
             var sut = MakeSUT();
             const string theAdminDistrict = "any old district";
-            var documentPath = new Uri("/", UriKind.Relative);
 
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.GetDocument<LocalAuthority>(documentPath, "not_required"))
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.GetLocalAuthorityAsync(theAdminDistrict, "not_required"))
                 .Returns(Task.FromResult(new LocalAuthority()));
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetLocalAuthorityResourcePathFor(theAdminDistrict))
-                .Returns(documentPath);
 
             // act
             var result = await sut.Get(theAdminDistrict);
 
             // assert
-            GetMock(sut.DocumentStore).VerifyAll();
-            GetMock(sut.StoragePaths).VerifyAll();
+            GetMock(sut.CosmosDbWrapper).VerifyAll();
             Assert.IsAssignableFrom<ILocalAuthority>(result);
         }
 
@@ -134,12 +112,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             // arrange
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
-            var resourcePath = new Uri("any/old/resource/path", UriKind.Relative);
             var la = new IncomingLocalAuthority { TouchpointID = touchpoint };
-
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists<LocalAuthority>(resourcePath, "not_required"))
-                .Returns(Task.FromResult(true));
 
             // act / assert
             await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Add(la));
@@ -156,15 +129,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
             var ladcode = "E000606060";
-            var laResourcePath = new Uri("any/old/la/resource/path", UriKind.Relative);
             var la = new IncomingLocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
 
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetLocalAuthorityResourcePathFor(ladcode))
-                .Returns(laResourcePath);
-
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists<LocalAuthority>(laResourcePath, "not_required"))
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.LocalAuthorityExistsAsync(la.LADCode, "not_required"))
                 .Returns(Task.FromResult(true));
 
             // act / assert
@@ -179,34 +147,61 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         public async Task AddLocalAuthorityWithValidAuthorityMeetsVerification()
         {
             // arrange
-            const string pKey = "not_required";
+            const string partitionKey = "not_required";
             var sut = MakeSUT();
             var touchpoint = "any old touchpoint";
             var ladcode = "E000606060";
-            var laResourcePath = new Uri("any/old/la/resource/path", UriKind.Relative);
             var la = new IncomingLocalAuthority { TouchpointID = touchpoint, LADCode = ladcode };
+            var mockItemResponse = new Mock<ItemResponse<LocalAuthority>>();
+            mockItemResponse.SetupGet(x => x.Resource).Returns(la);
 
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetLocalAuthorityResourcePathFor(ladcode))
-                .Returns(laResourcePath);
-            GetMock(sut.StoragePaths)
-                .SetupGet(x => x.LocalAuthorityCollection)
-                .Returns(laResourcePath);
-
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DocumentExists<LocalAuthority>(laResourcePath, pKey))
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.LocalAuthorityExistsAsync(la.LADCode, partitionKey))
                 .Returns(Task.FromResult(false));
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.AddDocument(la, It.IsAny<Uri>()))
-                .Returns(Task.FromResult(la));
+
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.CreateLocalAuthorityAsync(la, partitionKey))
+                .Returns(Task.FromResult(mockItemResponse.Object));
 
             // act
             var result = await sut.Add(la);
 
             // assert
-            GetMock(sut.StoragePaths).VerifyAll();
-            GetMock(sut.DocumentStore).VerifyAll();
+            GetMock(sut.CosmosDbWrapper).VerifyAll();
             Assert.Equal(la, result);
+        }
+
+        /// <summary>
+        /// delete local authority with null admin district (LAD Code) throws
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Fact]
+        public async Task DeleteLocalAuthorityWithNullAdminDistrictThrows()
+        {
+            // arrange
+            var sut = MakeSUT();
+
+            // act / assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => sut.Delete(null));
+        }
+
+        /// <summary>
+        /// delete local authority with admin district (LAD Code) not already existing throws
+        /// </summary>
+        /// <returns>the currently running (test) task</returns>
+        [Fact]
+        public async Task DeleteLocalAuthorityWithAdminDistrictNotExistingThrows()
+        {
+            // arrange
+            var sut = MakeSUT();
+            const string theAdminDistrict = "any old district";
+
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.LocalAuthorityExistsAsync(theAdminDistrict, "not_required"))
+                .Returns(Task.FromResult(false));
+
+            // act / assert
+            await Assert.ThrowsAsync<NoContentException>(() => sut.Delete(theAdminDistrict));
         }
 
         /// <summary>
@@ -219,21 +214,16 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
             // arrange
             var sut = MakeSUT();
             const string theAdminDistrict = "any old district";
-            var documentPath = new Uri("/", UriKind.Relative);
 
-            GetMock(sut.DocumentStore)
-                .Setup(x => x.DeleteDocument(documentPath, "not_required"))
-                .Returns(Task.CompletedTask);
-            GetMock(sut.StoragePaths)
-                .Setup(x => x.GetLocalAuthorityResourcePathFor(theAdminDistrict))
-                .Returns(documentPath);
+            GetMock(sut.CosmosDbWrapper)
+                .Setup(x => x.LocalAuthorityExistsAsync(theAdminDistrict, "not_required"))
+                .Returns(Task.FromResult(true));
 
             // act
             await sut.Delete(theAdminDistrict);
 
             // assert
-            GetMock(sut.DocumentStore).VerifyAll();
-            GetMock(sut.StoragePaths).VerifyAll();
+            GetMock(sut.CosmosDbWrapper).VerifyAll();
         }
 
         /// <summary>
@@ -242,10 +232,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// <returns>the system under test</returns>
         internal LocalAuthorityStore MakeSUT()
         {
-            var paths = MakeMock<IProvideStoragePaths>();
-            var store = MakeMock<IStoreDocuments>();
+            var cosmosDbWrapper = MakeMock<IWrapCosmosDbClient>();
 
-            return MakeSUT(paths, store);
+            return MakeSUT(cosmosDbWrapper);
         }
 
         /// <summary>
@@ -255,8 +244,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Storage.Internal
         /// <param name="store">the document store</param>
         /// <returns>the system under test</returns>
         internal LocalAuthorityStore MakeSUT(
-            IProvideStoragePaths paths,
-            IStoreDocuments store) =>
-            new LocalAuthorityStore(paths, store);
+            IWrapCosmosDbClient cosmosDbWrapper) =>
+            new LocalAuthorityStore(cosmosDbWrapper);
     }
 }

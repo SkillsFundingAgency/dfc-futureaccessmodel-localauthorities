@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
@@ -13,7 +12,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <summary>
         /// the microsoft logger
         /// </summary>
-        public ILogger Logger { get; }        
+        public ILogger Logger { get; }
 
         /// <summary>
         /// a 'correlation' id
@@ -28,7 +27,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <param name="initialisingRoutine">the calling routine</param>
         public LoggingContextScope(ILogger logger, string initialisingRoutine)
         {
-            Logger = logger;            
+            Logger = logger;
 
             CorrelationID = Guid.NewGuid();
 
@@ -58,7 +57,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <returns>the currently running task</returns>
         public async Task Information(string theMessage) =>
             await Task.Run(() => Logger.LogInformation("CorrelationId: {CorrelationId} Message: {TheMessage}", CorrelationID, theMessage));
-        
+
 
         /// <summary>
         /// (log) exception detail
@@ -67,13 +66,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <returns>the currently running task</returns>
         public async Task ExceptionDetail(Exception theException) =>
             await Task.Run(() => Logger.LogError(theException, "CorrelationId: {CorrelationId} Message: {TheMessage} Stack Trace: {StackTrace}", CorrelationID, theException.Message, theException.StackTrace));
-        
+
 
         /// <summary>
         /// dispose, as this is used in a 'using' clause disposal should be guaranteed
         /// </summary>
         public void Dispose()
-        {            
+        {
             Logger.LogInformation("CorrelationId: {CorrelationId} Message: request completed", CorrelationID);
         }
     }

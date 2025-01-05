@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -176,7 +175,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
                 .Returns(context);
 
             return request;
-        }        
+        }
 
         /// <summary>
         /// make a 'system under test'

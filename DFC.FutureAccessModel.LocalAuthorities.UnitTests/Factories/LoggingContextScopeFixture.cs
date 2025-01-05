@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using Microsoft.Extensions.Logging;
 using Moq;
 using System;
@@ -137,7 +136,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <returns>the system under test</returns>
         internal LoggingContextScope MakeSUT()
         {
-            var log = MakeMock<ILogger>();            
+            var log = MakeMock<ILogger>();
 
             return MakeSUT(log);
         }

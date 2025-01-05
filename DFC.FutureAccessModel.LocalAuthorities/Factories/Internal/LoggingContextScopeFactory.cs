@@ -23,13 +23,13 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <summary>
         /// the value for an unfound key item
         /// </summary>
-        public const string ValueNotFound = "(not found)";        
+        public const string ValueNotFound = "(not found)";
 
         /// <summary>
         /// initalises a new instance of the <see cref="LoggingContextScopeFactory"/>
         /// </summary>                
         public LoggingContextScopeFactory()
-        {            
+        {
         }
 
         /// <summary>
