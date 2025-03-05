@@ -1,5 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
@@ -13,12 +12,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <summary>
         /// the microsoft logger
         /// </summary>
-        public ILogger Log { get; }
-
-        /// <summary>
-        /// the DFC standard logger helper
-        /// </summary>
-        public ILoggerHelper LoggerHelper { get; }
+        public ILogger Logger { get; }
 
         /// <summary>
         /// a 'correlation' id
@@ -29,13 +23,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <summary>
         /// initialises an instance of <see cref="LoggingContextScope"/>
         /// </summary>
-        /// <param name="log">the microsoft log</param>
-        /// <param name="helper">the DFC logger helper</param>
+        /// <param name="logger">the microsoft log</param>        
         /// <param name="initialisingRoutine">the calling routine</param>
-        public LoggingContextScope(ILogger log, ILoggerHelper helper, string initialisingRoutine)
+        public LoggingContextScope(ILogger logger, string initialisingRoutine)
         {
-            Log = log;
-            LoggerHelper = helper;
+            Logger = logger;
 
             CorrelationID = Guid.NewGuid();
 
@@ -64,7 +56,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <param name="theMessage">the message</param>
         /// <returns>the currently running task</returns>
         public async Task Information(string theMessage) =>
-            await Task.Run(() => LoggerHelper.LogInformationMessage(Log, CorrelationID, theMessage));
+            await Task.Run(() => Logger.LogInformation("CorrelationId: {CorrelationId} Message: {TheMessage}", CorrelationID, theMessage));
+
 
         /// <summary>
         /// (log) exception detail
@@ -72,14 +65,15 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <param name="theException">the exception</param>
         /// <returns>the currently running task</returns>
         public async Task ExceptionDetail(Exception theException) =>
-            await Task.Run(() => LoggerHelper.LogException(Log, CorrelationID, theException));
+            await Task.Run(() => Logger.LogError(theException, "CorrelationId: {CorrelationId} Message: {TheMessage} Stack Trace: {StackTrace}", CorrelationID, theException.Message, theException.StackTrace));
+
 
         /// <summary>
         /// dispose, as this is used in a 'using' clause disposal should be guaranteed
         /// </summary>
         public void Dispose()
         {
-            LoggerHelper.LogInformationMessage(Log, CorrelationID, "request completed");
+            Logger.LogInformation("CorrelationId: {CorrelationId} Message: request completed", CorrelationID);
         }
     }
 }

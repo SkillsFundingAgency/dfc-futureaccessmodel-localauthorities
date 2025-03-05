@@ -28,7 +28,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public async Task RunWithNullRequestThrows()
         {
             // arrange
-            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
+            var logger = MakeMock<ILogger<PostLocalAuthorityFunction>>();
             var sut = MakeSUT(logger);
 
             // act / assert
@@ -43,8 +43,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullFactoryThrows()
         {
             // arrange
-            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();
+            var logger = MakeMock<ILogger<PostLocalAuthorityFunction>>();
+            var adapter = MakeMock<IManageLocalAuthorities>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(null, adapter, logger));
@@ -58,8 +58,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullAdapterThrows()
         {
             // arrange
-            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
-            var factory = MakeStrictMock<ICreateLoggingContextScopes>();
+            var logger = MakeMock<ILogger<PostLocalAuthorityFunction>>();
+            var factory = MakeMock<ICreateLoggingContextScopes>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new PostLocalAuthorityFunction(factory, null, logger));
@@ -82,11 +82,11 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
                 .Setup(x => x.Body)
                 .Returns(new MemoryStream(Encoding.UTF8.GetBytes(localAuthority)));
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.Dispose());
 
-            var logger = MakeStrictMock<ILogger<PostLocalAuthorityFunction>>();
+            var logger = MakeMock<ILogger<PostLocalAuthorityFunction>>();
             var sut = MakeSUT(logger);
             GetMock(sut.Factory)
                 .Setup(x => x.BeginScopeFor(request, logger, "RunActionScope"))
@@ -113,8 +113,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>the system under test</returns>
         internal PostLocalAuthorityFunction MakeSUT(ILogger<PostLocalAuthorityFunction> logger)
         {
-            var factory = MakeStrictMock<ICreateLoggingContextScopes>();
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();
+            var factory = MakeMock<ICreateLoggingContextScopes>();
+            var adapter = MakeMock<IManageLocalAuthorities>();
 
             return MakeSUT(factory, adapter, logger);
         }

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Faults
 {
@@ -7,8 +6,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
     /// access forbidden exception
     /// constructors and decorators are here to satisfy the static analysis tool
     /// as a consequence, excluded from coverage as they can't be tested properly
-    /// </summary>
-    [Serializable]
+    /// </summary>    
     [ExcludeFromCodeCoverage]
     public class ConflictingResourceException :
         Exception
@@ -42,16 +40,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         /// <param name="innerException"></param>
         public ConflictingResourceException(string message, Exception innerException) :
             base(ExceptionMessage, innerException)
-        {
-        }
-
-        /// <summary>
-        /// initialises an instance of the <see cref="AccessForbiddenException"/>
-        /// </summary>
-        /// <param name="info">info</param>
-        /// <param name="context">context</param>
-        protected ConflictingResourceException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
         {
         }
     }

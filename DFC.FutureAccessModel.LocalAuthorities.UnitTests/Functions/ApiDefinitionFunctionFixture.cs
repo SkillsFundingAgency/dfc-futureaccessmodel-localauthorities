@@ -75,7 +75,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullDocumentGeneratorThrows()
         {
             // arrange
-            var request = MakeStrictMock<HttpRequest>();
+            var request = MakeMock<HttpRequest>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new ApiDefinitionFunction(null));
@@ -90,7 +90,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string documentContent = "document returned from generator";
 
             // arrange
-            var request = MakeStrictMock<HttpRequest>();
+            var request = MakeMock<HttpRequest>();
 
             var sut = MakeSUT();
             // the mock expects the defaults to be sent in on optional values
@@ -122,6 +122,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// </summary>
         /// <returns>the system under test</returns>
         internal ApiDefinitionFunction MakeSUT() =>
-            new ApiDefinitionFunction(MakeStrictMock<ISwaggerDocumentGenerator>());
+            new ApiDefinitionFunction(MakeMock<ISwaggerDocumentGenerator>());
     }
 }

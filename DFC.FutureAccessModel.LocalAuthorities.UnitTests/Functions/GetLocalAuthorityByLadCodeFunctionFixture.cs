@@ -23,7 +23,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public async Task RunWithNullRequestThrows()
         {
             // arrange
-            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
+            var logger = MakeMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
             var sut = MakeSUT(logger);
 
             // act / assert
@@ -38,8 +38,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullFactoryThrows()
         {
             // arrange
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();
-            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
+            var adapter = MakeMock<IManageLocalAuthorities>();
+            var logger = MakeMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(null, adapter, logger));
@@ -53,8 +53,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         public void RunWithNullAdapterThrows()
         {
             // arrange
-            var factory = MakeStrictMock<ICreateLoggingContextScopes>();
-            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
+            var factory = MakeMock<ICreateLoggingContextScopes>();
+            var logger = MakeMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
             // act / assert
             Assert.Throws<ArgumentNullException>(() => new GetLocalAuthorityByLadCodeFunction(factory, null, logger));
@@ -70,10 +70,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
             const string theAdminDistrict = "E1234567";
             const string theTouchpoint = "00000000112";
 
-            var request = MakeStrictMock<HttpRequest>();
-            var logger = MakeStrictMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
+            var request = MakeMock<HttpRequest>();
+            var logger = MakeMock<ILogger<GetLocalAuthorityByLadCodeFunction>>();
 
-            var scope = MakeStrictMock<IScopeLoggingContext>();
+            var scope = MakeMock<IScopeLoggingContext>();
             GetMock(scope)
                 .Setup(x => x.Dispose());
 
@@ -98,8 +98,8 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Functions
         /// <returns>the system under test</returns>
         internal GetLocalAuthorityByLadCodeFunction MakeSUT(ILogger<GetLocalAuthorityByLadCodeFunction> logger)
         {
-            var factory = MakeStrictMock<ICreateLoggingContextScopes>();
-            var adapter = MakeStrictMock<IManageLocalAuthorities>();
+            var factory = MakeMock<ICreateLoggingContextScopes>();
+            var adapter = MakeMock<IManageLocalAuthorities>();
 
             return MakeSUT(factory, adapter, logger);
         }
