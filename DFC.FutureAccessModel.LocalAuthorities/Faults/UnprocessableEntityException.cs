@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
 
 namespace DFC.FutureAccessModel.LocalAuthorities.Faults
 {
@@ -7,8 +6,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
     /// unprocessable entity exception
     /// constructors and decorators are here to satisfy the static analysis tool
     /// as a consequence, excluded from coverage as they can't be tested properly
-    /// </summary>
-    [Serializable]
+    /// </summary>    
     [ExcludeFromCodeCoverage]
     public class UnprocessableEntityException :
             Exception
@@ -37,16 +35,6 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Faults
         /// <param name="innerException">inner exception</param>
         public UnprocessableEntityException(string message, Exception innerException) :
             base(message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// initialise an instance of the <see cref="UnprocessableEntityException"/>
-        /// </summary>
-        /// <param name="info">info</param>
-        /// <param name="context">context</param>
-        protected UnprocessableEntityException(SerializationInfo info, StreamingContext context) :
-            base(info, context)
         {
         }
     }

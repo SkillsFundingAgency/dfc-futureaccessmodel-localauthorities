@@ -20,7 +20,10 @@
             }
             catch (Exception e)
             {
-                await handleError?.Invoke(e);
+                if (handleError != null)
+                {
+                    await handleError.Invoke(e);
+                }                
             }
         }
 

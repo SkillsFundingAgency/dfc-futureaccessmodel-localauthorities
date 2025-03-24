@@ -93,7 +93,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Validation.Internal
         /// <returns>the system under test</returns>
         internal LocalAuthorityValidator MakeSUT()
         {
-            var factory = MakeStrictMock<ICreateValidationMessageContent>();
+            var factory = MakeMock<ICreateValidationMessageContent>();
 
             return MakeSUT(factory);
         }

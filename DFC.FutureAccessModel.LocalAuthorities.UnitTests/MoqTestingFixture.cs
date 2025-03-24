@@ -9,9 +9,9 @@ namespace DFC.FutureAccessModel.LocalAuthorities
         /// </summary>
         /// <typeparam name="TEntity">for this type</typeparam>
         /// <returns>a strict behaviour mock</returns>
-        public TEntity MakeStrictMock<TEntity>()
+        public TEntity MakeMock<TEntity>()
             where TEntity : class =>
-            new Mock<TEntity>(MockBehavior.Strict).Object;
+            new Mock<TEntity>().Object;
 
         /// <summary>
         /// get mock

@@ -1,6 +1,4 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.FutureAccessModel.LocalAuthorities.Helpers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Runtime.CompilerServices;
 
@@ -28,21 +26,10 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         public const string ValueNotFound = "(not found)";
 
         /// <summary>
-        /// the DFC logging helper
-        /// </summary>
-        public ILoggerHelper LoggerHelper { get; }
-
-        /// <summary>
         /// initalises a new instance of the <see cref="LoggingContextScopeFactory"/>
-        /// </summary>
-        /// <param name="log">the microsoft log</param>
-        /// <param name="logHelper">the DFC logging helper</param>
-        public LoggingContextScopeFactory(ILoggerHelper logHelper)
+        /// </summary>                
+        public LoggingContextScopeFactory()
         {
-            It.IsNull(logHelper)
-                .AsGuard<ArgumentNullException>(nameof(logHelper));
-
-            LoggerHelper = logHelper;
         }
 
         /// <summary>
@@ -57,7 +44,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
             ILogger usingTraceWriter,
             [CallerMemberName] string initialisingRoutine = null)
         {
-            var scope = new LoggingContextScope(usingTraceWriter, LoggerHelper, initialisingRoutine);
+            var scope = new LoggingContextScope(usingTraceWriter, initialisingRoutine);
 
             await scope.Information($"beginning scope for remote host, address: '{theRequest.HttpContext.Connection.RemoteIpAddress}' port: '{theRequest.HttpContext.Connection.RemotePort}'");
             await scope.Information($"request verb: '{theRequest.Method}'");
@@ -75,7 +62,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <param name="theRequest">the request</param>
         /// <param name="theHeaderItem">the header item</param>
         /// <returns>the header item value or a default string '(not found)'</returns>
-        internal string GetHeaderItemFrom(HttpRequest theRequest, string theHeaderItem) =>
+        internal static string GetHeaderItemFrom(HttpRequest theRequest, string theHeaderItem) =>
             theRequest.Headers.ContainsKey(theHeaderItem)
                 ? theRequest.Headers[theHeaderItem].FirstOrDefault()
                 : ValueNotFound;

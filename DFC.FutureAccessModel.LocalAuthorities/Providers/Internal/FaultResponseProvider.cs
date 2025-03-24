@@ -68,7 +68,7 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// the malformed request action
         /// </summary>
         /// <returns>a 'bad request' message</returns>
-        internal IActionResult Malformed(Exception theException) =>
+        internal static IActionResult Malformed(Exception theException) =>
             new BadRequestObjectResult(HttpStatusCode.BadRequest);
 
         /// <summary>
@@ -76,28 +76,28 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Providers.Internal
         /// </summary>
         /// <param name="theException">the exception</param>
         /// <returns>a conflicted message</returns>
-        internal IActionResult Conflicted(Exception theException) =>
+        internal static IActionResult Conflicted(Exception theException) =>
             new ConflictObjectResult(HttpStatusCode.Conflict);
 
         /// <summary>
         /// the no content action
         /// </summary>
         /// <returns>a 'no content' message</returns>
-        internal IActionResult NoContent(Exception theException) =>
+        internal static IActionResult NoContent(Exception theException) =>
             new NoContentResult();
 
         /// <summary>
         /// the unprocessable entity action
         /// </summary>
         /// <returns>a 'unprocessable entity' message</returns>
-        internal IActionResult UnprocessableEntity(Exception theException) =>
+        internal static IActionResult UnprocessableEntity(Exception theException) =>
             new UnprocessableEntityObjectResult(theException.Message);
 
         /// <summary>
         /// the unknown error action
         /// </summary>
         /// <returns>an 'internal server error' message</returns>
-        internal IActionResult UnknownError(Exception theException) =>
+        internal static IActionResult UnknownError(Exception theException) =>
             new InternalServerErrorResult();
     }
 }

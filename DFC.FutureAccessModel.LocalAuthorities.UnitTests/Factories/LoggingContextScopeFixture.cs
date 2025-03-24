@@ -1,6 +1,6 @@
-﻿using DFC.Common.Standard.Logging;
-using DFC.FutureAccessModel.LocalAuthorities.Faults;
+﻿using DFC.FutureAccessModel.LocalAuthorities.Faults;
 using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -31,107 +31,103 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
             Assert.NotEqual(Guid.Empty, MakeSUT().CorrelationID);
 
         /// <summary>
-        /// enter method, log helper meets verification
+        /// enter method, logger meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task EnterMethodLogHelperMeetsVerification()
+        public async Task EnterMethodLoggerMeetsVerification()
         {
             // arrange
             var sut = MakeSUT();
-            GetMock(sut.LoggerHelper)
-                .Setup(x => x.LogInformationMessage(sut.Log, sut.CorrelationID, "entering method: 'EnterMethodLogHelperMeetsVerification'"));
+            SetupLogger(sut.Logger, LogLevel.Information, "entering method: 'EnterMethodLoggerMeetsVerification'");
 
             // act
             await sut.EnterMethod();
 
             // assert
-            GetMock(sut.Log).VerifyAll();
-            GetMock(sut.LoggerHelper).VerifyAll();
+            GetMock(sut.Logger).VerifyAll();
+            VerifyLogger(sut.Logger, LogLevel.Information, "entering method: 'EnterMethodLoggerMeetsVerification'");
         }
 
         /// <summary>
-        /// exit method, log helper meets verification
+        /// exit method, logger meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task ExitMethodLogHelperMeetsVerification()
+        public async Task ExitMethodLoggerMeetsVerification()
         {
             // arrange
             var sut = MakeSUT();
-            GetMock(sut.LoggerHelper)
-                .Setup(x => x.LogInformationMessage(sut.Log, sut.CorrelationID, "exiting method: 'ExitMethodLogHelperMeetsVerification'"));
+            SetupLogger(sut.Logger, LogLevel.Information, "exiting method: 'ExitMethodLoggerMeetsVerification'");
 
             // act
             await sut.ExitMethod();
 
             // assert
-            GetMock(sut.Log).VerifyAll();
-            GetMock(sut.LoggerHelper).VerifyAll();
+            GetMock(sut.Logger).VerifyAll();
+            VerifyLogger(sut.Logger, LogLevel.Information, "exiting method: 'ExitMethodLoggerMeetsVerification'");
         }
 
         /// <summary>
-        /// recording a message, log helper meets verification
+        /// recording a message, logger meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task RecordingAMessageLogHelperMeetsVerification()
+        public async Task RecordingAMessageLoggerMeetsVerification()
         {
             // arrange
             const string message = "recording a message";
 
             var sut = MakeSUT();
-            GetMock(sut.LoggerHelper)
-                .Setup(x => x.LogInformationMessage(sut.Log, sut.CorrelationID, message));
+            SetupLogger(sut.Logger, LogLevel.Information, message);
 
             // act
             await sut.Information(message);
 
             // assert
-            GetMock(sut.Log).VerifyAll();
-            GetMock(sut.LoggerHelper).VerifyAll();
+            GetMock(sut.Logger).VerifyAll();
+            VerifyLogger(sut.Logger, LogLevel.Information, message);
         }
 
         /// <summary>
-        /// recording an exception, log helper meets verification
+        /// recording an exception, logger meets verification
         /// </summary>
         /// <returns>the currently running (test) task</returns>
         [Fact]
-        public async Task RecordingAnExceptionLogHelperMeetsVerification()
+        public async Task RecordingAnExceptionLoggerMeetsVerification()
         {
             // arrange
             var exception = new MalformedRequestException();
             var sut = MakeSUT();
-            GetMock(sut.LoggerHelper)
-                .Setup(x => x.LogException(sut.Log, sut.CorrelationID, exception));
+
+            SetupLogger(sut.Logger, LogLevel.Error, string.Empty, exception);
 
             // act
             await sut.ExceptionDetail(exception);
 
             // assert
-            GetMock(sut.Log).VerifyAll();
-            GetMock(sut.LoggerHelper).VerifyAll();
+            GetMock(sut.Logger).VerifyAll();
+            VerifyLogger(sut.Logger, LogLevel.Error, string.Empty, exception);
         }
 
         /// <summary>
-        /// recording a message during dispose,log helper meets verification
+        /// recording a message during dispose,logger meets verification
         /// </summary>
         [Fact]
-        public void RecordingAMessageDuringDisposeLogHelperMeetsVerification()
+        public void RecordingAMessageDuringDisposeLoggerMeetsVerification()
         {
             // arrange
             const string message = "request completed";
 
             var sut = MakeSUT();
-            GetMock(sut.LoggerHelper)
-                .Setup(x => x.LogInformationMessage(sut.Log, sut.CorrelationID, message));
+            SetupLogger(sut.Logger, LogLevel.Information, message);
 
             // act
             sut.Dispose();
 
             // assert
-            GetMock(sut.Log).VerifyAll();
-            GetMock(sut.LoggerHelper).VerifyAll();
+            GetMock(sut.Logger).VerifyAll();
+            VerifyLogger(sut.Logger, LogLevel.Information, message);
         }
 
         /// <summary>
@@ -140,17 +136,37 @@ namespace DFC.FutureAccessModel.LocalAuthorities.Factories.Internal
         /// <returns>the system under test</returns>
         internal LoggingContextScope MakeSUT()
         {
-            var log = MakeStrictMock<ILogger>();
-            var helper = MakeStrictMock<ILoggerHelper>();
+            var log = MakeMock<ILogger>();
 
-            return MakeSUT(log, helper);
+            return MakeSUT(log);
         }
 
         /// <summary>
         /// make a 'system under test'
         /// </summary>
         /// <returns>a document client factory</returns>
-        internal LoggingContextScope MakeSUT(ILogger log, ILoggerHelper logHelper, string initialisingRoutine = null) =>
-            new LoggingContextScope(log, logHelper, initialisingRoutine);
+        internal LoggingContextScope MakeSUT(ILogger log, string initialisingRoutine = null) =>
+            new LoggingContextScope(log, initialisingRoutine);
+
+        private void VerifyLogger(ILogger logger, LogLevel logLevel, string message, Exception exception = null)
+        {
+            GetMock(logger).Verify(l => l.Log(
+                logLevel,
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((v, t) => string.IsNullOrEmpty(message) ? true : v.ToString().Contains(message)),
+                exception == null ? It.IsAny<Exception>() : exception,
+                It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Exactly(1));
+        }
+
+        private void SetupLogger(ILogger logger, LogLevel logLevel, string message, Exception exception = null)
+        {
+            GetMock(logger).Setup(l => l.Log(
+                            logLevel,
+                            It.IsAny<EventId>(),
+                            It.Is<It.IsAnyType>((state, t) => string.IsNullOrEmpty(message) ? true : state.ToString().Contains(message)),
+                            exception == null ? It.IsAny<Exception>() : exception,
+                            It.IsAny<Func<It.IsAnyType, Exception, string>>()));
+        }
     }
 }
