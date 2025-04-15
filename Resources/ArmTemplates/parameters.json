@@ -8,17 +8,8 @@
         "appSharedStorageAccountName": {
             "value": "__famSharedStorageAccount__"
         },
-        "aseHostingEnvironmentName": {
-            "value": "__FunctionAppDomain__"
-        },
-        "aseResourceGroup": {
-            "value": "__SharedResourceGroupName__"
-        },
         "cosmosDbAccountName": {
             "value": "__famSharedCosmosAccount__"
-        },
-        "cosmosDbResourceGroup": {
-            "value": "__famSharedResourceGroup__"
         },
         "environment": {
             "value": "__ReleaseEnvironmentName__",
@@ -28,33 +19,6 @@
         },
         "functionAppName": {
             "value": "__FunctionAppName__"
-        },
-        "sharedAppServicePlanName": {
-            "value": "__famSharedAppServicePlanName__"
-        },
-        "sharedAppServicePlanResourceGroup": {
-            "value": "__famSharedResourceGroup__"
-        },
-        "apimResourceGroup": {
-            "value": "__SharedResourceGroupName__"
-        },
-        "apimInstanceName": {
-            "value": "__ApimServiceName__"
-        },
-        "apimProductId": {
-            "value": "__ApimProductId__"
-        },
-        "apimApiName": {
-            "value": "__ApimApiName__"
-        },
-        "apimApiSuffix": {
-            "value": "__ApimApiUrlSuffix__"
-        },
-        "workspaceName": {
-            "value": "__sharedLogAnalyticsWorkspace__"
-        },
-        "workspaceResourceGroup": {
-            "value": "__sharedLogAnalyticsResourceGroup__"
         }
     }
 }

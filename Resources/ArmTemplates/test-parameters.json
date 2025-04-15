@@ -11,41 +11,11 @@
         "cosmosDbAccountName": {
             "value": "dfc-dev-fam-shared-cdb"
         },
-        "cosmosDbResourceGroup": {
-            "value": "dfc-dev-fam-shared-rg"
-        },
         "environment": {
             "value": "FOO"
         },
         "functionAppName": {
             "value": "dfc-foo-fam-la-fa-ver2"
-        },
-        "sharedAppServicePlanName": {
-            "value": "dfc-dev-fam-shared-asp"
-        },
-        "sharedAppServicePlanResourceGroup": {
-            "value": "dfc-dev-fam-shared-rg"
-        },
-        "apimResourceGroup": {
-            "value": "dfc-test-template-rg"
-        },
-        "apimInstanceName": {
-            "value": "dfc-foo-shared-apim"
-        },
-        "apimProductId": {
-            "value": "an-apim-product"
-        },
-        "apimApiName": {
-            "value": "some-api-name"
-        },
-        "apimApiSuffix": {
-            "value": "api/suffix"
-        },
-        "workspaceName": {
-            "value": "aTestLogAnalyticsAccount"
-        },
-        "workspaceResourceGroup": {
-            "value": "aResourceGroup"
         }
     }
 }
