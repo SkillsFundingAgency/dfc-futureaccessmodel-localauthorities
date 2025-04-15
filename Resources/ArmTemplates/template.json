@@ -37,7 +37,7 @@
         "DocumentStoreID": "dfc-prime-contractor-areas-db",
         "LocalAuthorityCollectionID": "LocalAuthorities",
         "DocumentStoreEndpointAddress": "[concat('https://',parameters('cosmosDbAccountName'),'.documents.azure.com:443/')]",
-        "DocumentStoreAccountKey": "[listKeys(resourceId(parameters('appSharedResourceGroup'), 'Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbAccountName')), providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]).primaryMasterKey]",
+        "DocumentStoreAccountKey": "[listKeys(resourceId(parameters('appSharedResourceGroup'), 'Microsoft.DocumentDB/databaseAccounts', parameters('cosmosDbAccountName')), providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]).primaryMasterKey]"
       }
     },
     {
